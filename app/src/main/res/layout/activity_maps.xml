@@ -55,7 +55,7 @@ tools:context=".MapsActivity">
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|end"
     android:layout_margin="@dimen/fab_margin"
-    app:srcCompat="@drawable/ic_"
+    app:srcCompat="@drawable/ic_apps_white_24dp"
     android:layout_alignParentBottom="true"
     android:layout_alignParentRight="true"/>
 
