@@ -6,7 +6,6 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +31,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -66,11 +65,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     // Used for selecting the current place.
     private static final int M_MAX_ENTRIES = 5;
 
-    private FloatingActionButton fab;
-    private FloatingActionButton fab1;
-    private FloatingActionButton fab2;
-    private FloatingActionButton fab3;
-    private boolean isFABOpen;
+    //boolean flag to know if main FAB is in open or closed state.
+    private boolean fabExpanded = false;
+    private FloatingActionButton fabMenu;
+
+    //Linear layout holding the Save submenu
+    private LinearLayout layoutFabStage;
+    private LinearLayout layoutFabAccount;
+    private LinearLayout layoutFabHelp;
+    private LinearLayout layoutFabSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,35 +100,58 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab1 = (FloatingActionButton) findViewById(R.id.fab1);
-        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
-        fab3 = (FloatingActionButton) findViewById(R.id.fab3);
-        isFABOpen = false;
-        fab.setOnClickListener(new View.OnClickListener() {
+        fabMenu = (FloatingActionButton) this.findViewById(R.id.fabMenu);
+
+        layoutFabStage = (LinearLayout) this.findViewById(R.id.layoutFabStage);
+        layoutFabAccount = (LinearLayout) this.findViewById(R.id.layoutFabAccount);
+        layoutFabHelp = (LinearLayout) this.findViewById(R.id.layoutFabHelp);
+        layoutFabSetting = (LinearLayout) this.findViewById(R.id.layoutFabSetting);
+
+        // When main Fab (Settings) is clicked, it expands if not expanded already.
+        // Collapses if main FAB was open already.
+        // This gives FAB (Settings) open/close behavior
+        fabMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isFABOpen){
-                    showFABMenu();
-                }else{
-                    closeFABMenu();
+                if (fabExpanded == true) {
+                    closeSubMenusFab();
+                } else {
+                    openSubMenusFab();
                 }
+            }
+        });
+
+        // Only main FAB is visible in the beginning
+        closeSubMenusFab();
+
+
+        layoutFabStage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
 
-    private void showFABMenu(){
-        isFABOpen=true;
-        fab1.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
-        fab2.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
-        fab3.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
+    //closes FAB submenus
+    private void closeSubMenusFab() {
+        layoutFabStage.setVisibility(View.INVISIBLE);
+        layoutFabAccount.setVisibility(View.INVISIBLE);
+        layoutFabHelp.setVisibility(View.INVISIBLE);
+        layoutFabSetting.setVisibility(View.INVISIBLE);
+        fabMenu.setImageResource(R.drawable.ic_menu_white_24dp);
+        fabExpanded = false;
     }
 
-    private void closeFABMenu(){
-        isFABOpen=false;
-        fab1.animate().translationY(0);
-        fab2.animate().translationY(0);
-        fab3.animate().translationY(0);
+    //Opens FAB submenus
+    private void openSubMenusFab() {
+        layoutFabStage.setVisibility(View.VISIBLE);
+        layoutFabAccount.setVisibility(View.VISIBLE);
+        layoutFabHelp.setVisibility(View.VISIBLE);
+        layoutFabSetting.setVisibility(View.VISIBLE);
+        //Change settings icon to 'X' icon
+        fabMenu.setImageResource(R.drawable.ic_close_white_24dp);
+        fabExpanded = true;
     }
 
     /**
