@@ -7,6 +7,11 @@ public class PersonalData {
     private String member_password;
     private int member_score;
     private int member_rank;
+    private int member_idx;
+
+    public int getMember_idx() {
+        return member_idx;
+    }
 
     public String getMember_id() {
         return member_id;
@@ -28,9 +33,10 @@ public class PersonalData {
         return member_rank;
     }
 
-    public void setMember_id(String member_id) {
-        this.member_id = member_id;
-    }
+
+    public void setMember_idx(int member_idx) { this.member_idx = member_idx; }
+
+    public void setMember_id(String member_id) { this.member_id = member_id; }
 
     public void setMember_name(String member_name) {
         this.member_name = member_name;

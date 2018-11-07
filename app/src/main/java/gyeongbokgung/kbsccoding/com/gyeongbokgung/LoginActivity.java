@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // TODO: Implement your own authentication logic here.
         GetData task = new GetData();
-        task.execute( "http://" + "192.168.123.109"+ "/query.php", user_id);
+        task.execute( "http://" + "192.168.0.18"+ "/query.php", user_id);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -243,7 +243,7 @@ public class LoginActivity extends AppCompatActivity {
             personalData.setMember_name(dbname);
             personalData.setMember_password(dbpw);
             //  personalData.setMember_password(password);
-
+////////////////////////여기해야하나?////////////////////////////
             Log.d(TAG,"personalData:"+personalData.getMember_password());
             //mArrayList.add(personalData);
             //mAdapter.notifyDataSetChanged();
@@ -282,7 +282,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         mLogin.setEnabled(true);
-        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), RankingActivity.class);
         startActivity(intent);
         finish();
     }
