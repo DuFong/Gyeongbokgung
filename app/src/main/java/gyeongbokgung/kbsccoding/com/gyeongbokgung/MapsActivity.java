@@ -1,6 +1,7 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -128,7 +129,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         layoutFabStage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), StagelistActivity.class);
+                startActivity(intent);
             }
         });
     }
