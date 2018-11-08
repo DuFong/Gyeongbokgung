@@ -12,13 +12,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class StageAdapter extends RecyclerView.Adapter<StageAdapter.ViewHolder> {
 
     ArrayList mValues;
     Context mContext;
     protected ItemListener mListener;
 
-    public RecyclerViewAdapter(Context context, ArrayList values, ItemListener itemListener) {
+    public StageAdapter(Context context, ArrayList values, ItemListener itemListener) {
 
         mValues = values;
         mContext = context;
@@ -62,9 +62,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.recycler_view_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_stage, parent, false);
 
         return new ViewHolder(view);
     }

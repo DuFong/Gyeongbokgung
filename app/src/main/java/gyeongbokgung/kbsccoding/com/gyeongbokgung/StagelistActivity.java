@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class StagelistActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemListener {
+public class StagelistActivity extends AppCompatActivity implements StageAdapter.ItemListener {
     RecyclerView recyclerView;
     ArrayList arrayList;
 
@@ -28,7 +28,7 @@ public class StagelistActivity extends AppCompatActivity implements RecyclerView
                 "Item 5",R.drawable.ic_format_align_justify_black_24dp, "#F94336"));
         arrayList.add(new StageData("Item 6", R.drawable.ic_format_align_justify_black_24dp, "#0A9B88"));
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, arrayList, this);
+        StageAdapter adapter = new StageAdapter(this, arrayList, this);
         recyclerView.setAdapter(adapter);
 
 
