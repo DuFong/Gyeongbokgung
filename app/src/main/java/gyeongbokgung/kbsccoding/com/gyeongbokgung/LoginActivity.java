@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // TODO: Implement your own authentication logic here.
         GetData task = new GetData();
-        task.execute( "http://" + "192.168.0.18"+ "/query.php", user_id);
+        task.execute( "http://" + "192.168.0.41"+ "/query.php", user_id);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
