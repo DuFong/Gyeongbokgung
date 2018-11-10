@@ -13,8 +13,8 @@
         card_view:cardElevation="10dp"
         card_view:cardMaxElevation="10dp"
         card_view:contentPadding="10dp"
+        card_view:cardBackgroundColor="@color/colorPrimary"
         android:clickable="true"
-        android:onClick="animateIntent"
         android:transitionName="@string/transition_string"
         >
 

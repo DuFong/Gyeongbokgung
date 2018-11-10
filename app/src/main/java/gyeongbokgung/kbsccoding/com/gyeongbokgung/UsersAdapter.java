@@ -34,6 +34,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
             this.rank = (TextView) view.findViewById(R.id.textView_list_rank);
             this.name = (TextView) view.findViewById(R.id.textView_list_name);
             this.score = (TextView) view.findViewById(R.id.textView_list_score);
+
+
         }
     }
 
@@ -50,7 +52,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
         Log.d("UsersAdapter","~~~position"+position);
         viewholder.name.setText(mList.get(position).getMember_name());
-
         viewholder.rank.setText(String.valueOf(mList.get(position).getMember_rank()));
         viewholder.score.setText(String.valueOf(mList.get(position).getMember_score()));
     }
