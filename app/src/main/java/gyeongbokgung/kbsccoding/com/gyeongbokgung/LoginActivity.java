@@ -311,6 +311,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         mLogin.setEnabled(true);
         Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+
         Log.d(TAG,"~~~nowID"+nowPerson.getMember_id());
         String nid= nowPerson.getMember_id();
         Log.d(TAG,"~~~~nid:"+nid);

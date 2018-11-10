@@ -26,8 +26,8 @@ private RecyclerView.LayoutManager mLayoutManager;
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         mArrayList = new ArrayList();
-        mArrayList.add(new Quest(1,"튜토리얼","","","","","",0));
-        mArrayList.add(new Quest(2,"행사의 장","","","","","",0));
+        mArrayList.add(new Quest(1,"튜토리얼","","","","","",0,-1));
+        mArrayList.add(new Quest(2,"행사의 장","","","","","",0,-1));
 
         QuestsAdapter adapter = new QuestsAdapter(this, mArrayList, this);
         mRecyclerView.setAdapter(adapter);
