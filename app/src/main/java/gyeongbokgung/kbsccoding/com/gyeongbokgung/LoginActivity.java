@@ -303,11 +303,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         mLogin.setEnabled(true);
-        Intent intent = new Intent(getApplicationContext(), Prologue1Activity.class);
+        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+
         Log.d(TAG,"~~~nowID"+nowPerson.getMember_id());
         String nid= nowPerson.getMember_id();
         Log.d(TAG,"~~~~nid:"+nid);
-      //  intent.putExtra("nowPersonID",nid);
+        //  intent.putExtra("nowPersonID",nid);
         //intent.putExtra("nowPersonID",nid);
         intent.putExtra("nowperson",nowPerson);
         Log.d(TAG,"넘겨쥼");
