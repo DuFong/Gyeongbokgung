@@ -70,23 +70,30 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         //  progressDialog.show();
 
-        String user_id = mUserid.getText().toString();
-        String password = mPassword.getText().toString();
 
-        // TODO: Implement your own authentication logic here.
-        GetData task = new GetData();
+        if(mUserid.getText().toString().equals("")){
+            Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        }
+        else {
+            String user_id = mUserid.getText().toString();
+            //String password = mPassword.getText().toString();
 
-        task.execute( "http://" + getString(R.string.ip_adrress)+ "/query.php", user_id);
+            // TODO: Implement your own authentication logic here.
+            GetData task = new GetData();
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        //     onLoginSuccess();
-//                        onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+            task.execute("http://" + getString(R.string.ip_adrress) + "/query.php", user_id);
+
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            // On complete call either onLoginSuccess or onLoginFailed
+                            //     onLoginSuccess();
+//                      onLoginFailed();
+                            progressDialog.dismiss();
+                        }
+                    }, 3000);
+        }
+
     }
     private class GetData extends AsyncTask<String, Void, String> {
 
@@ -317,7 +324,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-        //mLogin.setEnabled(true);
+        mLogin.setEnabled(false);
     }
 
     @OnClick(R.id.tv_signup)
