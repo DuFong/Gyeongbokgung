@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        mLogin.setEnabled(false);
+        mLogin.setEnabled(true);
 
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.Theme_AppCompat_Dialog);
@@ -72,9 +72,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if(mUserid.getText().toString().equals("")){
-            Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+            onLoginFailed();
         }
-        else {
+         {
             String user_id = mUserid.getText().toString();
             //String password = mPassword.getText().toString();
 
@@ -185,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
             } catch (Exception e) {
-
+              //  Log.d("로그인", "ID없음");
                 Log.d(TAG, "GetData : Error "+e);
                 errorString = e.toString();
 
@@ -221,9 +222,15 @@ public class LoginActivity extends AppCompatActivity {
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
             Log.d(TAG, String.valueOf(jsonArray.length()));
             Log.d(TAG,"~~~3");
+
             for(int i=0;i<jsonArray.length();i++) {
+                Log.d("로그인", "for문 들어옴");
 
                 JSONObject item = jsonArray.getJSONObject(i);
+                Log.d("로그인", "for문 들어옴item");
+                String idx = item.getString("idx");
+                if(idx.equals("-1"))
+                    onLoginFailed();
                 System.out.println(item.getString("userPassword"));
                 dbpw=item.getString("userPassword");
                 dbid=item.getString("userID");
@@ -234,7 +241,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 System.out.println(item.getString("userName"));
+
             }
+
             PersonalData personalData = new PersonalData();
 
             personalData.setMember_id(dbid);
@@ -309,6 +318,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
+        Log.d("로그인","로그인성공!");
         mLogin.setEnabled(true);
         Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
 
@@ -324,8 +334,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
+        Log.d("로그인","로그인실패!");
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-        mLogin.setEnabled(false);
+        mLogin.setEnabled(true);
     }
 
     @OnClick(R.id.tv_signup)
