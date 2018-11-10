@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         //  progressDialog.show();
 
+
         String user_id = mUserid.getText().toString();
         String password = mPassword.getText().toString();
 
@@ -87,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, 3000);
+
     }
     private class GetData extends AsyncTask<String, Void, String> {
 
@@ -304,10 +306,11 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         mLogin.setEnabled(true);
         Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+
         Log.d(TAG,"~~~nowID"+nowPerson.getMember_id());
         String nid= nowPerson.getMember_id();
         Log.d(TAG,"~~~~nid:"+nid);
-      //  intent.putExtra("nowPersonID",nid);
+        //  intent.putExtra("nowPersonID",nid);
         //intent.putExtra("nowPersonID",nid);
         intent.putExtra("nowperson",nowPerson);
         Log.d(TAG,"넘겨쥼");
@@ -317,7 +320,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-        mLogin.setEnabled(true);
+        mLogin.setEnabled(false);
     }
 
     @OnClick(R.id.tv_signup)

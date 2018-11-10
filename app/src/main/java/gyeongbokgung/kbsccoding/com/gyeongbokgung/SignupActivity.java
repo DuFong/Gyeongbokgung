@@ -26,8 +26,6 @@ import butterknife.OnClick;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
-    private static String IP_ADDRESS = "10.27.24.146";
-
     // private static String TAG = "phptest";
 
     @BindView(R.id.et_userid)
@@ -73,7 +71,7 @@ public class SignupActivity extends AppCompatActivity {
 
         // TODO: Implement your own signup logic here.
         InsertData task = new InsertData();
-        task.execute("http://" + IP_ADDRESS + "/insert.php", userID,userPassword,userName);
+        task.execute("http://" + getString(R.string.ip_adrress) + "/insert.php", userID,userPassword,userName);
 
 
 

@@ -38,8 +38,9 @@ public class QuestsViewActivity extends AppCompatActivity {
 
         // 데이터 세팅
         mArrayList = new ArrayList();
-        mArrayList.add(new Quest(1, "튜토리얼", "", "", "", "", "", 0));
-        mArrayList.add(new Quest(2, "행사의 장", "", "", "", "", "", 0));
+        mArrayList.add(new Quest(1,"튜토리얼","","","","","",0,-1));
+        mArrayList.add(new Quest(2,"행사의 장","","","","","",0,-1));
+
 
         // 어댑터 세팅
         mAdapter = new QuestsAdapter(getApplicationContext(), mArrayList);

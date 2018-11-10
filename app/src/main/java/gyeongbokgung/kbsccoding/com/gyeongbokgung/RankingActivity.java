@@ -32,8 +32,7 @@ import java.util.ArrayList;
 
 public class RankingActivity extends AppCompatActivity {
 
-    private static String IP_ADDRESS = "10.27.24.146";
-    private static String TAG = "phptest";
+    private static String TAG = "흐름";
 
     private EditText mEditTextName;
     private EditText mEditTextCountry;
@@ -59,7 +58,6 @@ public class RankingActivity extends AppCompatActivity {
 
 
         mArrayList = new ArrayList<>();
-
         mAdapter = new UsersAdapter(this, mArrayList);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -72,7 +70,7 @@ public class RankingActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
 
         GetData task = new GetData();
-        task.execute( "http://" + IP_ADDRESS + "/getjson22.php", "");
+        task.execute( "http://" + getString(R.string.ip_adrress) + "/getjson22.php", "");
         //   }
         // });
 
@@ -100,7 +98,7 @@ public class RankingActivity extends AppCompatActivity {
 
             progressDialog.dismiss();
 //            mTextViewResult.setText(result);
-            Log.d(TAG, "response - " + result);
+          //  Log.d(TAG, "response - " + result);
 
             if (result == null){
 
@@ -141,7 +139,7 @@ public class RankingActivity extends AppCompatActivity {
 
 
                 int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d(TAG, "response code - " + responseStatusCode);
+        //        Log.d(TAG, "response code - " + responseStatusCode);
 
                 InputStream inputStream;
                 if(responseStatusCode == HttpURLConnection.HTTP_OK) {
@@ -169,7 +167,7 @@ public class RankingActivity extends AppCompatActivity {
 
             } catch (Exception e) {
 
-                Log.d(TAG, "GetData : Error ", e);
+       //         Log.d(TAG, "GetData : Error ", e);
                 errorString = e.toString();
 
                 return null;
@@ -190,13 +188,13 @@ public class RankingActivity extends AppCompatActivity {
 
 
         try {
-            Log.d(TAG,"~~try 들어옴");
+     //       Log.d(TAG,"~~try 들어옴");
             JSONObject jsonObject = new JSONObject(mJsonString.substring(mJsonString.indexOf("{"), mJsonString.lastIndexOf("}") + 1));
             //  JSONObject jsonObject = new JSONObject(mJsonString);
             Log.d(TAG,"~~JSONObject: "+jsonObject.toString());
 
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
-            Log.d(TAG,"~~array 성공");
+   //         Log.d(TAG,"~~array 성공");
             for(int i=0;i<jsonArray.length();i++){
 
                 JSONObject item = jsonArray.getJSONObject(i);
@@ -216,13 +214,12 @@ public class RankingActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged();
                 Log.d(TAG,"~~notify성공");
             }
-
-
+            Log.d(TAG, "리스트 삽입 끝났니?");
 
         } catch (JSONException e) {
 
-            Log.d(TAG, "showResult : ", e);
-            Log.d(TAG,"~~catch로 들어옴 ",e);
+//            Log.d(TAG, "showResult : ", e);
+//            Log.d(TAG,"~~catch로 들어옴 ",e);
         }
 
     }
