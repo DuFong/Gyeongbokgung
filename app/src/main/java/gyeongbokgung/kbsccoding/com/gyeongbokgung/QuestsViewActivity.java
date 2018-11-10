@@ -1,10 +1,15 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,5 +39,23 @@ private RecyclerView.LayoutManager mLayoutManager;
     @Override
     public void onItemClick(Quest item){
         Toast.makeText(getApplicationContext(),"clicked" ,  Toast.LENGTH_SHORT).show();
+    }
+
+    public void animateIntent(View view){
+
+        // Ordinary Intent for launching a new activity
+        Intent intent = new Intent(this, QuestDetailActivity.class);
+
+        // Get the transition name from the string
+        String transitionName = getString(R.string.transition_string);
+
+        // Define the view that the animation will start from
+        View viewStart = findViewById(R.id.cardView);
+
+        ActivityOptionsCompat options =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this, viewStart, transitionName);
+
+        // Start the Intent
+        ActivityCompat.startActivity(this, intent, options.toBundle());
     }
 }
