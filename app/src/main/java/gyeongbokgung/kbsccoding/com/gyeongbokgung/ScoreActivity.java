@@ -37,15 +37,11 @@ import butterknife.OnClick;
 
 public class ScoreActivity extends AppCompatActivity {
 
-
-    //private static String IP_ADDRESS = "10.27.24.146";
-
     private static String TAG = "ScoreActivity";
     @BindView(R.id.btn_submit)
     Button mSubmit;
     boolean valid =true;
     private String mJsonString;
-    private static String IP_ADDRESS="10.27.24.146";
     @BindView(R.id.et_score)
     EditText mScore;
     String userID;
@@ -71,7 +67,7 @@ public class ScoreActivity extends AppCompatActivity {
         String userScore = mScore.getText().toString();
         if(valid==true){
             InsertData task=new InsertData();
-            task.execute("http://" + IP_ADDRESS + "/update.php", userID,userScore);
+            task.execute("http://" + getString(R.string.ip_adrress) + "/update.php", userID,userScore);
 
         }
     }

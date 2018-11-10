@@ -48,11 +48,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
-        Log.d("UsersAdapter","~~~position"+position);
+     //   Log.d("UsersAdapter","~~~position"+position);
         viewholder.name.setText(mList.get(position).getMember_name());
 
-        viewholder.rank.setText(String.valueOf(mList.get(position).getMember_rank()));
+        //viewholder.rank.setText(String.valueOf(mList.get(position).getMember_rank()));
+        viewholder.rank.setText(String.valueOf(position+1));
         viewholder.score.setText(String.valueOf(mList.get(position).getMember_score()));
+        Log.d("흐름","랭킹 : " + (position+1) + ", 이름 : " + mList.get(position).getMember_name() + ", 점수 : " + mList.get(position).getMember_score());
     }
 
     @Override

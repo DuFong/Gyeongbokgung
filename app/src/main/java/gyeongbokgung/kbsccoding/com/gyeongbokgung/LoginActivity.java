@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         // TODO: Implement your own authentication logic here.
         GetData task = new GetData();
 
-        task.execute( "http://" + "10.27.24.146"+ "/query.php", user_id);
+        task.execute( "http://" + getString(R.string.ip_adrress)+ "/query.php", user_id);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -303,7 +303,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         mLogin.setEnabled(true);
-        Intent intent = new Intent(getApplicationContext(), ScoreActivity.class);
+        Intent intent = new Intent(getApplicationContext(), RankingActivity.class);
         Log.d(TAG,"~~~nowID"+nowPerson.getMember_id());
         String nid= nowPerson.getMember_id();
         Log.d(TAG,"~~~~nid:"+nid);
@@ -317,7 +317,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-        mLogin.setEnabled(true);
+        //mLogin.setEnabled(true);
     }
 
     @OnClick(R.id.tv_signup)
