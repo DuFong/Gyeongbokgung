@@ -45,8 +45,6 @@
         </activity>
         <activity android:name=".SignupActivity"/>
         <activity android:name=".RankingActivity"/>
-        <activity android:name=".StagelistActivity">
-        </activity>
         <activity android:name=".QuestsViewActivity">
         </activity>
     </application>
