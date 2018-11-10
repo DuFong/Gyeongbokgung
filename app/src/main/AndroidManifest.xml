@@ -32,22 +32,18 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key"/>
-
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
         <activity android:name=".LoginActivity">
         </activity>
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".SignupActivity"/>
-        <activity android:name=".RankingActivity"/>
-        <activity android:name=".StagelistActivity">
-        </activity>
+            android:label="@string/title_activity_maps"></activity>
+        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".RankingActivity"></activity>
+        <activity android:name=".QuestActivity"></activity>
     </application>
 
 </manifest>
