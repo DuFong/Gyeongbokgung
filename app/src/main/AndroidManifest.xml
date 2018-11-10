@@ -35,17 +35,18 @@
 
         <activity android:name=".LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".SignupActivity"></activity>
-        <activity android:name=".RankingActivity"></activity>
-        <activity android:name=".QuestActivity"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".RankingActivity" />
+        <activity android:name=".QuestActivity" />
+        <activity android:name=".ScoreActivity" />
     </application>
 
 </manifest>

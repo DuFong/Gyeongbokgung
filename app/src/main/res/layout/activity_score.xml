@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".QuestActivity"
+    tools:context=".ScoreActivity"
     android:layout_margin="15dp"
     android:padding="10dp">
+
 
 
     <EditText
@@ -15,6 +16,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number" />
+
 
     <Button
         android:id="@+id/btn_submit"

@@ -75,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // TODO: Implement your own authentication logic here.
         GetData task = new GetData();
+
         task.execute( "http://" + "10.27.24.146"+ "/query.php", user_id);
 
         new android.os.Handler().postDelayed(
@@ -302,7 +303,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         mLogin.setEnabled(true);
-        Intent intent = new Intent(getApplicationContext(), QuestActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ScoreActivity.class);
         Log.d(TAG,"~~~nowID"+nowPerson.getMember_id());
         String nid= nowPerson.getMember_id();
         Log.d(TAG,"~~~~nid:"+nid);
