@@ -35,22 +35,21 @@
             android:value="@string/google_maps_key"/>
 
         <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".SignupActivity"/>
         <activity android:name=".RankingActivity"/>
-        <activity android:name=".QuestsViewActivity">
-        </activity>
-        <activity android:name=".QuestDetailActivity">
-        </activity>
+        <activity android:name=".ScoreActivity"/>
+        <activity android:name=".QuestsViewActivity"/>
+        <activity android:name=".QuestDetailActivity"/>
     </application>
 
 </manifest>

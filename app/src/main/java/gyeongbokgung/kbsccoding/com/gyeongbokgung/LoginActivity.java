@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.tv_signup)
     TextView mSignup;
     private String mJsonString;
+    PersonalData nowPerson = new PersonalData();
 
 
     @Override
@@ -74,7 +75,8 @@ public class LoginActivity extends AppCompatActivity {
 
         // TODO: Implement your own authentication logic here.
         GetData task = new GetData();
-        task.execute( "http://" + "192.168.0.18"+ "/query.php", user_id);
+
+        task.execute( "http://" + "10.27.24.146"+ "/query.php", user_id);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -194,6 +196,9 @@ public class LoginActivity extends AppCompatActivity {
         String dbpw="";
         String dbid="";
         String dbname="";
+        int dbscore=0;
+        int dbrank=0;
+        int dbidx=0;
 
         try {
             Log.d(TAG,"~~~1");
@@ -216,8 +221,27 @@ public class LoginActivity extends AppCompatActivity {
                 dbpw=item.getString("userPassword");
                 dbid=item.getString("userID");
                 dbname=item.getString("userName");
+                dbidx=item.getInt("idx");
+                dbscore=item.getInt("userScore");
+                dbrank=item.getInt("userRank");
+
+
                 System.out.println(item.getString("userName"));
             }
+            PersonalData personalData = new PersonalData();
+
+            personalData.setMember_id(dbid);
+            personalData.setMember_name(dbname);
+
+            nowPerson.setMember_id(dbid);
+            nowPerson.setMember_name(dbname);
+            nowPerson.setMember_password(dbpw);
+            nowPerson.setMember_score(dbscore);
+            nowPerson.setMember_rank(dbrank);
+            nowPerson.setMember_idx(dbidx);
+
+
+
             String password = mPassword.getText().toString();
             if(password.equals(dbpw)){
                 Log.d("TAG","login Success");
@@ -237,11 +261,8 @@ public class LoginActivity extends AppCompatActivity {
                 String name = item.getString(TAG_NAME);
                // String password = item.getString(TAG_PASSWORD);
 */
-            PersonalData personalData = new PersonalData();
 
-            personalData.setMember_id(dbid);
-            personalData.setMember_name(dbname);
-            personalData.setMember_password(dbpw);
+
             //  personalData.setMember_password(password);
 ////////////////////////여기해야하나?////////////////////////////
             Log.d(TAG,"personalData:"+personalData.getMember_password());
@@ -282,7 +303,14 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         mLogin.setEnabled(true);
-        Intent intent = new Intent(getApplicationContext(), RankingActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ScoreActivity.class);
+        Log.d(TAG,"~~~nowID"+nowPerson.getMember_id());
+        String nid= nowPerson.getMember_id();
+        Log.d(TAG,"~~~~nid:"+nid);
+      //  intent.putExtra("nowPersonID",nid);
+        //intent.putExtra("nowPersonID",nid);
+        intent.putExtra("nowperson",nowPerson);
+        Log.d(TAG,"넘겨쥼");
         startActivity(intent);
         finish();
     }
@@ -295,7 +323,9 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.tv_signup)
     void signup() {
         // Start the Signup activity
+
         Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+
         startActivityForResult(intent, REQUEST_SIGNUP);
     }
 
