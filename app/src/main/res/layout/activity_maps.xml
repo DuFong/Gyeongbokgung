@@ -16,5 +16,6 @@
         tools:context="com.kbsccoding.examples.gyeongbokgung.MapsActivity"/>
 
     <include layout="@layout/layout_fab_submenu"/>
+    <include layout="@layout/layout_quest"/>
 
 </RelativeLayout>

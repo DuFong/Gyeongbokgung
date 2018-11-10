@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +35,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -76,6 +81,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LinearLayout layoutFabHelp;
     private LinearLayout layoutFabSetting;
 
+    // 화면상단에 메인퀘스트 표시
+    private ExpandableListView listView;
+    private ExpandableListAdapter listAdapter;
+    private List<String> listDataHeader;
+    private HashMap<String,List<String>> listHash;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);// Retrieve location and camera position from saved instance state.
@@ -86,6 +97,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
+
+        // 화면상단 메인퀘스트 표시
+        listView = findViewById(R.id.lvExp);
+        initData();
+        listAdapter = new ExpandableListAdapter(this,listDataHeader,listHash);
+        listView.setAdapter(listAdapter);
 
         // Construct a GeoDataClient.
         mGeoDataClient = Places.getGeoDataClient(this, null);
@@ -367,6 +384,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    // 화면 상단 메인퀘스트에 들어갈 텍스트
+    private void initData() {
+        listDataHeader = new ArrayList<>();
+        listHash = new HashMap<>();
+
+        listDataHeader.add("hello");
+
+        List<String> hello= new ArrayList<>();
+        hello.add("눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가");
+
+
+        listHash.put(listDataHeader.get(0),hello);
+    }
 
 
 
