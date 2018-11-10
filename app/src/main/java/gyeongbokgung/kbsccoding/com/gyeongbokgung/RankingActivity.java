@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class RankingActivity extends AppCompatActivity {
 
-    private static String IP_ADDRESS = "192.168.0.41";
+    private static String IP_ADDRESS = "10.27.24.146";
     private static String TAG = "phptest";
 
     private EditText mEditTextName;
@@ -50,11 +50,11 @@ public class RankingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
-      //  mTextViewResult = (TextView)findViewById(R.id.textView_main_result);
+        //  mTextViewResult = (TextView)findViewById(R.id.textView_main_result);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-       // mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
+        // mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
 
 
 
@@ -64,17 +64,17 @@ public class RankingActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
 
-     //   Button button_all = (Button) findViewById(R.id.button_main_all);
-      //  button_all.setOnClickListener(new View.OnClickListener() {
-       //     public void onClick(View v) {
+        //   Button button_all = (Button) findViewById(R.id.button_main_all);
+        //  button_all.setOnClickListener(new View.OnClickListener() {
+        //     public void onClick(View v) {
 
-                mArrayList.clear();
-                mAdapter.notifyDataSetChanged();
+        mArrayList.clear();
+        mAdapter.notifyDataSetChanged();
 
-                GetData task = new GetData();
-                task.execute( "http://" + IP_ADDRESS + "/getjson22.php", "");
-         //   }
-       // });
+        GetData task = new GetData();
+        task.execute( "http://" + IP_ADDRESS + "/getjson22.php", "");
+        //   }
+        // });
 
     }
 
@@ -104,7 +104,7 @@ public class RankingActivity extends AppCompatActivity {
 
             if (result == null){
 
-             //   mTextViewResult.setText(errorString);
+                //   mTextViewResult.setText(errorString);
             }
             else {
 
@@ -182,7 +182,7 @@ public class RankingActivity extends AppCompatActivity {
     private void showResult(){
 
 
-      //  String TAG_COUNTRY ="country";
+        //  String TAG_COUNTRY ="country";
         String TAG_JSON="proj_manager";
         String TAG_RANK = "userRank";
         String TAG_NAME = "userName";
@@ -192,7 +192,7 @@ public class RankingActivity extends AppCompatActivity {
         try {
             Log.d(TAG,"~~try 들어옴");
             JSONObject jsonObject = new JSONObject(mJsonString.substring(mJsonString.indexOf("{"), mJsonString.lastIndexOf("}") + 1));
-          //  JSONObject jsonObject = new JSONObject(mJsonString);
+            //  JSONObject jsonObject = new JSONObject(mJsonString);
             Log.d(TAG,"~~JSONObject: "+jsonObject.toString());
 
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);

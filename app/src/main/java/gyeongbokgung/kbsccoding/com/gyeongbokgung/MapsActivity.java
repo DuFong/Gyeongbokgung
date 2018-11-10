@@ -129,7 +129,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         layoutFabStage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), StagelistActivity.class);
+                Intent intent = new Intent(getApplicationContext(), QuestsViewActivity.class);
                 startActivity(intent);
             }
         });

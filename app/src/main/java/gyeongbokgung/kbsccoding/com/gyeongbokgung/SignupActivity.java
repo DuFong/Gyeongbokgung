@@ -26,7 +26,8 @@ import butterknife.OnClick;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
-    private static String IP_ADDRESS = "192.168.0.41";
+    private static String IP_ADDRESS = "10.27.24.146";
+
     // private static String TAG = "phptest";
 
     @BindView(R.id.et_userid)
