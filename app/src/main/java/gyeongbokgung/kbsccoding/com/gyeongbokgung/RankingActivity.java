@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class RankingActivity extends AppCompatActivity {
 
-    private static String IP_ADDRESS = "192.168.0.18";
+    private static String IP_ADDRESS = "192.168.123.109";
     private static String TAG = "phptest";
 
     private EditText mEditTextName;

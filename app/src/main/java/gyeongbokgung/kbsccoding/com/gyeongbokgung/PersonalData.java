@@ -1,7 +1,9 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 
-public class PersonalData {
+import java.io.Serializable;
+
+public class PersonalData implements Serializable {
     private String member_id;
     private String member_name;
     private String member_password;
