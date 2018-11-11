@@ -34,7 +34,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,27 +45,35 @@
         </activity>
         <activity
             android:name=".MapsActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".SignupActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".RankingActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ScoreActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".QuestsViewActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".QuestDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SignupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RankingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ScoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QuestsViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QuestDetailActivity"
+            android:screenOrientation="portrait" />
         >>>>>>> feature/quest
-        <activity android:name=".Prologue1Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Prologue2Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Prologue3Activity"
-            android:screenOrientation="portrait">
-
-        </activity>
+        <activity
+            android:name=".Prologue1Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Prologue2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Prologue3Activity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".HintActivity" />
+        <activity android:name=".HintImageActivity"></activity>
     </application>
 
 </manifest>

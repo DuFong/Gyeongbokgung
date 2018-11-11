@@ -1,18 +1,21 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
-    private Context context;
+    Context context;
     private List<String> listDataHeader;
     private HashMap<String,List<String>> listHashMap;
 
@@ -81,7 +84,20 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView txtListChild = view.findViewById(R.id.listItem);
+        Button buttonHint = view.findViewById(R.id.hint_button);
+        Button buttonRestore = view.findViewById(R.id.restore_button);
         txtListChild.setText(childText);
+        buttonHint.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                // db에서 문제 id로 switch문 작성
+                Intent intent = new Intent(context, HintActivity.class);
+                Log.d("힌트사용", "사용");
+                //Intent intent = new Intent(getApplicationContext(), HintImageActivity.class);
+                context.startActivity(intent);
+            }
+        });
         return view;
     }
 
