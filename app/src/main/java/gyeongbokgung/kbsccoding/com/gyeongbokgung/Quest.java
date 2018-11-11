@@ -1,8 +1,10 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
+import java.io.Serializable;
+
 /* QuestDTO
  *  */
-public class Quest {
+public class Quest implements Serializable {
     private int idx;
     private String Title;
     private String Subtitle;
