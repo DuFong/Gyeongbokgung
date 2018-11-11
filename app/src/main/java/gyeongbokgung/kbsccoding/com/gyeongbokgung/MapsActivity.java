@@ -1,6 +1,7 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -11,10 +12,12 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -86,6 +89,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ExpandableListAdapter listAdapter;
     private List<String> listDataHeader;
     private HashMap<String,List<String>> listHash;
+  //  private Button buttonHint;
+  //  private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +108,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         initData();
         listAdapter = new ExpandableListAdapter(this,listDataHeader,listHash);
         listView.setAdapter(listAdapter);
+
+        /*LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.list_quest_detail,null);
+        buttonHint = view.findViewById(R.id.hint_button);
+        //Log.d("힌트사용", "버튼연결됨");
+        buttonHint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // db에서 문제 id로 switch문 작성
+                Intent intent = new Intent(getApplicationContext(), HintActivity.class);
+                Log.d("힌트사용", "사용");
+                //Intent intent = new Intent(getApplicationContext(), HintImageActivity.class);
+                startActivity(intent);
+            }
+        });*/
 
         // Construct a GeoDataClient.
         mGeoDataClient = Places.getGeoDataClient(this, null);
