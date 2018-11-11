@@ -47,6 +47,8 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestsView
                 //Toast.makeText(view.getContext(), position + " clicked!", Toast.LENGTH_SHORT).show();
                 Context context = view.getContext();
                 Intent intent = new Intent(context, QuestDetailActivity.class);
+                intent.putExtra("quests", quests);
+                intent.putExtra("position", position);
                 context.startActivity(intent);
             }
         });
