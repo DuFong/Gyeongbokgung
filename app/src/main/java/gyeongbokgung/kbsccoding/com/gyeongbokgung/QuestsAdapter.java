@@ -3,6 +3,7 @@ package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class QuestsAdapter extends RecyclerView.Adapter<QuestsAdapter.QuestsView
     onBindViewHolder(QuestsViewHolder holder, final int position) {
         holder.textView.setText(quests.get(position).getTitle());
         holder.imageView.setImageResource(quests.get(position).drawable);
+        holder.imageView.setColorFilter(Color.parseColor("#BDBDBD"),PorterDuff.Mode.MULTIPLY);
 
         // 클릭 이벤트 발생 시
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {

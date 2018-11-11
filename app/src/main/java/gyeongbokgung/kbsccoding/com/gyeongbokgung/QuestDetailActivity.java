@@ -38,4 +38,5 @@ public class QuestDetailActivity extends AppCompatActivity {
         mDescription.setText(quests.get(position).getDescription());
 
     }
+
 }

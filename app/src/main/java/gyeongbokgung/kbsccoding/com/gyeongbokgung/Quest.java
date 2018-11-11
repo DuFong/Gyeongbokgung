@@ -15,7 +15,7 @@ public class Quest implements Serializable {
     private int Point;
     private int Type;
     // TODO: drawable, color 변경
-    static int drawable = R.drawable.ic_format_align_justify_black_24dp;
+    static int drawable = R.drawable.image1;
     static String color =  "#4BAA50";
 
     @Override
