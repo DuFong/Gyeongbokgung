@@ -98,6 +98,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 context.startActivity(intent);
             }
         });
+        buttonRestore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, RestoreActivity.class);
+                context.startActivity(intent);
+            }
+        });
         return view;
     }
 
