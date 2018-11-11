@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
             onLoginFailed();
         }
-         {
+        else {
             String user_id = mUserid.getText().toString();
             //String password = mPassword.getText().toString();
 
