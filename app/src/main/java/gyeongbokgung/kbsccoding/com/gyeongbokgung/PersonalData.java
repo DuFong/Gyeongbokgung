@@ -10,6 +10,7 @@ public class PersonalData implements Serializable {
     private int member_score;
     private int member_rank;
     private int member_idx;
+    private int member_currentQuest;
 
     public int getMember_idx() {
         return member_idx;
@@ -35,6 +36,10 @@ public class PersonalData implements Serializable {
         return member_rank;
     }
 
+    public int getMember_currentQuest() {
+        return member_currentQuest;
+    }
+
 
     public void setMember_idx(int member_idx) { this.member_idx = member_idx; }
 
@@ -54,5 +59,9 @@ public class PersonalData implements Serializable {
 
     public void setMember_rank(int member_rank) {
         this.member_rank = member_rank;
+    }
+
+    public void setMember_currentQuest(int member_currentQuest) {
+        this.member_currentQuest = member_currentQuest;
     }
 }

@@ -208,6 +208,7 @@ public class LoginActivity extends AppCompatActivity {
         int dbscore=0;
         int dbrank=0;
         int dbidx=0;
+        int dbcurrent=0;
 
         try {
             Log.d(TAG,"~~~1");
@@ -239,6 +240,7 @@ public class LoginActivity extends AppCompatActivity {
                 dbidx=item.getInt("idx");
                 dbscore=item.getInt("userScore");
                 dbrank=item.getInt("userRank");
+                dbcurrent=item.getInt("currentQuest");
 
 
                 System.out.println(item.getString("userName"));
@@ -256,6 +258,7 @@ public class LoginActivity extends AppCompatActivity {
             nowPerson.setMember_score(dbscore);
             nowPerson.setMember_rank(dbrank);
             nowPerson.setMember_idx(dbidx);
+            nowPerson.setMember_currentQuest(dbcurrent);
 
 
 
