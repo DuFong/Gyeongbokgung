@@ -57,6 +57,7 @@ public class ScoreActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         nowPerson=(PersonalData)getIntent().getSerializableExtra("nowperson");
         userID=nowPerson.getMember_id();
+        Log.d(TAG,"~~~~~~~확인: "+nowPerson.getMember_currentQuest());
         Log.d(TAG,"~~~넘어온 score: "+nowPerson.getMember_score()+" rank:: "+nowPerson.getMember_rank());
 
 

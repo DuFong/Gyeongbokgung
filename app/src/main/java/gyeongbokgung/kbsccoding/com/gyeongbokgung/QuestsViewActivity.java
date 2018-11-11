@@ -1,7 +1,9 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,17 +16,29 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class QuestsViewActivity extends AppCompatActivity {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
-
+    private static final String TAGQ = "Quest DB Connect";
     private RecyclerView mRecyclerView;
     private GridLayoutManager mLayoutManager;
 
     private QuestsAdapter mAdapter;
     private ArrayList<Quest> mArrayList;
+    private String mJsonString;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +62,13 @@ public class QuestsViewActivity extends AppCompatActivity {
         mArrayList.add(new Quest(2,"행사의 장","궁의 광대","경복궁의 위엄...어쩌구 저쩌구..해학적인 요소를 찾으시오. OOO을 보여주고 있는 웃긴 놈","","","",0,-1));
         mArrayList.add(new Quest(3,"행사의 장","궁의 광대","경복궁의 위엄...어쩌구 저쩌구..해학적인 요소를 찾으시오. OOO을 보여주고 있는 웃긴 놈","","","",0,-1));
 
+        Intent intent = getIntent();
+        ArrayList<Quest> quests = (ArrayList<Quest>) intent.getSerializableExtra("quests");
+        int position = (int)intent.getSerializableExtra("position");
+
         // 어댑터 세팅
-        mAdapter = new QuestsAdapter(getApplicationContext(), mArrayList);
+        mAdapter = new QuestsAdapter(getApplicationContext(), quests);
+        Log.d(TAG,"~~~~~확인하기!!"+quests.get(position).getTitle());
         mRecyclerView.setAdapter(mAdapter);
     }
 
