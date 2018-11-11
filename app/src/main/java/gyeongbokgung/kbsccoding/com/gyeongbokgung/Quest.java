@@ -5,15 +5,19 @@ import java.io.Serializable;
 /* QuestDTO
  *  */
 public class Quest implements Serializable {
-    private int idx;
-    private String Title;
-    private String Subtitle;
-    private String Description;
-    private String Description_sum;
-    private String Goal;
-    private String Hint;
-    private int Point;
-    private int Type;
+    private int titleID;
+    private int subID;
+    private int rowID;
+    private String title;
+    private String subTitle;
+    private String description;
+    private String sumDescription;
+    private String goal;
+    private String hint;
+    private String explanation;
+    private int point;
+    private int type;
+
     // TODO: drawable, color 변경
     static int drawable = R.drawable.image1;
     static String color =  "#4BAA50";
@@ -21,98 +25,126 @@ public class Quest implements Serializable {
     @Override
     public String toString() {
         return "Quest{" +
-                "idx=" + idx +
-                ", Title='" + Title + '\'' +
-                ", Subtitle='" + Subtitle + '\'' +
-                ", Description='" + Description + '\'' +
-                ", Description_sum='" + Description_sum + '\'' +
-                ", Goal='" + Goal + '\'' +
-                ", Hint='" + Hint + '\'' +
-                ", Type='" + Type + '\'' +
-                ", Point=" + Point +
+                "rowID=" + rowID +
+                ", title='" + title + '\'' +
+                ", subTitle='" + subTitle + '\'' +
+                ", description='" + description + '\'' +
+                ", sumDescription='" + sumDescription + '\'' +
+                ", goal='" + goal + '\'' +
+                ", hint='" + hint + '\'' +
+                ", type='" + type + '\'' +
+                ", point=" + point +
                 '}';
     }
 
-    public int getIdx() {
-        return idx;
+    public Quest(int titleID, int subID, int rowID, String title, String subTitle, String description, String sumDescription, String goal, String hint, String explanation, int point, int type) {
+        this.titleID = titleID;
+        this.subID = subID;
+        this.rowID = rowID;
+        this.title = title;
+        this.subTitle = subTitle;
+        this.description = description;
+        this.sumDescription = sumDescription;
+        this.goal = goal;
+        this.hint = hint;
+        this.explanation = explanation;
+        this.point = point;
+        this.type = type;
     }
 
-    public void setIdx(int idx) {
-        this.idx = idx;
+    public int getRowID() {
+        return rowID;
+    }
+
+    public void setRowID(int rowID) {
+        this.rowID = rowID;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String Title) {
-        this.Title = Title;
+        this.title = Title;
     }
 
-    public String getSubtitle() {
-        return Subtitle;
+    public String getSubTitle() {
+        return subTitle;
     }
 
-    public void setSubtitle(String Subtitle) {
-        this.Subtitle = Subtitle;
+    public void setSubTitle(String Subtitle) {
+        this.subTitle = Subtitle;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String Description) {
-        this.Description = Description;
+        this.description = Description;
     }
 
-    public String getDescription_sum() {
-        return Description_sum;
+    public int getTitleID() {
+        return titleID;
     }
 
-    public void setDescription_sum(String Description_sum) {
-        this.Description_sum = Description_sum;
+    public void setTitleID(int titleID) {
+        this.titleID = titleID;
+    }
+
+    public int getSubID() {
+        return subID;
+    }
+
+    public void setSubID(int subID) {
+        this.subID = subID;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
+    }
+
+    public String getSumDescription() {
+        return sumDescription;
+    }
+
+    public void setSumDescription(String Description_sum) {
+        this.sumDescription = Description_sum;
     }
 
     public String getGoal() {
-        return Goal;
+        return goal;
     }
 
     public void setGoal(String Goal) {
-        this.Goal = Goal;
+        this.goal = Goal;
     }
 
     public String getHint() {
-        return Hint;
+        return hint;
     }
 
     public void setHint(String Hint) {
-        this.Hint = Hint;
+        this.hint = Hint;
     }
 
     public int getPoint() {
-        return Point;
+        return point;
     }
 
     public void setPoint(int Point) {
-        this.Point = Point;
+        this.point = Point;
     }
     public int getType() {
-        return Type;
+        return type;
     }
 
     public void setType(int Type) {
-        this.Type = Type;
+        this.type = Type;
     }
 
-    public Quest(int idx, String Title, String Subtitle, String Description, String Description_sum, String Goal, String Hint, int Point,int Type) {
-        this.idx = idx;
-        this.Title = Title;
-        this.Subtitle = Subtitle;
-        this.Description = Description;
-        this.Description_sum = Description_sum;
-        this.Goal = Goal;
-        this.Hint = Hint;
-        this.Point = Point;
-        this.Type = Type;
-    }
 }
