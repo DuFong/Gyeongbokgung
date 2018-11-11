@@ -103,7 +103,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private HashMap<String,List<String>> listHash;
   //  private Button buttonHint;
   //  private Context context;
-    protected ArrayList<Quest> mArrayList;
+  //  public static ArrayList<Quest> questDataList;   //퀘스트 데이터
     private String mJsonString;
     private int position =0;
 
@@ -121,7 +121,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         GetData task = new GetData();
         task.execute( "http://" + getString(R.string.ip_adrress) + "/getQuest.php", "");
 
-        mArrayList = new ArrayList();
 
 
         // 화면상단 메인퀘스트 표시
@@ -188,8 +187,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), QuestsViewActivity.class);
-                intent.putExtra("quests", mArrayList);
-                intent.putExtra("position", position);
                 startActivity(intent);
             }
         });
@@ -446,7 +443,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
+            Log.d("TEST","2");
             progressDialog.dismiss();
 //            mTextViewResult.setText(result);
             //  Log.d(TAG, "response - " + result);
@@ -514,7 +511,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
                 bufferedReader.close();
-
+                Log.d(TAG,"SB: "+sb.toString().trim());
                 return sb.toString().trim();
 
 
@@ -572,10 +569,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Quest quest = new Quest(idx,title,subTitle,description,description_sum,goal,hint,point,type);
 
 
-                mArrayList.add(quest);
-                Log.d(TAG,"~~mArrayList 추가");
+                DBHandler.questDataList.add(quest);
+                Log.d(TAG,"~~questDataList 추가");
                 Log.d(TAG,"~~~quest:"+quest.toString());
-                Log.d(TAG,"~~~~!!!"+mArrayList.get(0).getTitle());
+                Log.d(TAG,"~~~~!!!"+DBHandler.questDataList.get(0).getTitle());
              //   mAdapter.notifyDataSetChanged();
                 ////////////////확인하기///////////////////////////////////////
                 //Log.d(TAG,"~~notify성공");
@@ -597,15 +594,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void initData() {
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
-       // listDataHeader.add("hello");
-        Log.d(TAG,"~~~~~init"+mArrayList.get(position).getSubtitle());
-        listDataHeader.add(mArrayList.get(position).getSubtitle());
+
+        Log.d(TAG,"~~~~~init"+DBHandler.questDataList.get(0).getSubtitle());
+        listDataHeader.add(DBHandler.questDataList.get(0).getSubtitle());
 
         List<String> showQuest= new ArrayList<>();
-       // showQuest.add("눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가");
-        showQuest.add(mArrayList.get(position).getDescription_sum());
-
-
+        showQuest.add(DBHandler.questDataList.get(0).getDescription_sum());
+        
         listHash.put(listDataHeader.get(0),showQuest);
     }
 

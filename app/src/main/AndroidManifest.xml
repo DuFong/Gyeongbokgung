@@ -72,6 +72,7 @@
             android:name=".Prologue3Activity"
             android:screenOrientation="portrait" />
         <activity android:name=".HintActivity" />
+        <activity android:name=".HintImageActivity"/>
         <activity android:name=".HintImageActivity" />
         <activity android:name=".RestoreActivity" />
         <activity android:name=".Restore2Activity" />

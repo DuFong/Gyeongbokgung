@@ -14,8 +14,10 @@ public class Quest implements Serializable {
     private String Hint;
     private int Point;
     private int Type;
+    private int subID;
+    private String explanation;
     // TODO: drawable, color 변경
-    static int drawable = R.drawable.ic_format_align_justify_black_24dp;
+    static int drawable = R.drawable.image1;
     static String color =  "#4BAA50";
 
     @Override
@@ -29,7 +31,9 @@ public class Quest implements Serializable {
                 ", Goal='" + Goal + '\'' +
                 ", Hint='" + Hint + '\'' +
                 ", Type='" + Type + '\'' +
-                ", Point=" + Point +
+                ", Point='" + Point + '\'' +
+                ", subID='" + subID + '\'' +
+                ", explanation=" + explanation +
                 '}';
     }
 
@@ -102,6 +106,19 @@ public class Quest implements Serializable {
 
     public void setType(int Type) {
         this.Type = Type;
+    }
+
+    public int getSubID() {
+        return subID;
+    }
+
+    public void setSubID(int subID) {
+        this.subID = subID;
+    }
+    public String getExplanation() { return explanation; }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
     }
 
     public Quest(int idx, String Title, String Subtitle, String Description, String Description_sum, String Goal, String Hint, int Point,int Type) {
