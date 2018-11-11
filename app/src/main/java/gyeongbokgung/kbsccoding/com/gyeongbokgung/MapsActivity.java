@@ -446,7 +446,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
+            Log.d("TEST","2");
             progressDialog.dismiss();
 //            mTextViewResult.setText(result);
             //  Log.d(TAG, "response - " + result);
@@ -514,7 +514,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
                 bufferedReader.close();
-
+                Log.d(TAG,"SB: "+sb.toString().trim());
                 return sb.toString().trim();
 
 
@@ -597,12 +597,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void initData() {
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
-       // listDataHeader.add("hello");
-        Log.d(TAG,"~~~~~init"+mArrayList.get(position).getSubtitle());
+       Log.d(TAG,"~~~~~init"+mArrayList.get(position).getSubtitle());
         listDataHeader.add(mArrayList.get(position).getSubtitle());
 
         List<String> showQuest= new ArrayList<>();
-       // showQuest.add("눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가");
         showQuest.add(mArrayList.get(position).getDescription_sum());
 
 
