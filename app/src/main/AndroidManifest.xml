@@ -39,6 +39,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -61,7 +62,6 @@
         <activity
             android:name=".QuestDetailActivity"
             android:screenOrientation="portrait" />
-        >>>>>>> feature/quest
         <activity
             android:name=".Prologue1Activity"
             android:screenOrientation="portrait" />
@@ -72,7 +72,8 @@
             android:name=".Prologue3Activity"
             android:screenOrientation="portrait" />
         <activity android:name=".HintActivity" />
-        <activity android:name=".HintImageActivity"/>
+        <activity android:name=".HintImageActivity" />
+        <activity android:name=".RestoreActivity"></activity>
     </application>
 
 </manifest>
