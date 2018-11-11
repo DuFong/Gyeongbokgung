@@ -74,7 +74,9 @@
         <activity android:name=".HintActivity" />
         <activity android:name=".HintImageActivity"/>
         <activity android:name=".HintImageActivity" />
-        <activity android:name=".RestoreActivity"></activity>
+        <activity android:name=".RestoreActivity" />
+        <activity android:name=".Restore2Activity" />
+        <activity android:name=".Restore3Activity"></activity>
     </application>
 
 </manifest>

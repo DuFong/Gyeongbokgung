@@ -8,7 +8,7 @@
     tools:context=".RestoreActivity">
 
     <TextView
-        android:id="@+id/view_input_reply"
+        android:id="@+id/view_input_reply2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -18,18 +18,29 @@
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/input_reply"
+        android:id="@+id/input_reply2_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textSize="20sp"
-        android:layout_weight="1"
+        android:layout_weight="0.8"
         android:gravity="center_horizontal|center_vertical"
-        android:hint="정답을 입력하세요" />
+        android:hint="첫 번째 정답을 입력하세요" />
+
+    <EditText
+        android:id="@+id/input_reply2_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="20sp"
+        android:layout_weight="0.8"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="두 번째 정답을 입력하세요" />
 
     <Button
-        android:id="@+id/input_button"
+        android:id="@+id/input_button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
