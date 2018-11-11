@@ -541,6 +541,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String TAG_HINT = "Hint";
         String TAG_POINT= "Point";
         String TAG_TYPE = "type";
+        String TAG_titleID = "titleID";
 
 
 
@@ -555,18 +556,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             for(int i=0;i<jsonArray.length();i++){
 
                 JSONObject item = jsonArray.getJSONObject(i);
+                int titleID = item.getInt("titleID");
+                int subID = item.getInt("subID");
+                int rowID = item.getInt("rowID");
+                String title = item.getString("title");
+                String subTitle = item.getString("subTitle");
+                String description = item.getString("description");
+                String sumDescription = item.getString("sumDescription");
+                String goal = item.getString("goal");
+                String hint = item.getString("hint");
+                String explanation = item.getString("explanation");
+                int point = item.getInt("point");
+                int type = item.getInt("type");
 
-                int idx = item.getInt(TAG_IDX);
-                String title = item.getString(TAG_TITLE);
-                String subTitle = item.getString(TAG_SUBTITLE);
-                String description = item.getString(TAG_DESC);
-                String description_sum = item.getString(TAG_DESCSUM);
-                String goal = item.getString(TAG_GOAL);
-                String hint = item.getString(TAG_HINT);
-                int point = item.getInt(TAG_POINT);
-                int type = item.getInt(TAG_TYPE);
 
-                Quest quest = new Quest(idx,title,subTitle,description,description_sum,goal,hint,point,type);
+
+                Quest quest = new Quest(titleID,subID,rowID,title,subTitle,description,sumDescription,goal,hint,explanation,point,type);
 
 
                 DBHandler.questDataList.add(quest);
@@ -595,12 +600,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
 
-        Log.d(TAG,"~~~~~init"+DBHandler.questDataList.get(0).getSubtitle());
-        listDataHeader.add(DBHandler.questDataList.get(0).getSubtitle());
+        Log.d(TAG,"~~~~~init"+DBHandler.questDataList.get(0).getSubTitle());
+        listDataHeader.add(DBHandler.questDataList.get(0).getSubTitle());
 
         List<String> showQuest= new ArrayList<>();
-        showQuest.add(DBHandler.questDataList.get(0).getDescription_sum());
-        
+        showQuest.add(DBHandler.questDataList.get(0).getSumDescription());
+
         listHash.put(listDataHeader.get(0),showQuest);
     }
 

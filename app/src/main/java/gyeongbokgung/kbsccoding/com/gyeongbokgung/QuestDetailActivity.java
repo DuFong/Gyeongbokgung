@@ -34,7 +34,7 @@ public class QuestDetailActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         mTitle.setText(DBHandler.questDataList.get(position).getTitle());
-        mSubitle.setText(DBHandler.questDataList.get(position).getSubtitle());
+        mSubitle.setText(DBHandler.questDataList.get(position).getSubTitle());
         mDescription.setText(DBHandler.questDataList.get(position).getDescription());
 
     }
