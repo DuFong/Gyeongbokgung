@@ -61,7 +61,6 @@
         <activity
             android:name=".QuestDetailActivity"
             android:screenOrientation="portrait" />
-        >>>>>>> feature/quest
         <activity
             android:name=".Prologue1Activity"
             android:screenOrientation="portrait" />
