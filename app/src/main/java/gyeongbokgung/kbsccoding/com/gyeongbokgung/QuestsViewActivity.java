@@ -36,8 +36,8 @@ public class QuestsViewActivity extends AppCompatActivity {
     private GridLayoutManager mLayoutManager;
 
     private QuestsAdapter mAdapter;
-    private ArrayList<Quest> mArrayList;
-    private String mJsonString;
+//    private ArrayList<Quest> mArrayList;
+  //  private String mJsonString;
 
 
     @Override
@@ -46,14 +46,14 @@ public class QuestsViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_questsview);
 
         // 레이아웃매니저 세팅
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.recyclerView);
         mLayoutManager = new GridLayoutManager(getApplicationContext(), 1, GridLayoutManager.VERTICAL, false);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        Intent intent = getIntent();
-        ArrayList<Quest> quests = (ArrayList<Quest>) intent.getSerializableExtra("quests");
-        int position = (int)intent.getSerializableExtra("position");
+       // Intent intent = getIntent();
+       // ArrayList<Quest> quests = (ArrayList<Quest>) intent.getSerializableExtra("quests");
+        //int position = (int)intent.getExtras().getInt("position");
         // 데이터 세팅
 
     //    mArrayList = new ArrayList();
@@ -63,28 +63,9 @@ public class QuestsViewActivity extends AppCompatActivity {
 
 
         // 어댑터 세팅
-        mAdapter = new QuestsAdapter(getApplicationContext(), quests);
-        Log.d(TAG,"~~~~~확인하기!!"+quests.get(position).getTitle());
+        mAdapter = new QuestsAdapter(getApplicationContext(), DBHandler.questDataList);
+     //   Log.d(TAG,"~~~~~확인하기!!"+DBHandler.questDataList.get(position).getTitle());
         mRecyclerView.setAdapter(mAdapter);
     }
 
-//      @Override
-//    public void onItemClick(View view, Quest item) {
-//        Log.d(TAG, item.getId()+" 클릭!");
-//        Toast.makeText(getApplicationContext(), item.getId() + " clicked!", Toast.LENGTH_SHORT).show();
-//        // Ordinary Intent for launching a new activity
-//        Intent intent = new Intent(this, QuestDetailActivity.class);
-//
-//        // Get the transition name from the string
-//        String transitionName = getString(R.string.transition_string);
-//
-//        // Define the view that the animation will start from
-//        View viewStart = findViewById(R.id.cardView);
-//
-//        ActivityOptionsCompat options =
-//                ActivityOptionsCompat.makeSceneTransitionAnimation(this, viewStart, transitionName);
-//
-//        // Start the Intent
-//        ActivityCompat.startActivity(this, intent, options.toBundle());
-//    }
 }

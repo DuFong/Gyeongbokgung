@@ -29,13 +29,13 @@ public class QuestDetailActivity extends AppCompatActivity {
 
         // 데이터 세팅
         Intent intent = getIntent();
-        ArrayList<Quest> quests = (ArrayList<Quest>) intent.getSerializableExtra("quests");
+        //ArrayList<Quest> quests = (ArrayList<Quest>) intent.getSerializableExtra("quests");
         int position = (int)intent.getSerializableExtra("position");
 
         ButterKnife.bind(this);
-        mTitle.setText(quests.get(position).getTitle());
-        mSubitle.setText(quests.get(position).getSubtitle());
-        mDescription.setText(quests.get(position).getDescription());
+        mTitle.setText(DBHandler.questDataList.get(position).getTitle());
+        mSubitle.setText(DBHandler.questDataList.get(position).getSubtitle());
+        mDescription.setText(DBHandler.questDataList.get(position).getDescription());
 
     }
 }
