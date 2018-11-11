@@ -1,10 +1,12 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -39,6 +41,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +103,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private HashMap<String,List<String>> listHash;
   //  private Button buttonHint;
   //  private Context context;
+    protected ArrayList<Quest> mArrayList;
+    private String mJsonString;
+    private int position =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,11 +118,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
 
+        GetData task = new GetData();
+        task.execute( "http://" + getString(R.string.ip_adrress) + "/getQuest.php", "");
+
+        mArrayList = new ArrayList();
+
+
         // 화면상단 메인퀘스트 표시
-        listView = findViewById(R.id.lvExp);
+      /*  listView = findViewById(R.id.lvExp);
         initData();
         listAdapter = new ExpandableListAdapter(this,listDataHeader,listHash);
-        listView.setAdapter(listAdapter);
+        listView.setAdapter(listAdapter);*/
 
         /*LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.list_quest_detail,null);
@@ -167,9 +188,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), QuestsViewActivity.class);
+                intent.putExtra("quests", mArrayList);
+                intent.putExtra("position", position);
                 startActivity(intent);
             }
         });
+
+
+
     }
 
     //closes FAB submenus
@@ -403,19 +429,184 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.e("Exception: %s", e.getMessage());
         }
     }
+    private class GetData extends AsyncTask<String, Void, String> {
 
+        ProgressDialog progressDialog;
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = ProgressDialog.show(MapsActivity.this,
+                    "Please Wait", null, true, true);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            progressDialog.dismiss();
+//            mTextViewResult.setText(result);
+            //  Log.d(TAG, "response - " + result);
+
+            if (result == null){
+
+                //   mTextViewResult.setText(errorString);
+            }
+            else {
+
+                mJsonString = result;
+                showResult();
+
+
+            }
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+            String postParameters = "country=" + params[1];
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.connect();
+
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                //        Log.d(TAG, "response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+                bufferedReader.close();
+
+                return sb.toString().trim();
+
+
+            } catch (Exception e) {
+
+                //         Log.d(TAG, "GetData : Error ", e);
+                errorString = e.toString();
+
+                return null;
+            }
+
+        }
+    }
+
+
+    private void showResult(){
+
+
+        //  String TAG_COUNTRY ="country";
+        String TAG_JSON="proj_manager";
+        String TAG_IDX = "idx";
+        String TAG_TITLE = "Title";
+        String TAG_SUBTITLE="Subtitle";
+        String TAG_DESC= "Description";
+        String TAG_DESCSUM = "Description_sum";
+        String TAG_GOAL = "Goal";
+        String TAG_HINT = "Hint";
+        String TAG_POINT= "Point";
+        String TAG_TYPE = "type";
+
+
+
+        try {
+            //       Log.d(TAG,"~~try 들어옴");
+            JSONObject jsonObject = new JSONObject(mJsonString.substring(mJsonString.indexOf("{"), mJsonString.lastIndexOf("}") + 1));
+            //  JSONObject jsonObject = new JSONObject(mJsonString);
+            Log.d(TAG,"~~JSONObject: "+jsonObject.toString());
+
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+            //         Log.d(TAG,"~~array 성공");
+            for(int i=0;i<jsonArray.length();i++){
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+                int idx = item.getInt(TAG_IDX);
+                String title = item.getString(TAG_TITLE);
+                String subTitle = item.getString(TAG_SUBTITLE);
+                String description = item.getString(TAG_DESC);
+                String description_sum = item.getString(TAG_DESCSUM);
+                String goal = item.getString(TAG_GOAL);
+                String hint = item.getString(TAG_HINT);
+                int point = item.getInt(TAG_POINT);
+                int type = item.getInt(TAG_TYPE);
+
+                Quest quest = new Quest(idx,title,subTitle,description,description_sum,goal,hint,point,type);
+
+
+                mArrayList.add(quest);
+                Log.d(TAG,"~~mArrayList 추가");
+                Log.d(TAG,"~~~quest:"+quest.toString());
+                Log.d(TAG,"~~~~!!!"+mArrayList.get(0).getTitle());
+             //   mAdapter.notifyDataSetChanged();
+                ////////////////확인하기///////////////////////////////////////
+                //Log.d(TAG,"~~notify성공");
+            }
+            Log.d(TAG, "리스트 삽입 끝났니?");
+            listView = findViewById(R.id.lvExp);
+            initData();
+            listAdapter = new ExpandableListAdapter(this,listDataHeader,listHash);
+            listView.setAdapter(listAdapter);
+           // initData();
+        } catch (JSONException e) {
+
+//            Log.d(TAG, "showResult : ", e);
+//            Log.d(TAG,"~~catch로 들어옴 ",e);
+        }
+
+    }
     // 화면 상단 메인퀘스트에 들어갈 텍스트
     private void initData() {
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
+       // listDataHeader.add("hello");
+        Log.d(TAG,"~~~~~init"+mArrayList.get(position).getSubtitle());
+        listDataHeader.add(mArrayList.get(position).getSubtitle());
 
-        listDataHeader.add("hello");
+        List<String> showQuest= new ArrayList<>();
+       // showQuest.add("눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가");
+        showQuest.add(mArrayList.get(position).getDescription_sum());
 
-        List<String> hello= new ArrayList<>();
-        hello.add("눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가눌러보시든가");
 
-
-        listHash.put(listDataHeader.get(0),hello);
+        listHash.put(listDataHeader.get(0),showQuest);
     }
 
 
