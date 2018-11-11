@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.tv_signup)
     TextView mSignup;
     private String mJsonString;
-    PersonalData nowPerson = new PersonalData();
+    //PersonalData nowPerson = new PersonalData();
 
 
     @Override
@@ -252,13 +252,13 @@ public class LoginActivity extends AppCompatActivity {
             personalData.setMember_id(dbid);
             personalData.setMember_name(dbname);
 
-            nowPerson.setMember_id(dbid);
-            nowPerson.setMember_name(dbname);
-            nowPerson.setMember_password(dbpw);
-            nowPerson.setMember_score(dbscore);
-            nowPerson.setMember_rank(dbrank);
-            nowPerson.setMember_idx(dbidx);
-            nowPerson.setMember_currentQuest(dbcurrent);
+            DBHandler.currentUserData.setMember_id(dbid);
+            DBHandler.currentUserData.setMember_name(dbname);
+            DBHandler.currentUserData.setMember_password(dbpw);
+            DBHandler.currentUserData.setMember_score(dbscore);
+            DBHandler.currentUserData.setMember_rank(dbrank);
+            DBHandler.currentUserData.setMember_idx(dbidx);
+            DBHandler.currentUserData.setMember_currentQuest(dbcurrent);
 
 
 
@@ -326,13 +326,13 @@ public class LoginActivity extends AppCompatActivity {
         mLogin.setEnabled(true);
         Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
 
-        Log.d(TAG,"~~~nowID"+nowPerson.getMember_id());
-        String nid= nowPerson.getMember_id();
-        Log.d(TAG,"~~~~nid:"+nid);
+       // Log.d(TAG,"~~~nowID"+nowPerson.getMember_id());
+      //  String nid= nowPerson.getMember_id();
+     //   Log.d(TAG,"~~~~nid:"+nid);
         //  intent.putExtra("nowPersonID",nid);
         //intent.putExtra("nowPersonID",nid);
-        intent.putExtra("nowperson",nowPerson);
-        Log.d(TAG,"넘겨쥼");
+     //   intent.putExtra("nowperson",nowPerson);
+     //   Log.d(TAG,"넘겨쥼");
         startActivity(intent);
         finish();
     }
