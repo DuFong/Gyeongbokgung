@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,8 +22,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RestoreActivity extends AppCompatActivity {
 
+public class RestoreActivity extends AppCompatActivity {
+  
     @BindView(R.id.input_reply)
     EditText mAnswer;
     @BindView(R.id.input_button)
@@ -36,6 +38,7 @@ public class RestoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_restore);
+
         ButterKnife.bind(this);
 
 
@@ -166,6 +169,7 @@ public class RestoreActivity extends AppCompatActivity {
             }
 
         }
+
     }
 
 }
