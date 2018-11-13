@@ -18,6 +18,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     Context context;
     private List<String> listDataHeader;
     private HashMap<String,List<String>> listHashMap;
+    private int nowType=0;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listHashMap) {
         this.context = context;
@@ -101,7 +102,23 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         buttonRestore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, RestoreActivity.class);
+                nowType=DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getType();
+                Intent intent = null;
+                if(nowType == 0 ){
+                    intent = new Intent(context, RestoreActivity.class);
+                }
+                else if(nowType == 1) {
+                    intent = new Intent(context, RestoreActivity.class);
+                }
+                else if(nowType == 2){
+                    intent = new Intent(context, Restore2Activity.class);
+                }
+                else if(nowType == 3){
+                    intent = new Intent(context, Restore3Activity.class);
+                }
+                else {
+                    Log.d("ExpandableListAdapter","type 설정 이상");
+                }
                 context.startActivity(intent);
             }
         });

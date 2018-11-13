@@ -11,10 +11,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Prologue1Activity extends AppCompatActivity {
-    Animation animation_trans;
-    TextView main_text;
-    Timer timer;
-    TimerTask after_timer;
+    private Animation animation_trans;
+    private TextView main_text;
+    private Timer timer;
+    private TimerTask after_timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

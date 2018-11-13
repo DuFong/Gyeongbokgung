@@ -13,6 +13,8 @@ public class Quest implements Serializable {
     private String description;
     private String sumDescription;
     private String goal;
+    private String goal2;
+    private String goal3;
     private String hint;
     private String explanation;
     private int point;
@@ -124,6 +126,23 @@ public class Quest implements Serializable {
         this.goal = Goal;
     }
 
+
+    public String getGoal2() {
+        return goal2;
+    }
+
+    public void setGoal2(String Goal2) {
+        this.goal2 = Goal2;
+    }
+
+    public String getGoal3() {
+        return goal3;
+    }
+
+    public void setGoal3(String Goal3) {
+        this.goal3 = Goal3;
+    }
+
     public String getHint() {
         return hint;
     }
@@ -146,5 +165,5 @@ public class Quest implements Serializable {
     public void setType(int Type) {
         this.type = Type;
     }
-
+    
 }
