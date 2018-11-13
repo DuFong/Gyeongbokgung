@@ -600,13 +600,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
 
-        Log.d(TAG,"~~~~~init"+DBHandler.questDataList.get(0).getSubTitle());
-        listDataHeader.add(DBHandler.questDataList.get(0).getSubTitle());
+        Log.d(TAG,"~~~~~init"+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
+        listDataHeader.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
 
         List<String> showQuest= new ArrayList<>();
-        showQuest.add(DBHandler.questDataList.get(0).getSumDescription());
+        showQuest.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSumDescription());
 
-        listHash.put(listDataHeader.get(0),showQuest);
+        listHash.put(listDataHeader.get(DBHandler.currentUserData.getMember_currentQuest()),showQuest);
     }
 
 
