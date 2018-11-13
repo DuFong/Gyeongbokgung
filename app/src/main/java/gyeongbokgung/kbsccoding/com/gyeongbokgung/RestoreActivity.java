@@ -24,24 +24,22 @@ import butterknife.OnClick;
 
 
 public class RestoreActivity extends AppCompatActivity {
-  
+
     @BindView(R.id.input_reply)
     EditText mAnswer;
     @BindView(R.id.input_button)
     Button mInput;
     private String TAG = "Restore Activity";
     private String score;
-
+    private String explanation;
+ //   ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_restore);
 
         ButterKnife.bind(this);
-
-
     }
     @OnClick(R.id.input_button)
     void input_answer() {
@@ -54,6 +52,7 @@ public class RestoreActivity extends AppCompatActivity {
         Log.d(TAG,answer+DBanswer);
         if(answer.equals(DBanswer)){
             //답이 맞았을 때
+
             Toast.makeText(getBaseContext(), "정답입니다.", Toast.LENGTH_LONG).show();
             Log.d(TAG,"정답if문으로 들어옴");
             score = String.valueOf(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getPoint());
@@ -65,12 +64,18 @@ public class RestoreActivity extends AppCompatActivity {
             Log.d("점수점수", Integer.toString(DBHandler.currentUserData.getMember_score()));
             Log.d(TAG,"current 업데이트 확인"+DBHandler.currentUserData.getMember_currentQuest());
             //점수 올리기
-
+            explanation=DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getExplanation();
             //APP current도 올려줘야함!
-
-            Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
-            startActivity(intent);
-            finish();
+            if (explanation.equals("null")){
+                Intent intent = new Intent(getApplicationContext(),CompleteActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else{
+                Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
         //답이 맞으면 배경지식 띄어주는 화면, 그 다음에 확인버튼 누르면 complete됐다고 띄어야됨
         //user의 점수 올리기
@@ -82,13 +87,13 @@ public class RestoreActivity extends AppCompatActivity {
 
     }
     class InsertData extends AsyncTask<String, Void,String > {
-        ProgressDialog progressDialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            progressDialog = ProgressDialog.show(RestoreActivity.this,
-                    "Please Wait", null, true, true);
+          //  progressDialog = ProgressDialog.show(RestoreActivity.this,
+           //         "Please Wait", null, true, true);
         }
 
 
@@ -96,9 +101,9 @@ public class RestoreActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            progressDialog.dismiss();
+          //  progressDialog.dismiss();
 
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
             Log.d(TAG, "POST response  - " + result);
 
