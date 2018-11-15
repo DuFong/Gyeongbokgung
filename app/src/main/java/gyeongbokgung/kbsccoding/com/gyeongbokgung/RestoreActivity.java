@@ -89,6 +89,9 @@ public class RestoreActivity extends AppCompatActivity {
 
         //type에 따라서 설정해줘야함 (0은 위치인식, 1은 정답 한개, 2는 정답 두개 ...)
 
+        else {      // 답이 틀렸을 때
+            Toast.makeText(getBaseContext(), "틀렸습니다. 다시 시도하세요.", Toast.LENGTH_LONG).show();
+        }
 
     }
     class InsertData extends AsyncTask<String, Void,String > {
