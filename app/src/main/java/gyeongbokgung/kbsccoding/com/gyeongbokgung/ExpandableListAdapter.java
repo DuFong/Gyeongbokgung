@@ -86,6 +86,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView txtListChild = view.findViewById(R.id.listItem);
         Button buttonHint = view.findViewById(R.id.hint_button);
+        if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getHint().equals("null")){
+            buttonHint.setVisibility(View.INVISIBLE);
+        }
+        else{
+            buttonHint.setVisibility(View.VISIBLE);
+        }
         Button buttonRestore = view.findViewById(R.id.restore_button);
         txtListChild.setText(childText);
         buttonHint.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +99,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View view) {
                 // db에서 문제 id로 switch문 작성
-                Intent intent = new Intent(context, HintActivity.class);
-                Log.d("힌트사용", "사용");
+                Intent intent=null;
+                if(DBHandler.currentUserData.getMember_currentQuest()==7){
+                    intent = new Intent(context, HintImageActivity.class);
+                }
+                else{
+                    intent = new Intent(context, HintActivity.class);
+                    Log.d("힌트사용", "사용");
+                }
                 //Intent intent = new Intent(getApplicationContext(), HintImageActivity.class);
                 context.startActivity(intent);
             }
