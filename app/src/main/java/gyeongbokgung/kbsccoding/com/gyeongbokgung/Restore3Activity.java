@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -32,6 +33,8 @@ public class Restore3Activity extends AppCompatActivity {
     EditText mAnswer3_3;
     @BindView(R.id.input_button3)
     Button mInput;
+    @BindView(R.id.view_input_reply3)
+    TextView mQuest;
     private String TAG = "Restore3 Activity";
     private String score;
     private String explanation;
@@ -41,6 +44,7 @@ public class Restore3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore3);
         ButterKnife.bind(this);
+        mQuest.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getDescription());
     }
     @OnClick(R.id.input_button3)
     void input_answer() {
