@@ -20,6 +20,8 @@ public class CompleteActivity extends AppCompatActivity {
     TextView mDesc;
     private String TAG = "CompleteActivity";
 
+    private MapsActivity end_activity; //MapsActivity스텍을 담을 변수
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +30,13 @@ public class CompleteActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mSubtitle.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         mDesc.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getDescription());
+        end_activity = (MapsActivity)MapsActivity.mapsActivity; // 변수에 MapsActivity 를 담는다.
     }
     @OnClick(R.id.btn_finish)
     void fin() {
         DBHandler.currentUserData.setMember_currentQuest(DBHandler.currentUserData.getMember_currentQuest()+1);
         Log.d(TAG, String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
+        end_activity.finish();
         Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
         startActivity(intent);
         finish();

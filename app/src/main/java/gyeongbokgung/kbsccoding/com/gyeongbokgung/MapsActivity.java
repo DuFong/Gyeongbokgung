@@ -1,6 +1,7 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -107,6 +108,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String mJsonString;
     private int position =0;
 
+    public static Activity mapsActivity;  // CompleteActivity에서 finsh하기 위함
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);// Retrieve location and camera position from saved instance state.
@@ -115,6 +118,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
 
+        mapsActivity = MapsActivity.this;
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
 
