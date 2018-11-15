@@ -191,7 +191,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-
+        
 
     }
 
@@ -606,7 +606,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         List<String> showQuest= new ArrayList<>();
         showQuest.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSumDescription());
 
-        listHash.put(listDataHeader.get(DBHandler.currentUserData.getMember_currentQuest()),showQuest);
+        listHash.put(listDataHeader.get(0),showQuest);
     }
 
 
