@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,5 +41,11 @@ public class CompleteActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "뒤로갈 수 없습니다. 확인버튼을 누르세요~", Toast.LENGTH_SHORT).show();
+       // super.onBackPressed();  뒤로가기 막기
     }
 }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +36,12 @@ public class ExplanationActivity extends AppCompatActivity {
         mExplain.setText("배경지식 : "+explanation);
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "뒤로갈 수 없습니다. 확인버튼을 누르세요~", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
     }
 
 
