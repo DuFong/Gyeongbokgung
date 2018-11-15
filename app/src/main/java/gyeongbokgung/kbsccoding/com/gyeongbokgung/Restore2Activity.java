@@ -30,7 +30,7 @@ public class Restore2Activity extends AppCompatActivity {
     EditText mAnswer2_2;
     @BindView(R.id.input_button2)
     Button mInput;
-    private String TAG = "Restore Activity";
+    private String TAG = "Restore2 Activity";
     private String score;
     private String explanation;
 

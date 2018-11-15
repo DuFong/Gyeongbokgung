@@ -33,8 +33,6 @@ public class CompleteActivity extends AppCompatActivity {
     void fin() {
         DBHandler.currentUserData.setMember_currentQuest(DBHandler.currentUserData.getMember_currentQuest()+1);
         Log.d(TAG, String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
-        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-        startActivity(intent);
         finish();
     }
 }
