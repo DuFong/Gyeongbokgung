@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
@@ -261,7 +262,8 @@ public class LoginActivity extends AppCompatActivity {
             DBHandler.currentUserData.setMember_currentQuest(dbcurrent);
 
 
-
+           // SaveSharedPreference.getInstance(LoginActivity.this).saveUserInfo(DBHandler.currentUserData);
+            SaveSharedPreference.setUserName(getApplicationContext(),DBHandler.currentUserData.getMember_id());
             String password = mPassword.getText().toString();
             if(password.equals(dbpw)){
                 Log.d("TAG","login Success");

@@ -56,6 +56,7 @@ public class QuestsViewActivity extends AppCompatActivity {
                 new DividerItemDecoration(mRecyclerView.getContext(), mLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
+
         // 어댑터 세팅
         mAdapter = new QuestsAdapter(getApplicationContext(), DBHandler.questDataList);
         mRecyclerView.setAdapter(mAdapter);

@@ -5,5 +5,5 @@
     <string name="setting">설정</string>
     <string name="quest">퀘스트 목록</string>
     <string name="transition_string">hello</string>
-    <string name="ip_adrress">10.27.25.73</string>
+    <string name="ip_adrress">192.168.0.5</string>
 </resources>

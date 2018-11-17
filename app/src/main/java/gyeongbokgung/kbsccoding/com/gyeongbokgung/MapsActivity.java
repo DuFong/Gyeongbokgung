@@ -58,7 +58,8 @@ import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final String TAG = MapsActivity.class.getSimpleName();
+    //private static final String TAG = MapsActivity.class.getSimpleName();
+    private static final String TAG = "맵스맵스";
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
 
@@ -107,12 +108,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
   //  public static ArrayList<Quest> questDataList;   //퀘스트 데이터
     private String mJsonString;
     private int position =0;
+    private int loginState=0;
 
     public static Activity mapsActivity;  // CompleteActivity에서 finsh하기 위함
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);// Retrieve location and camera position from saved instance state.
+        Intent intent = getIntent();
+        loginState = intent.getIntExtra("alreadyLogin",0);
+        Log.d(TAG,"이미 로그인으로 들어옴 :"+String.valueOf(loginState));
+        if(loginState==1){
+            GetData_set task2 = new GetData_set();
+            task2.execute("http://" + getString(R.string.ip_adrress) + "/query.php", SaveSharedPreference.getUserName(getApplicationContext()));
+            //Log.d(TAG,DBHandler.currentUserData.getMember_id());
+            Log.d(TAG,"!!!!!!!!!!!!!!1로 들어옴 !!!!!!!");
+        }
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
@@ -606,13 +617,184 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         Log.d(TAG,"~~~~~init"+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         listDataHeader.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
-
+        Log.d(TAG,"여기서 quest 업데이트 됨");
         List<String> showQuest= new ArrayList<>();
         showQuest.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSumDescription());
 
         listHash.put(listDataHeader.get(0),showQuest);
     }
 
+    private class GetData_set extends AsyncTask<String, Void, String> {
 
+        // ProgressDialog progressDialog;
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            // progressDialog = ProgressDialog.show(MainActivity.this,
+            //        "Please Wait", null, true, true);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            // progressDialog.dismiss();
+            //mTextViewResult.setText(result);
+
+            Log.d(TAG, "response - " + result);
+
+            if (result == null){
+
+                //mTextViewResult.setText(errorString);
+                Log.d(TAG,"null로 들어옴 :(errorString): "+errorString);
+            }
+            else {
+
+                mJsonString = result;
+                showResult_set();
+            }
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+            String postParameters = "userID=" + params[1];
+/////////////////////////////////////////////////////////////////////////////////////////////
+            Log.d(TAG,"param: "+params[1]);
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(50000);
+                httpURLConnection.setConnectTimeout(50000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.connect();
+
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(TAG, "response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+                bufferedReader.close();
+                Log.d(TAG,"~~~결과뚜뚜뚜:"+sb.toString().trim());
+                return sb.toString().trim();
+
+
+            } catch (Exception e) {
+                //  Log.d("로그인", "ID없음");
+                Log.d(TAG, "GetData : Error "+e);
+                errorString = e.toString();
+
+                return null;
+            }
+
+        }
+    }
+    private void showResult_set(){
+
+        String TAG_JSON="gyeongbokgung";
+        String TAG_ID = "userID";
+        String TAG_NAME = "userName";
+        String TAG_PASSWORD="userPassword";
+        String dbpw="";
+        String dbid="";
+        String dbname="";
+        int dbscore=0;
+        int dbrank=0;
+        int dbidx=0;
+        int dbcurrent=0;
+
+        try {
+            Log.d(TAG,"~~~1");
+            Log.d(TAG,"~~~mJsonString"+mJsonString);
+            // JSONObject jsonObject = new JSONObject(mJsonString);
+            JSONObject jsonObject = new JSONObject(mJsonString.substring(mJsonString.indexOf("{"), mJsonString.lastIndexOf("}") + 1));
+            Log.d(TAG,"~~~2");
+            //  Log.d(TAG,"~~~~~@@@:"+jsonObject.toString());
+            // Log.d(TAG,"~~~~!!!!!:"+jsonObject.get("userPassword").toString());
+            // Log.d(TAG,"~~~~~@@@:"+jsonObject.toString());
+            // Log.d(TAG,"~~~~~####:"+jsonObject.getString(TAG_PASSWORD));
+            //JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+            Log.d(TAG, String.valueOf(jsonArray.length()));
+            Log.d(TAG,"~~~3");
+
+            for(int i=0;i<jsonArray.length();i++) {
+                Log.d("로그인", "for문 들어옴");
+
+                JSONObject item = jsonArray.getJSONObject(i);
+                Log.d("로그인", "for문 들어옴item");
+                String idx = item.getString("idx");
+                System.out.println(item.getString("userPassword"));
+                dbpw=item.getString("userPassword");
+                dbid=item.getString("userID");
+                dbname=item.getString("userName");
+                dbidx=item.getInt("idx");
+                Log.d(TAG,"userScore 전");
+                dbscore=item.getInt("userScore");
+                Log.d(TAG,"userScore 후");
+                dbrank=item.getInt("userRank");
+                dbcurrent=item.getInt("currentQuest");
+
+
+                System.out.println(item.getString("userName"));
+
+            }
+
+            PersonalData personalData = new PersonalData();
+
+            personalData.setMember_id(dbid);
+            personalData.setMember_name(dbname);
+
+            DBHandler.currentUserData.setMember_id(dbid);
+            DBHandler.currentUserData.setMember_name(dbname);
+            DBHandler.currentUserData.setMember_password(dbpw);
+            DBHandler.currentUserData.setMember_score(dbscore);
+            DBHandler.currentUserData.setMember_rank(dbrank);
+            DBHandler.currentUserData.setMember_idx(dbidx);
+            DBHandler.currentUserData.setMember_currentQuest(dbcurrent);
+            Log.d(TAG,"currentUserData 업데이트됨 !!");
+
+            // SaveSharedPreference.getInstance(LoginActivity.this).saveUserInfo(DBHandler.currentUserData);
+
+        } catch (JSONException e) {
+
+            Log.d(TAG, "catch로 들어옴 showResult : "+e);
+        }
+
+    }
 
 }
