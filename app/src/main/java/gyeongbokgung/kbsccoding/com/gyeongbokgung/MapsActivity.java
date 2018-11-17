@@ -106,6 +106,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FloatingActionMenu fab_menu;
     private com.github.clans.fab.FloatingActionButton fab_quest;
     private com.github.clans.fab.FloatingActionButton fab_ranking;
+    private com.github.clans.fab.FloatingActionButton fab_logout;
     private Handler mUiHandler = new Handler();
 
     public static Activity mapsActivity;  // CompleteActivity에서 finsh하기 위함
@@ -166,10 +167,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab_menu = (FloatingActionMenu) findViewById(R.id.fab_menu);
         fab_quest = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_quest);
         fab_ranking = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_ranking);
+        fab_logout = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_logout);
 
         createCustomAnimation();
         fab_ranking.setOnClickListener(clickListener);
         fab_quest.setOnClickListener(clickListener);
+        fab_logout.setOnClickListener(clickListener);
     }
 
     private void createCustomAnimation() {
@@ -609,6 +612,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 case R.id.fab_ranking:
                     intent = new Intent(MapsActivity.this,RankingActivity.class);
                     startActivity(intent);
+                    break;
+                case R.id.fab_logout:
+                    // 연재연재!!
                     break;
             }
         }
