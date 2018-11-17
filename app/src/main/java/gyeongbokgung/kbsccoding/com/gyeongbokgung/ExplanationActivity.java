@@ -40,7 +40,7 @@ public class ExplanationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(this, "뒤로갈 수 없습니다. 확인버튼을 누르세요~", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "뒤로 갈 수 없습니다. 확인버튼을 누르세요~", Toast.LENGTH_SHORT).show();
         //super.onBackPressed();
     }
 

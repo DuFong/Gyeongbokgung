@@ -51,7 +51,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
      //   Log.d("UsersAdapter","~~~position"+position);
-        
+
         viewholder.name.setText(mList.get(position).getMember_name());
 
 
