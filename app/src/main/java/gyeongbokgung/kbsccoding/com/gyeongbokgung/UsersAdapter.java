@@ -27,10 +27,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         protected TextView rank;
         protected TextView name;
         protected TextView score;
-
+        protected View rootView;
 
         public CustomViewHolder(View view) {
             super(view);
+
+            this.rootView = view;
             this.rank = (TextView) view.findViewById(R.id.textView_list_rank);
             this.name = (TextView) view.findViewById(R.id.textView_list_name);
             this.score = (TextView) view.findViewById(R.id.textView_list_score);
@@ -51,11 +53,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
      //   Log.d("UsersAdapter","~~~position"+position);
-        /*if(DBHandler.currentUserData.getMember_name().equals(mList.get(position).getMember_name())){
+        if(DBHandler.currentUserData.getMember_name().equals(mList.get(position).getMember_name())){
+            viewholder.rootView.setBackgroundResource(android.R.color.holo_orange_light);
+//            viewholder.name.setBackgroundResource(android.R.color.holo_orange_light);
+//            viewholder.rank.setBackgroundResource(android.R.color.holo_orange_light);
+//            viewholder.score.setBackgroundResource(android.R.color.holo_orange_light);
 
-            backGround.setBackgroundResource(android.R.color.white);
-
-        }*/
+        }
         viewholder.name.setText(mList.get(position).getMember_name());
 
 
