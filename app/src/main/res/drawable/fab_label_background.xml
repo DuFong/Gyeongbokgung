@@ -4,16 +4,16 @@
     <item android:state_pressed="true">
         <shape>
             <solid android:color="@color/white"/>
-            <padding android:bottom="12dp" android:left="8dp" android:right="8dp" android:top="12dp"/>
-            <corners android:radius="28dp"/>
+            <padding android:bottom="6dp" android:left="8dp" android:right="8dp" android:top="6dp"/>
+            <corners android:bottomLeftRadius="28dp" android:topLeftRadius="28dp"/>
         </shape>
     </item>
 
     <item>
         <shape>
             <solid android:color="@color/white"/>
-            <padding android:bottom="12dp" android:left="8dp" android:right="8dp" android:top="12dp"/>
-            <corners android:radius="28dp"/>
+            <padding android:bottom="6dp" android:left="8dp" android:right="8dp" android:top="6dp"/>
+            <corners android:bottomLeftRadius="28dp" android:topLeftRadius="28dp"/>
         </shape>
     </item>
 

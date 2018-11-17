@@ -5,6 +5,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="16dp"
                 android:orientation="vertical"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -19,7 +20,6 @@
         fab:menu_colorRipple="#99FFFFFF"
         fab:menu_fab_size="normal"
         fab:menu_icon="@drawable/ic_menu"
-        fab:menu_labels_margin="8dp"
         fab:menu_labels_paddingRight="32dp"
         fab:menu_labels_showShadow="false"
         fab:menu_labels_style="@style/MenuLabelsStyle"
@@ -27,7 +27,6 @@
         >
 
         <com.github.clans.fab.FloatingActionButton
-            android:minWidth="64dp"
             android:id="@+id/fab_quest"
             style="@style/MenuButtonsStyle"
             android:src="@drawable/ic_quest"
@@ -38,6 +37,7 @@
             style="@style/MenuButtonsStyle"
             android:src="@drawable/ic_ranking"
             fab:fab_label="랭킹"/>
+
     </com.github.clans.fab.FloatingActionMenu>
 
 

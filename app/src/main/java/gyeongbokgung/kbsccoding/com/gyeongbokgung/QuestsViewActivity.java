@@ -50,7 +50,6 @@ public class QuestsViewActivity extends AppCompatActivity {
     private GridLayoutManager mLayoutManager;
 
     public SectionedRecyclerViewAdapter sectionAdapter;
-    private QuestsAdapter mAdapter;
     public ArrayList<Quest> mArrayList;
     //  private String mJsonString;
 
@@ -71,12 +70,8 @@ public class QuestsViewActivity extends AppCompatActivity {
                 new DividerItemDecoration(mRecyclerView.getContext(), mLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
-//        // 데이터 세팅
-////        mArrayList = DBHandler.questDataList;
-//
-//        // 어댑터 세팅
-//        mAdapter = new QuestsAdapter(getApplicationContext(), DBHandler.questDataList);
-//        mRecyclerView.setAdapter(mAdapter);
+        // 데이터 세팅
+//        mArrayList = DBHandler.questDataList;
 
         // 테스트용 데이터 세팅
         mArrayList = new ArrayList<>();
@@ -116,8 +111,7 @@ public class QuestsViewActivity extends AppCompatActivity {
 //        }
 //
 
-        // 다른 어댑터로!
-
+        // 어댑터 세팅
         sectionAdapter = new SectionedRecyclerViewAdapter();
 
         for (String title : multiMap.keySet()) {
@@ -165,8 +159,17 @@ public class QuestsViewActivity extends AppCompatActivity {
         onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
             QuestSection.ItemViewHolder itemHolder = (QuestSection.ItemViewHolder) holder;
 
-            String subTitle = list.get(position).getSubTitle();
+            final String subTitle = list.get(position).getSubTitle();
             itemHolder.tvItem.setText(subTitle);
+            itemHolder.rootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(QuestsViewActivity.this,QuestDetailActivity.class);
+                    intent.putExtra("title", subTitle); // 데이터 송신
+                    startActivity(intent);
+                }
+            });
+            // list.get(position)
         }
 
         @Override
