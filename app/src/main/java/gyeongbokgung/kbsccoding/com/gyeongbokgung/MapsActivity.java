@@ -5,6 +5,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -107,6 +108,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private com.github.clans.fab.FloatingActionButton fab_ranking;
     private Handler mUiHandler = new Handler();
 
+    public static Activity mapsActivity;  // CompleteActivity에서 finsh하기 위함
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,8 +121,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
 
-//        GetData task = new GetData();
-//        task.execute("http://" + getString(R.string.ip_adrress) + "/getQuest.php", "");
+        mapsActivity = MapsActivity.this;
+
+        GetData task = new GetData();
+        task.execute( "http://" + getString(R.string.ip_adrress) + "/getQuest.php", "");
 
 
         // 화면상단 메인퀘스트 표시
@@ -196,6 +201,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         fab_menu.setIconToggleAnimatorSet(set);
     }
+
     /**
      * Saves the state of the map when the activity is paused.
      */
@@ -582,11 +588,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
 
-        Log.d(TAG, "~~~~~init" + DBHandler.questDataList.get(0).getSubTitle());
-        listDataHeader.add(DBHandler.questDataList.get(0).getSubTitle());
+        Log.d(TAG,"~~~~~init"+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
+        listDataHeader.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
 
-        List<String> showQuest = new ArrayList<>();
-        showQuest.add(DBHandler.questDataList.get(0).getSumDescription());
+        List<String> showQuest= new ArrayList<>();
+        showQuest.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSumDescription());
 
         listHash.put(listDataHeader.get(0), showQuest);
     }

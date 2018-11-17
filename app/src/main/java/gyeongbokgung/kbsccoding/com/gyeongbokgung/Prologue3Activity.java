@@ -9,8 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Prologue3Activity extends AppCompatActivity {
-    Button tutorial_start_button;
-    TextView main_text;
+    private Button tutorial_start_button;
+    private TextView main_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

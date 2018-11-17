@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_hint"
         android:layout_width="332dp"
         android:layout_height="286dp"
         android:layout_marginStart="8dp"
