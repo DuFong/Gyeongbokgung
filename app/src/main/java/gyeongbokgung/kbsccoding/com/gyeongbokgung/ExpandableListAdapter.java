@@ -117,7 +117,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 nowType=DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getType();
                 Intent intent = null;
                 if(nowType == 0 ){
-                    intent = new Intent(context, RestoreActivity.class);
+                    intent = new Intent(context, RestoreLocationActivity.class);
                 }
                 else if(nowType == 1) {
                     intent = new Intent(context, RestoreActivity.class);

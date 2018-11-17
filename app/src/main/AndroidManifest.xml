@@ -71,13 +71,28 @@
         <activity
             android:name=".Prologue3Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".HintActivity" />
-        <activity android:name=".HintImageActivity" />
-        <activity android:name=".RestoreActivity" />
-        <activity android:name=".Restore2Activity" />
-        <activity android:name=".Restore3Activity" />
-        <activity android:name=".ExplanationActivity" />
-        <activity android:name=".CompleteActivity"></activity>
+        <activity
+            android:name=".HintActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HintImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RestoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Restore2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Restore3Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ExplanationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CompleteActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".RestoreLocationActivity"></activity>
     </application>
 
 </manifest>
