@@ -8,6 +8,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -43,6 +44,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.collect.Maps;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -95,12 +97,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     //  private Context context;
     //  public static ArrayList<Quest> questDataList;   //퀘스트 데이터
     private String mJsonString;
-    private int position = 0;
-
+    private int position =0;
+    private int loginState=0;
     // FloatingActionMenu
     private FloatingActionMenu fab_menu;
     private com.github.clans.fab.FloatingActionButton fab_quest;
     private com.github.clans.fab.FloatingActionButton fab_ranking;
+    private com.github.clans.fab.FloatingActionButton fab_logout;
     private Handler mUiHandler = new Handler();
 
     public static Activity mapsActivity;  // CompleteActivity에서 finsh하기 위함
@@ -110,7 +113,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);// Retrieve location and camera position from saved instance state.
+        Intent intent = getIntent();
+        loginState = intent.getIntExtra("alreadyLogin",0);
+        if(loginState==1){
+            GetData_set task2 = new GetData_set();
+            task2.execute("http://" + getString(R.string.ip_adrress) + "/query.php", SaveSharedPreference.getUserName(getApplicationContext()));
+            //Log.d(TAG,DBHandler.currentUserData.getMember_id());
+        }
         setContentView(R.layout.activity_maps);
         mapView = this.getWindow().getDecorView();
 
@@ -165,10 +175,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab_menu = (FloatingActionMenu) findViewById(R.id.fab_menu);
         fab_quest = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_quest);
         fab_ranking = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_ranking);
+        fab_logout = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_logout);
 
         createCustomAnimation();
         fab_ranking.setOnClickListener(clickListener);
         fab_quest.setOnClickListener(clickListener);
+<<<<<<< HEAD
 
         // 튜토리얼 상황
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
@@ -193,6 +205,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             line2.setVisibility(View.GONE);
             explain.setVisibility(View.GONE);
         }
+=======
+        fab_logout.setOnClickListener(clickListener);
+>>>>>>> origin/master
     }
 
     private void createCustomAnimation() {
@@ -457,7 +472,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Log.d("TEST", "2");
             progressDialog.dismiss();
 //            mTextViewResult.setText(result);
             //  Log.d(TAG, "response - " + result);
@@ -523,7 +537,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
                 bufferedReader.close();
-                Log.d(TAG, "SB: " + sb.toString().trim());
                 return sb.toString().trim();
 
 
@@ -557,7 +570,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         try {
-            //       Log.d(TAG,"~~try 들어옴");
             JSONObject jsonObject = new JSONObject(mJsonString.substring(mJsonString.indexOf("{"), mJsonString.lastIndexOf("}") + 1));
             //  JSONObject jsonObject = new JSONObject(mJsonString);
             Log.d(TAG, "~~JSONObject: " + jsonObject.toString());
@@ -585,23 +597,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                 DBHandler.questDataList.add(quest);
-                Log.d(TAG, "~~questDataList 추가");
-                Log.d(TAG, "~~~quest:" + quest.toString());
-                Log.d(TAG, "~~~~!!!" + DBHandler.questDataList.get(0).getTitle());
-                //   mAdapter.notifyDataSetChanged();
-                ////////////////확인하기///////////////////////////////////////
-                //Log.d(TAG,"~~notify성공");
+                Log.d(TAG, "questDataList 추가");
+                Log.d(TAG, "quest:" + quest.toString());
+                Log.d(TAG, DBHandler.questDataList.get(0).getTitle());
+
             }
             Log.d(TAG, "리스트 삽입 끝났니?");
             listView = findViewById(R.id.lvExp);
             initData();
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listHash);
             listView.setAdapter(listAdapter);
-            // initData();
         } catch (JSONException e) {
 
-//            Log.d(TAG, "showResult : ", e);
-//            Log.d(TAG,"~~catch로 들어옴 ",e);
+
         }
 
     }
@@ -611,13 +619,189 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
 
-        Log.d(TAG,"~~~~~init"+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
+        Log.d(TAG,"init"+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         listDataHeader.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
-
         List<String> showQuest= new ArrayList<>();
         showQuest.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSumDescription());
 
         listHash.put(listDataHeader.get(0), showQuest);
+    }
+
+    private class GetData_set extends AsyncTask<String, Void, String> {
+
+        // ProgressDialog progressDialog;
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            // progressDialog = ProgressDialog.show(MainActivity.this,
+            //        "Please Wait", null, true, true);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            // progressDialog.dismiss();
+            //mTextViewResult.setText(result);
+
+            Log.d(TAG, "response - " + result);
+
+            if (result == null){
+
+                //mTextViewResult.setText(errorString);
+                Log.d(TAG,"null로 들어옴 :(errorString): "+errorString);
+            }
+            else {
+
+                mJsonString = result;
+                showResult_set();
+            }
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+            String postParameters = "userID=" + params[1];
+/////////////////////////////////////////////////////////////////////////////////////////////
+            Log.d(TAG,"param: "+params[1]);
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(50000);
+                httpURLConnection.setConnectTimeout(50000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.connect();
+
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(TAG, "response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+                bufferedReader.close();
+                Log.d(TAG,"~~~결과뚜뚜뚜:"+sb.toString().trim());
+                return sb.toString().trim();
+
+
+            } catch (Exception e) {
+                //  Log.d("로그인", "ID없음");
+                Log.d(TAG, "GetData : Error "+e);
+                errorString = e.toString();
+
+                return null;
+            }
+
+        }
+    }
+    private void showResult_set(){
+
+        String TAG_JSON="gyeongbokgung";
+        String TAG_ID = "userID";
+        String TAG_NAME = "userName";
+        String TAG_PASSWORD="userPassword";
+        String dbpw="";
+        String dbid="";
+        String dbname="";
+        int dbscore=0;
+        int dbrank=0;
+        int dbidx=0;
+        int dbcurrent=0;
+
+        try {
+            Log.d(TAG,"~~~1");
+            Log.d(TAG,"~~~mJsonString"+mJsonString);
+            // JSONObject jsonObject = new JSONObject(mJsonString);
+            JSONObject jsonObject = new JSONObject(mJsonString.substring(mJsonString.indexOf("{"), mJsonString.lastIndexOf("}") + 1));
+            Log.d(TAG,"~~~2");
+            //  Log.d(TAG,"~~~~~@@@:"+jsonObject.toString());
+            // Log.d(TAG,"~~~~!!!!!:"+jsonObject.get("userPassword").toString());
+            // Log.d(TAG,"~~~~~@@@:"+jsonObject.toString());
+            // Log.d(TAG,"~~~~~####:"+jsonObject.getString(TAG_PASSWORD));
+            //JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+            Log.d(TAG, String.valueOf(jsonArray.length()));
+            Log.d(TAG,"~~~3");
+
+            for(int i=0;i<jsonArray.length();i++) {
+                Log.d("로그인", "for문 들어옴");
+
+                JSONObject item = jsonArray.getJSONObject(i);
+                Log.d("로그인", "for문 들어옴item");
+                String idx = item.getString("idx");
+                System.out.println(item.getString("userPassword"));
+                dbpw=item.getString("userPassword");
+                dbid=item.getString("userID");
+                dbname=item.getString("userName");
+                dbidx=item.getInt("idx");
+                Log.d(TAG,"userScore 전");
+                dbscore=item.getInt("userScore");
+                Log.d(TAG,"userScore 후");
+                dbrank=item.getInt("userRank");
+                dbcurrent=item.getInt("currentQuest");
+
+
+                System.out.println(item.getString("userName"));
+
+            }
+
+            PersonalData personalData = new PersonalData();
+
+            personalData.setMember_id(dbid);
+            personalData.setMember_name(dbname);
+
+            DBHandler.currentUserData.setMember_id(dbid);
+            DBHandler.currentUserData.setMember_name(dbname);
+            DBHandler.currentUserData.setMember_password(dbpw);
+            DBHandler.currentUserData.setMember_score(dbscore);
+            DBHandler.currentUserData.setMember_rank(dbrank);
+            DBHandler.currentUserData.setMember_idx(dbidx);
+            DBHandler.currentUserData.setMember_currentQuest(dbcurrent);
+            Log.d(TAG,"currentUserData 업데이트됨 !!");
+
+            // SaveSharedPreference.getInstance(LoginActivity.this).saveUserInfo(DBHandler.currentUserData);
+
+        } catch (JSONException e) {
+
+            Log.d(TAG, "catch로 들어옴 showResult : "+e);
+        }
+
+    }
+    public static void clearUserName(Context ctx) {
+        SharedPreferences.Editor editor = SaveSharedPreference.getSharedPreferences(ctx).edit();
+        editor.clear(); //clear all stored data editor.commit(); }
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -631,6 +815,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     break;
                 case R.id.fab_ranking:
                     intent = new Intent(MapsActivity.this,RankingActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.fab_logout:
+                    clearUserName(getApplicationContext());
+                    intent = new Intent(MapsActivity.this, LoginActivity.class);
                     startActivity(intent);
                     break;
             }

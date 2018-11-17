@@ -78,12 +78,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
         final String childText = (String)getChild(i,i1);
-        if(view == null)
-        {
-            LayoutInflater inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.list_quest_detail,null);
+        if(view == null) {
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.list_quest_detail, null);
         }
-
         TextView txtListChild = view.findViewById(R.id.listItem);
         Button buttonHint = view.findViewById(R.id.hint_button);
         if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getHint().equals("null")){
