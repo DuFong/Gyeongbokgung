@@ -51,7 +51,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
      //   Log.d("UsersAdapter","~~~position"+position);
+        /*if(DBHandler.currentUserData.getMember_name().equals(mList.get(position).getMember_name())){
 
+            backGround.setBackgroundResource(android.R.color.white);
+
+        }*/
         viewholder.name.setText(mList.get(position).getMember_name());
 
 

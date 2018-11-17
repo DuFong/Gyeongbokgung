@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -48,6 +49,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.collect.Maps;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -771,6 +773,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
     }
+    public static void clearUserName(Context ctx) {
+        SharedPreferences.Editor editor = SaveSharedPreference.getSharedPreferences(ctx).edit();
+        editor.clear(); //clear all stored data editor.commit(); }
+    }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
@@ -786,7 +792,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     startActivity(intent);
                     break;
                 case R.id.fab_logout:
-                    // 연재연재!!
+                    clearUserName(getApplicationContext());
+                    intent = new Intent(MapsActivity.this, LoginActivity.class);
+                    startActivity(intent);
                     break;
             }
         }
