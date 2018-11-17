@@ -165,5 +165,5 @@ public class Quest implements Serializable {
     public void setType(int Type) {
         this.type = Type;
     }
-    
+
 }

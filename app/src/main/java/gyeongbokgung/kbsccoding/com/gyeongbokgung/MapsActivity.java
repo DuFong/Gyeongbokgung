@@ -1,13 +1,19 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
@@ -27,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.GeoDataClient;
@@ -41,6 +49,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.collect.Maps;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,7 +66,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
-
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
@@ -74,7 +82,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private final LatLng mDefaultLocation = new LatLng(37.579617, 126.97704099999999);
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private boolean mLocationPermissionGranted;
+    private boolean mLocationPermissionGranted; // GPS 이용가능 여부
 
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
@@ -84,47 +92,49 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
-    // Used for selecting the current place.
-    private static final int M_MAX_ENTRIES = 5;
-
-    //boolean flag to know if main FAB is in open or closed state.
-    private boolean fabExpanded = false;
-    private FloatingActionButton fabMenu;
-
-    //Linear layout holding the Save submenu
-    private LinearLayout layoutFabStage;
-    private LinearLayout layoutFabAccount;
-    private LinearLayout layoutFabHelp;
-    private LinearLayout layoutFabSetting;
 
     // 화면상단에 메인퀘스트 표시
     private ExpandableListView listView;
     private ExpandableListAdapter listAdapter;
     private List<String> listDataHeader;
-    private HashMap<String,List<String>> listHash;
-  //  private Button buttonHint;
-  //  private Context context;
-  //  public static ArrayList<Quest> questDataList;   //퀘스트 데이터
+    private HashMap<String, List<String>> listHash;
+    //  private Button buttonHint;
+    //  private Context context;
+    //  public static ArrayList<Quest> questDataList;   //퀘스트 데이터
     private String mJsonString;
     private int position =0;
+    private int loginState=0;
+    // FloatingActionMenu
+    private FloatingActionMenu fab_menu;
+    private com.github.clans.fab.FloatingActionButton fab_quest;
+    private com.github.clans.fab.FloatingActionButton fab_ranking;
+    private com.github.clans.fab.FloatingActionButton fab_logout;
+    private Handler mUiHandler = new Handler();
 
     public static Activity mapsActivity;  // CompleteActivity에서 finsh하기 위함
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);// Retrieve location and camera position from saved instance state.
+        Intent intent = getIntent();
+        loginState = intent.getIntExtra("alreadyLogin",0);
+        if(loginState==1){
+            GetData_set task2 = new GetData_set();
+            task2.execute("http://" + getString(R.string.ip_adrress) + "/query.php", SaveSharedPreference.getUserName(getApplicationContext()));
+            //Log.d(TAG,DBHandler.currentUserData.getMember_id());
+        }
+        setContentView(R.layout.activity_maps);
+
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
 
+
         mapsActivity = MapsActivity.this;
-        // Retrieve the content view that renders the map.
-        setContentView(R.layout.activity_maps);
 
         GetData task = new GetData();
         task.execute( "http://" + getString(R.string.ip_adrress) + "/getQuest.php", "");
-
 
 
         // 화면상단 메인퀘스트 표시
@@ -162,62 +172,46 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        fabMenu = (FloatingActionButton) this.findViewById(R.id.fabMenu);
+        // FAB Menu 세팅
+        fab_menu = (FloatingActionMenu) findViewById(R.id.fab_menu);
+        fab_quest = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_quest);
+        fab_ranking = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_ranking);
+        fab_logout = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab_logout);
 
-        layoutFabStage = (LinearLayout) this.findViewById(R.id.layoutFabStage);
-        layoutFabAccount = (LinearLayout) this.findViewById(R.id.layoutFabAccount);
-        layoutFabHelp = (LinearLayout) this.findViewById(R.id.layoutFabHelp);
-        layoutFabSetting = (LinearLayout) this.findViewById(R.id.layoutFabSetting);
+        createCustomAnimation();
+        fab_ranking.setOnClickListener(clickListener);
+        fab_quest.setOnClickListener(clickListener);
+        fab_logout.setOnClickListener(clickListener);
+    }
 
-        // When main Fab (Settings) is clicked, it expands if not expanded already.
-        // Collapses if main FAB was open already.
-        // This gives FAB (Settings) open/close behavior
-        fabMenu.setOnClickListener(new View.OnClickListener() {
+    private void createCustomAnimation() {
+        AnimatorSet set = new AnimatorSet();
+
+        ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(fab_menu.getMenuIconView(), "scaleX", 1.0f, 0.2f);
+        ObjectAnimator scaleOutY = ObjectAnimator.ofFloat(fab_menu.getMenuIconView(), "scaleY", 1.0f, 0.2f);
+
+        ObjectAnimator scaleInX = ObjectAnimator.ofFloat(fab_menu.getMenuIconView(), "scaleX", 0.2f, 1.0f);
+        ObjectAnimator scaleInY = ObjectAnimator.ofFloat(fab_menu.getMenuIconView(), "scaleY", 0.2f, 1.0f);
+
+        scaleOutX.setDuration(50);
+        scaleOutY.setDuration(50);
+
+        scaleInX.setDuration(150);
+        scaleInY.setDuration(150);
+
+        scaleInX.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onClick(View view) {
-                if (fabExpanded == true) {
-                    closeSubMenusFab();
-                } else {
-                    openSubMenusFab();
-                }
+            public void onAnimationStart(Animator animation) {
+                fab_menu.getMenuIconView().setImageResource(fab_menu.isOpened()
+                        ?  R.drawable.ic_menu:R.drawable.ic_close);
             }
         });
 
-        // Only main FAB is visible in the beginning
-        closeSubMenusFab();
+        set.play(scaleOutX).with(scaleOutY);
+        set.play(scaleInX).with(scaleInY).after(scaleOutX);
+        set.setInterpolator(new OvershootInterpolator(2));
 
-
-        layoutFabStage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), QuestsViewActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        
-
-    }
-
-    //closes FAB submenus
-    private void closeSubMenusFab() {
-        layoutFabStage.setVisibility(View.INVISIBLE);
-        layoutFabAccount.setVisibility(View.INVISIBLE);
-        layoutFabHelp.setVisibility(View.INVISIBLE);
-        layoutFabSetting.setVisibility(View.INVISIBLE);
-        fabMenu.setImageResource(R.drawable.ic_menu_white_24dp);
-        fabExpanded = false;
-    }
-
-    //Opens FAB submenus
-    private void openSubMenusFab() {
-        layoutFabStage.setVisibility(View.VISIBLE);
-        layoutFabAccount.setVisibility(View.VISIBLE);
-        layoutFabHelp.setVisibility(View.VISIBLE);
-        layoutFabSetting.setVisibility(View.VISIBLE);
-        //Change settings icon to 'X' icon
-        fabMenu.setImageResource(R.drawable.ic_close_white_24dp);
-        fabExpanded = true;
+        fab_menu.setIconToggleAnimatorSet(set);
     }
 
     /**
@@ -234,6 +228,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     /**
      * Sets up the options menu.
+     *
      * @param menu The options menu.
      * @return Boolean.
      */
@@ -246,6 +241,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     /**
      * Handles a click on the menu option to get a place.
+     *
      * @param item The menu item to handle.
      * @return Boolean.
      */
@@ -269,6 +265,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
         // Use a custom info window adapter to handle multiple lines of text in the
         // info window contents.
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -303,6 +300,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
+
     }
 
 
@@ -320,7 +318,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful()&&task.getResult()!=null) {
                             // Set the map's camera position to the current location of the device.
                             mLastKnownLocation = task.getResult();
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
@@ -342,7 +340,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private void getLocationPermission() {       /*
+    private void getLocationPermission() {/*
      * Request location permission, so that we can get the location of the
      * device. The result of the permission request is handled by a callback,
      * onRequestPermissionsResult.
@@ -426,10 +424,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mLastKnownLocation = null;
                 getLocationPermission();
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
+
     private class GetData extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;
@@ -447,16 +446,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Log.d("TEST","2");
             progressDialog.dismiss();
 //            mTextViewResult.setText(result);
             //  Log.d(TAG, "response - " + result);
 
-            if (result == null){
+            if (result == null) {
 
                 //   mTextViewResult.setText(errorString);
-            }
-            else {
+            } else {
 
                 mJsonString = result;
                 showResult();
@@ -496,6 +493,180 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //        Log.d(TAG, "response code - " + responseStatusCode);
 
                 InputStream inputStream;
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                } else {
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                bufferedReader.close();
+                return sb.toString().trim();
+
+
+            } catch (Exception e) {
+
+                //         Log.d(TAG, "GetData : Error ", e);
+                errorString = e.toString();
+
+                return null;
+            }
+
+        }
+    }
+
+
+    private void showResult() {
+
+
+        //  String TAG_COUNTRY ="country";
+        String TAG_JSON = "proj_manager";
+        String TAG_IDX = "idx";
+        String TAG_TITLE = "Title";
+        String TAG_SUBTITLE = "Subtitle";
+        String TAG_DESC = "Description";
+        String TAG_DESCSUM = "Description_sum";
+        String TAG_GOAL = "Goal";
+        String TAG_HINT = "Hint";
+        String TAG_POINT = "Point";
+        String TAG_TYPE = "type";
+        String TAG_titleID = "titleID";
+
+
+        try {
+            JSONObject jsonObject = new JSONObject(mJsonString.substring(mJsonString.indexOf("{"), mJsonString.lastIndexOf("}") + 1));
+            //  JSONObject jsonObject = new JSONObject(mJsonString);
+            Log.d(TAG, "~~JSONObject: " + jsonObject.toString());
+
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+            //         Log.d(TAG,"~~array 성공");
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                JSONObject item = jsonArray.getJSONObject(i);
+                int titleID = item.getInt("titleID");
+                int subID = item.getInt("subID");
+                int rowID = item.getInt("rowID");
+                String title = item.getString("title");
+                String subTitle = item.getString("subTitle");
+                String description = item.getString("description");
+                String sumDescription = item.getString("sumDescription");
+                String goal = item.getString("goal");
+                String hint = item.getString("hint");
+                String explanation = item.getString("explanation");
+                int point = item.getInt("point");
+                int type = item.getInt("type");
+
+
+                Quest quest = new Quest(titleID, subID, rowID, title, subTitle, description, sumDescription, goal, hint, explanation, point, type);
+
+
+                DBHandler.questDataList.add(quest);
+                Log.d(TAG, "questDataList 추가");
+                Log.d(TAG, "quest:" + quest.toString());
+                Log.d(TAG, DBHandler.questDataList.get(0).getTitle());
+
+            }
+            Log.d(TAG, "리스트 삽입 끝났니?");
+            listView = findViewById(R.id.lvExp);
+            initData();
+            listAdapter = new ExpandableListAdapter(this, listDataHeader, listHash);
+            listView.setAdapter(listAdapter);
+        } catch (JSONException e) {
+
+
+        }
+
+    }
+
+    // 화면 상단 메인퀘스트에 들어갈 텍스트
+    private void initData() {
+        listDataHeader = new ArrayList<>();
+        listHash = new HashMap<>();
+
+        Log.d(TAG,"init"+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
+        listDataHeader.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
+        List<String> showQuest= new ArrayList<>();
+        showQuest.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSumDescription());
+
+        listHash.put(listDataHeader.get(0), showQuest);
+    }
+
+    private class GetData_set extends AsyncTask<String, Void, String> {
+
+        // ProgressDialog progressDialog;
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            // progressDialog = ProgressDialog.show(MainActivity.this,
+            //        "Please Wait", null, true, true);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            // progressDialog.dismiss();
+            //mTextViewResult.setText(result);
+
+            Log.d(TAG, "response - " + result);
+
+            if (result == null){
+
+                //mTextViewResult.setText(errorString);
+                Log.d(TAG,"null로 들어옴 :(errorString): "+errorString);
+            }
+            else {
+
+                mJsonString = result;
+                showResult_set();
+            }
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+            String postParameters = "userID=" + params[1];
+/////////////////////////////////////////////////////////////////////////////////////////////
+            Log.d(TAG,"param: "+params[1]);
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(50000);
+                httpURLConnection.setConnectTimeout(50000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.connect();
+
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(TAG, "response code - " + responseStatusCode);
+
+                InputStream inputStream;
                 if(responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
                 }
@@ -515,13 +686,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
                 bufferedReader.close();
-                Log.d(TAG,"SB: "+sb.toString().trim());
+                Log.d(TAG,"~~~결과뚜뚜뚜:"+sb.toString().trim());
                 return sb.toString().trim();
 
 
             } catch (Exception e) {
-
-                //         Log.d(TAG, "GetData : Error ", e);
+                //  Log.d("로그인", "ID없음");
+                Log.d(TAG, "GetData : Error "+e);
                 errorString = e.toString();
 
                 return null;
@@ -529,89 +700,103 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
     }
+    private void showResult_set(){
 
-
-    private void showResult(){
-
-
-        //  String TAG_COUNTRY ="country";
-        String TAG_JSON="proj_manager";
-        String TAG_IDX = "idx";
-        String TAG_TITLE = "Title";
-        String TAG_SUBTITLE="Subtitle";
-        String TAG_DESC= "Description";
-        String TAG_DESCSUM = "Description_sum";
-        String TAG_GOAL = "Goal";
-        String TAG_HINT = "Hint";
-        String TAG_POINT= "Point";
-        String TAG_TYPE = "type";
-        String TAG_titleID = "titleID";
-
-
+        String TAG_JSON="gyeongbokgung";
+        String TAG_ID = "userID";
+        String TAG_NAME = "userName";
+        String TAG_PASSWORD="userPassword";
+        String dbpw="";
+        String dbid="";
+        String dbname="";
+        int dbscore=0;
+        int dbrank=0;
+        int dbidx=0;
+        int dbcurrent=0;
 
         try {
-            //       Log.d(TAG,"~~try 들어옴");
+            Log.d(TAG,"~~~1");
+            Log.d(TAG,"~~~mJsonString"+mJsonString);
+            // JSONObject jsonObject = new JSONObject(mJsonString);
             JSONObject jsonObject = new JSONObject(mJsonString.substring(mJsonString.indexOf("{"), mJsonString.lastIndexOf("}") + 1));
-            //  JSONObject jsonObject = new JSONObject(mJsonString);
-            Log.d(TAG,"~~JSONObject: "+jsonObject.toString());
-
+            Log.d(TAG,"~~~2");
+            //  Log.d(TAG,"~~~~~@@@:"+jsonObject.toString());
+            // Log.d(TAG,"~~~~!!!!!:"+jsonObject.get("userPassword").toString());
+            // Log.d(TAG,"~~~~~@@@:"+jsonObject.toString());
+            // Log.d(TAG,"~~~~~####:"+jsonObject.getString(TAG_PASSWORD));
+            //JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
-            //         Log.d(TAG,"~~array 성공");
-            for(int i=0;i<jsonArray.length();i++){
+            Log.d(TAG, String.valueOf(jsonArray.length()));
+            Log.d(TAG,"~~~3");
+
+            for(int i=0;i<jsonArray.length();i++) {
+                Log.d("로그인", "for문 들어옴");
 
                 JSONObject item = jsonArray.getJSONObject(i);
-                int titleID = item.getInt("titleID");
-                int subID = item.getInt("subID");
-                int rowID = item.getInt("rowID");
-                String title = item.getString("title");
-                String subTitle = item.getString("subTitle");
-                String description = item.getString("description");
-                String sumDescription = item.getString("sumDescription");
-                String goal = item.getString("goal");
-                String hint = item.getString("hint");
-                String explanation = item.getString("explanation");
-                int point = item.getInt("point");
-                int type = item.getInt("type");
+                Log.d("로그인", "for문 들어옴item");
+                String idx = item.getString("idx");
+                System.out.println(item.getString("userPassword"));
+                dbpw=item.getString("userPassword");
+                dbid=item.getString("userID");
+                dbname=item.getString("userName");
+                dbidx=item.getInt("idx");
+                Log.d(TAG,"userScore 전");
+                dbscore=item.getInt("userScore");
+                Log.d(TAG,"userScore 후");
+                dbrank=item.getInt("userRank");
+                dbcurrent=item.getInt("currentQuest");
 
 
+                System.out.println(item.getString("userName"));
 
-                Quest quest = new Quest(titleID,subID,rowID,title,subTitle,description,sumDescription,goal,hint,explanation,point,type);
-
-
-                DBHandler.questDataList.add(quest);
-                Log.d(TAG,"~~questDataList 추가");
-                Log.d(TAG,"~~~quest:"+quest.toString());
-                Log.d(TAG,"~~~~!!!"+DBHandler.questDataList.get(0).getTitle());
-             //   mAdapter.notifyDataSetChanged();
-                ////////////////확인하기///////////////////////////////////////
-                //Log.d(TAG,"~~notify성공");
             }
-            Log.d(TAG, "리스트 삽입 끝났니?");
-            listView = findViewById(R.id.lvExp);
-            initData();
-            listAdapter = new ExpandableListAdapter(this,listDataHeader,listHash);
-            listView.setAdapter(listAdapter);
-           // initData();
+
+            PersonalData personalData = new PersonalData();
+
+            personalData.setMember_id(dbid);
+            personalData.setMember_name(dbname);
+
+            DBHandler.currentUserData.setMember_id(dbid);
+            DBHandler.currentUserData.setMember_name(dbname);
+            DBHandler.currentUserData.setMember_password(dbpw);
+            DBHandler.currentUserData.setMember_score(dbscore);
+            DBHandler.currentUserData.setMember_rank(dbrank);
+            DBHandler.currentUserData.setMember_idx(dbidx);
+            DBHandler.currentUserData.setMember_currentQuest(dbcurrent);
+            Log.d(TAG,"currentUserData 업데이트됨 !!");
+
+            // SaveSharedPreference.getInstance(LoginActivity.this).saveUserInfo(DBHandler.currentUserData);
+
         } catch (JSONException e) {
 
-//            Log.d(TAG, "showResult : ", e);
-//            Log.d(TAG,"~~catch로 들어옴 ",e);
+            Log.d(TAG, "catch로 들어옴 showResult : "+e);
         }
 
     }
-    // 화면 상단 메인퀘스트에 들어갈 텍스트
-    private void initData() {
-        listDataHeader = new ArrayList<>();
-        listHash = new HashMap<>();
-
-        Log.d(TAG,"~~~~~init"+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
-        listDataHeader.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
-
-        List<String> showQuest= new ArrayList<>();
-        showQuest.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSumDescription());
-
-        listHash.put(listDataHeader.get(0),showQuest);
+    public static void clearUserName(Context ctx) {
+        SharedPreferences.Editor editor = SaveSharedPreference.getSharedPreferences(ctx).edit();
+        editor.clear(); //clear all stored data editor.commit(); }
     }
 
-
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent;
+            switch (view.getId()){
+                case R.id.fab_quest:
+                    intent = new Intent(MapsActivity.this,QuestsViewActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.fab_ranking:
+                    intent = new Intent(MapsActivity.this,RankingActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.fab_logout:
+                    clearUserName(getApplicationContext());
+                    intent = new Intent(MapsActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+        }
+    };
 }
