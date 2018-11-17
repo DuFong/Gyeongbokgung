@@ -92,7 +92,16 @@
         <activity
             android:name=".CompleteActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".RestoreLocationActivity"></activity>
+        <activity
+            android:name=".RestoreLocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VideoChapter1Activity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ReceiveQuestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".VideoStartChapter1Activity"></activity>
     </application>
 
 </manifest>
