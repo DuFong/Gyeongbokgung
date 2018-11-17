@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:sl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,22 +10,33 @@
     android:layout_margin="15dp"
     android:padding="10dp">
 
-
-    <TextView
-        android:id="@+id/tv_complete"
-        android:layout_width="334dp"
+    <com.ssomai.android.scalablelayout.ScalableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="313dp"
-        android:gravity="center"
-        android:text="COMPLETE"
-        android:textColor="#ff0101"
-        android:textSize="45sp"
-        android:textStyle="bold|italic"
-        android:background="@drawable/my_border"
-        android:layout_centerInParent="true"
-        android:rotation="-30"/>
+        sl:scale_base_height="1000"
+        sl:scale_base_width="1000">
+
+        <TextView
+            android:id="@+id/tv_complete"
+            android:layout_width="334dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="313dp"
+            android:gravity="center"
+            android:text="COMPLETE"
+            android:textColor="#ff0101"
+            android:textStyle="bold|italic"
+            android:background="@drawable/my_border"
+            android:layout_centerInParent="true"
+            android:rotation="-30"
+            sl:scale_height="300"
+            sl:scale_left="50"
+            sl:scale_textsize="150"
+            sl:scale_top="500"
+            sl:scale_width="850"
+            tools:ignore="MissingPrefix"/>
+    </com.ssomai.android.scalablelayout.ScalableLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,23 +49,52 @@
         tools:layout_editor_absoluteX="10dp"
         tools:layout_editor_absoluteY="120dp">
 
-        <TextView
-            android:id="@+id/tv_subtitle_com"
+        <com.ssomai.android.scalablelayout.ScalableLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="TextView" />
+            android:layout_height="match_parent"
+            sl:scale_base_height="160"
+            sl:scale_base_width="100">
 
-        <TextView
-            android:id="@+id/tv_desc_com"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/tv_subtitle_com"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:gravity="center_horizontal"
+                android:text="TextView"
+                android:textColor="@color/cardview_dark_background"
+                sl:scale_height="25"
+                sl:scale_left="0"
+                sl:scale_textsize="13"
+                sl:scale_top="5"
+                sl:scale_width="100"
+                tools:ignore="MissingPrefix" />
 
-        <Button
-            android:id="@+id/btn_finish"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="확인" />
+            <TextView
+                android:id="@+id/tv_desc_com"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:gravity="center_horizontal"
+                android:text="TextView"
+                sl:scale_height="120"
+                sl:scale_left="0"
+                sl:scale_textsize="7"
+                sl:scale_top="35"
+                sl:scale_width="100"
+                tools:ignore="MissingPrefix" />
+
+            <Button
+                android:id="@+id/btn_finish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="확인"
+                sl:scale_height="18"
+                sl:scale_left="0"
+                sl:scale_textsize="6"
+                sl:scale_top="130"
+                sl:scale_width="100"
+                tools:ignore="MissingPrefix" />
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
     </LinearLayout>
 
 </RelativeLayout>
