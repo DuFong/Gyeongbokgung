@@ -7,6 +7,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -180,19 +181,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         createCustomAnimation();
         fab_ranking.setOnClickListener(clickListener);
         fab_quest.setOnClickListener(clickListener);
-<<<<<<< HEAD
+        fab_logout.setOnClickListener(clickListener);
 
         // 튜토리얼 상황
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
-            if(DBHandler.numTutorial == 3) {
-                box = findViewById(R.id.box3);
-                line1 = findViewById(R.id.line3_1);
-                line2 = findViewById(R.id.line3_2);
-                explain = findViewById(R.id.explain3);
+            DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
+
+            if(DBHandler.numTutorial == 1) {
+                box = findViewById(R.id.box1);
+                line1 = findViewById(R.id.line1_1);
+                line2 = findViewById(R.id.line1_2);
+                explain = findViewById(R.id.explain1);
+
                 box.setVisibility(View.VISIBLE);
                 line1.setVisibility(View.VISIBLE);
                 line2.setVisibility(View.VISIBLE);
                 explain.setVisibility(View.VISIBLE);
+            }
+
+            else{
+
             }
         }
         else {
@@ -205,9 +213,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             line2.setVisibility(View.GONE);
             explain.setVisibility(View.GONE);
         }
-=======
-        fab_logout.setOnClickListener(clickListener);
->>>>>>> origin/master
+
     }
 
     private void createCustomAnimation() {
@@ -230,6 +236,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onAnimationStart(Animator animation) {
                 fab_menu.getMenuIconView().setImageResource(fab_menu.isOpened()
                         ?  R.drawable.ic_menu:R.drawable.ic_close);
+                // 튜토리얼 상황
             }
         });
 
@@ -812,15 +819,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 case R.id.fab_quest:
                     intent = new Intent(MapsActivity.this,QuestsViewActivity.class);
                     startActivity(intent);
+                    // 튜토리얼 상황
                     break;
                 case R.id.fab_ranking:
                     intent = new Intent(MapsActivity.this,RankingActivity.class);
                     startActivity(intent);
+                    // 튜토리얼 상황
                     break;
                 case R.id.fab_logout:
                     clearUserName(getApplicationContext());
                     intent = new Intent(MapsActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    // 튜토리얼 상황
                     break;
             }
         }
