@@ -106,7 +106,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View view) {
                 // db에서 문제 id로 switch문 작성
                 Intent intent=null;
-                if(DBHandler.currentUserData.getMember_currentQuest()==7){
+                if(DBHandler.currentUserData.getMember_currentQuest()==6){
                     intent = new Intent(context, HintImageActivity.class);
                 }
                 else{
