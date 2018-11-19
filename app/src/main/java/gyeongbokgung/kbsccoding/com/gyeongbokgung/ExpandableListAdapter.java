@@ -3,6 +3,7 @@ package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,12 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +26,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> listDataHeader;
     private HashMap<String,List<String>> listHashMap;
     private int nowType=0;
+    private String TAG ="ExpandableListAdapter";
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listHashMap) {
         this.context = context;
@@ -148,8 +156,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
             DBHandler.currentUserData.setMember_numTutorial(2);
             //DB에도 업데이트
-            
-       //     SaveSharedPreference2.setNumTutorial(this.context);
+            InsertData task=new InsertData();
+            task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id());
+
+            //     SaveSharedPreference2.setNumTutorial(this.context);
       /*      if(DBHandler.numTutorial == 2) {
                 TextView box = MapsActivity.mapView.findViewById(R.id.box2);
                 TextView line1 = MapsActivity.mapView.findViewById(R.id.line2_1);
@@ -169,4 +179,96 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int i, int i1) {
         return true;
     }
+
+
+    class InsertData extends AsyncTask<String, Void,String > {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //  progressDialog = ProgressDialog.show(RestoreActivity.this,
+            //         "Please Wait", null, true, true);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            //  progressDialog.dismiss();
+
+            //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+            Log.d(TAG, "POST response  - " + result);
+
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String userID = (String)params[1];
+
+            String serverURL = (String)params[0];
+            String postParameters = "userID=" + userID;
+
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(50000);
+                httpURLConnection.setConnectTimeout(50000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(TAG, "POST response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+
+                bufferedReader.close();
+
+
+                return sb.toString();
+
+
+            } catch (Exception e) {
+
+                Log.d(TAG, "InsertData: Error ", e);
+                // onSignupFailed();
+                return new String("Error: " + e.getMessage());
+            }
+
+        }
+
+    }
+
 }

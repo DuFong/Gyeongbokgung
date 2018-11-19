@@ -17,7 +17,7 @@ public class SaveSharedPreference2 {
     public static void setNumTutorial(Context ctx)
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
-        editor.putInt(numTutorial, DBHandler.numTutorial);
+        editor.putInt(numTutorial, DBHandler.currentUserData.getMember_numTutorial());
         editor.commit();
     }
 
