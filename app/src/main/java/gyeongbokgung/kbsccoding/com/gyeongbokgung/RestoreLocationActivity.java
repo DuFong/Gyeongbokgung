@@ -21,7 +21,6 @@ public class RestoreLocationActivity extends AppCompatActivity {
     private LatLng mylocation;
     private LatLng destination;
     private String score;
-    private MapsActivity end_activity; //MapsActivity스텍을 담을 변수
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +33,23 @@ public class RestoreLocationActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "해당 위치까지 잘 오셨습니다.", Toast.LENGTH_LONG).show();
             score = String.valueOf(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getPoint());
             InsertData task=new InsertData();
-            task.execute("http://" + getString(R.string.ip_adrress)+ "/update.php", DBHandler.currentUserData.getMember_id(),score);
+            task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_DD.php", DBHandler.currentUserData.getMember_id(),score);
             DBHandler.currentUserData.setMember_score(DBHandler.currentUserData.getMember_score()+Integer.parseInt(score));
             DBHandler.currentUserData.setMember_currentQuest(DBHandler.currentUserData.getMember_currentQuest()+1);
-            end_activity = (MapsActivity)MapsActivity.mapsActivity;
-            end_activity.finish();
             gps.stopUsingGPS();
-            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-            startActivity(intent);
-            finish();
+
+            //TEST용 나중에 밑에 if문 삭제하고 else문 내용만 남기자
+            if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID() == 2 && DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()-1).getTitleID() != DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID())
+            {
+                Intent intent = new Intent(getApplicationContext(), VideoChapter1Activity.class);
+                startActivity(intent);
+                finish();
+            }
+            else {
+                Intent intent = new Intent(getApplicationContext(), ReceiveQuestActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
         else
         {

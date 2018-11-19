@@ -78,12 +78,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
         final String childText = (String)getChild(i,i1);
-        if(view == null)
-        {
-            LayoutInflater inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.list_quest_detail,null);
+        if(view == null) {
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.list_quest_detail, null);
         }
-
         TextView txtListChild = view.findViewById(R.id.listItem);
         Button buttonHint = view.findViewById(R.id.hint_button);
         if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getHint().equals("null")){
@@ -134,6 +132,22 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 context.startActivity(intent);
             }
         });
+
+        // 튜토리얼창 안보이게 하기
+        if(DBHandler.numTutorial == 1) {
+            TextView box = MapsActivity.mapView.findViewById(R.id.box1);
+            TextView line1 = MapsActivity.mapView.findViewById(R.id.line1_1);
+            TextView line2 = MapsActivity.mapView.findViewById(R.id.line1_2);
+            TextView explain = MapsActivity.mapView.findViewById(R.id.explain1);
+
+            box.setVisibility(View.GONE);
+            line1.setVisibility(View.GONE);
+            line2.setVisibility(View.GONE);
+            explain.setVisibility(View.GONE);
+
+            DBHandler.numTutorial++;
+            SaveSharedPreference2.setNumTutorial(this.context);
+        }
         return view;
     }
 

@@ -71,7 +71,7 @@ public class SignupActivity extends AppCompatActivity {
 
         // TODO: Implement your own signup logic here.
         InsertData task = new InsertData();
-        task.execute("http://" + getString(R.string.ip_adrress) + "/insert.php", userID,userPassword,userName);
+        task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/insert_DD.php", userID,userPassword,userName);
 
 
 

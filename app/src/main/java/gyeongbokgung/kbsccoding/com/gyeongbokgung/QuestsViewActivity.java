@@ -55,6 +55,7 @@ public class QuestsViewActivity extends AppCompatActivity {
                 new DividerItemDecoration(mRecyclerView.getContext(), mLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
+
         // 데이터 세팅
         mArrayList = DBHandler.questDataList;
 
@@ -87,7 +88,6 @@ public class QuestsViewActivity extends AppCompatActivity {
         for (String subTitle : ssTitle.keySet()) {
             multiMap.put(ssTitle.get(subTitle).getTitle(), ssTitle.get(subTitle));
         }
-
         // 어댑터 세팅
         sectionAdapter = new SectionedRecyclerViewAdapter();
 

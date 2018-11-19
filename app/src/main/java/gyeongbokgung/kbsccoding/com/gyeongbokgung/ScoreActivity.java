@@ -70,7 +70,7 @@ public class ScoreActivity extends AppCompatActivity {
             score = String.valueOf(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getPoint());
             Log.d(TAG2,"score 점수 업데이트");
             InsertData task=new InsertData();
-            task.execute("http://" + getString(R.string.ip_adrress)+ "/update.php", DBHandler.currentUserData.getMember_id(),score);
+            task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_DD.php", DBHandler.currentUserData.getMember_id(),score);
             DBHandler.currentUserData.setMember_score(DBHandler.currentUserData.getMember_score()+Integer.parseInt(score));
             Log.d(TAG,"이제 점수 추가");
             Log.d("점수점수", Integer.toString(DBHandler.currentUserData.getMember_score()));

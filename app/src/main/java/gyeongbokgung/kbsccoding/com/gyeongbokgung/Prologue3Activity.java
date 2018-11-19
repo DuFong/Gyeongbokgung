@@ -23,7 +23,7 @@ public class Prologue3Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "잠시만 기다려주세요",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+                Intent intent = new Intent(getApplicationContext(),ReceiveQuestActivity.class);
                 startActivity(intent);
                 finish();
             }
