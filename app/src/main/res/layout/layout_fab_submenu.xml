@@ -44,7 +44,6 @@
             android:src="@drawable/ic_power_settings"
             fab:fab_label="로그아웃"/>
 
-
     </com.github.clans.fab.FloatingActionMenu>
 
 
