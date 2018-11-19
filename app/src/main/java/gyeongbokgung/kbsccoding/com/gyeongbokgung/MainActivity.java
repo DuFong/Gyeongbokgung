@@ -13,11 +13,13 @@ public class MainActivity extends AppCompatActivity {
         {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
+            finish();
         } else
         {
             Intent i = new Intent(this, MapsActivity.class);
             i.putExtra("alreadyLogin",1);
             startActivity(i);
+            finish();
         }
     }
 }

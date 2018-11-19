@@ -6,31 +6,29 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -114,6 +112,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public static Activity mapsActivity;  // CompleteActivity에서 finsh하기 위함
 
+    private TextView box, line1, line2, explain;
+    public static View mapView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);// Retrieve location and camera position from saved instance state.
@@ -125,6 +126,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             //Log.d(TAG,DBHandler.currentUserData.getMember_id());
         }
         setContentView(R.layout.activity_maps);
+        mapView = this.getWindow().getDecorView();
 
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
@@ -183,6 +185,38 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab_ranking.setOnClickListener(clickListener);
         fab_quest.setOnClickListener(clickListener);
         fab_logout.setOnClickListener(clickListener);
+
+        // 튜토리얼 상황
+        if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
+            DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
+
+            if(DBHandler.numTutorial == 1) {
+                box = findViewById(R.id.box1);
+                line1 = findViewById(R.id.line1_1);
+                line2 = findViewById(R.id.line1_2);
+                explain = findViewById(R.id.explain1);
+
+                box.setVisibility(View.VISIBLE);
+                line1.setVisibility(View.VISIBLE);
+                line2.setVisibility(View.VISIBLE);
+                explain.setVisibility(View.VISIBLE);
+            }
+
+            else{
+
+            }
+        }
+        else {
+            box = findViewById(R.id.box3);
+            line1 = findViewById(R.id.line3_1);
+            line2 = findViewById(R.id.line3_2);
+            explain = findViewById(R.id.explain3);
+            box.setVisibility(View.GONE);
+            line1.setVisibility(View.GONE);
+            line2.setVisibility(View.GONE);
+            explain.setVisibility(View.GONE);
+        }
+
     }
 
     private void createCustomAnimation() {
@@ -205,6 +239,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onAnimationStart(Animator animation) {
                 fab_menu.getMenuIconView().setImageResource(fab_menu.isOpened()
                         ?  R.drawable.ic_menu:R.drawable.ic_close);
+                // 튜토리얼 상황
             }
         });
 
@@ -796,17 +831,41 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 case R.id.fab_quest:
                     intent = new Intent(MapsActivity.this,QuestsViewActivity.class);
                     startActivity(intent);
+                    // 튜토리얼 상황
                     break;
                 case R.id.fab_ranking:
                     intent = new Intent(MapsActivity.this,RankingActivity.class);
                     startActivity(intent);
+                    // 튜토리얼 상황
                     break;
                 case R.id.fab_logout:
                     SaveSharedPreference.clearUserName(getApplicationContext());
                     intent = new Intent(MapsActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    // 튜토리얼 상황
                     break;
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+        builder.setTitle("종료 확인");
+        builder.setMessage("정말 종료하시겠습니까?");
+        //오른쪽 버튼
+        builder.setPositiveButton("아니요", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        builder.setNegativeButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        builder.show();
+        // super.onBackPressed();  뒤로가기 막기
+    }
 }

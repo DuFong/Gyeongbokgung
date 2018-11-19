@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="gyeongbokgung.kbsccoding.com.gyeongbokgung">
+    package="gyeongbokgung.kbsccoding.com.gyeongbokgung">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -8,11 +8,11 @@
          location permissions for the 'MyLocation' functionality.
     -->
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -34,65 +34,63 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key"/>
+            android:value="@string/google_maps_key" />
 
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
 
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignupActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RankingActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ScoreActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".QuestsViewActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Prologue1Activity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Prologue2Activity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Prologue3Activity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HintActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HintImageActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RestoreActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Restore2Activity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Restore3Activity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ExplanationActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CompleteActivity"
             android:screenOrientation="portrait" />
@@ -104,14 +102,18 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".ReceiveQuestActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".VideoStartChapter1Activity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VideoStartChapter1Activity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".QuestDetailActivity"
             android:label="@string/title_activity_quest_detail"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".VideoStartChapter2Activity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".AfterEndingActivity"></activity>
     </application>
 
 </manifest>
