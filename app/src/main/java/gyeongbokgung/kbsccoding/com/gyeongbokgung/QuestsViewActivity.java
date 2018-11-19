@@ -158,7 +158,7 @@ public class QuestsViewActivity extends AppCompatActivity {
             itemHolder.rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(QuestsViewActivity.this,QuestDetailActivity.class);
+                    Intent intent = new Intent(QuestsViewActivity.this, QuestDetailActivity.class);
                     intent.putExtra("title", subTitle); // 데이터 송신
                     startActivity(intent);
                 }

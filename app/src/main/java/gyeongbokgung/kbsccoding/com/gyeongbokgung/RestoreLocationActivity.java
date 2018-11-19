@@ -72,7 +72,7 @@ public class RestoreLocationActivity extends AppCompatActivity {
         // 현재 나의 위도 경도를 변수에 저장.
         mylocation = new LatLng(gps.getLatitude(),gps.getLongitude());
         //******* 일단 야매로 도착지 위도 경도 넣기 ******* 나중에 꼭 수정하기********
-        destination = new LatLng(37.494630, 126.960156);
+        destination = new LatLng(37.494630,126.960156);
 
         // 거리 차이가 10m 이하 일때는 도착지에 도착했다.
         if(distance(mylocation.latitude, mylocation.longitude,destination.latitude,destination.longitude) < 10)

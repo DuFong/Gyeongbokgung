@@ -21,8 +21,7 @@
         tools:context="com.kbsccoding.examples.gyeongbokgung.MapsActivity"/>
 
     <include layout="@layout/layout_fab_submenu"/>
-    <include
-        layout="@layout/layout_quest" />
+    <include layout="@layout/layout_quest" />
 
     <TextView
         android:id="@+id/box1"

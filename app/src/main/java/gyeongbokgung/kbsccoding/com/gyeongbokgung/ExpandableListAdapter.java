@@ -160,6 +160,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id());
 
             //     SaveSharedPreference2.setNumTutorial(this.context);
+
       /*      if(DBHandler.numTutorial == 2) {
                 TextView box = MapsActivity.mapView.findViewById(R.id.box2);
                 TextView line1 = MapsActivity.mapView.findViewById(R.id.line2_1);

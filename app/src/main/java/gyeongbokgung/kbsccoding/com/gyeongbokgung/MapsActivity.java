@@ -195,6 +195,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
         //    DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
             if(DBHandler.currentUserData.getMember_numTutorial() == 1) {
+               // mapView.setBackgroundColor(getResources().getColor(R.color.darkBackground));
 
                 box = findViewById(R.id.box1);
                 line1 = findViewById(R.id.line1_1);
@@ -625,7 +626,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 int type = item.getInt("type");
                 double latitude = item.getDouble("latitude");
                 double longitude = item.getDouble("longitude");
-
+                Log.d("왜안나와", rowID +" : " + latitude);
 
                 Quest quest = new Quest(titleID, subID, rowID, title, subTitle, description, sumDescription, goal, goal2, goal3, hint, explanation, point, type,latitude, longitude);
 
@@ -643,7 +644,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listHash);
             listView.setAdapter(listAdapter);
         } catch (JSONException e) {
-
+            Log.d("왜안나와", String.valueOf(e));
 
         }
 
@@ -654,7 +655,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
 
-        Log.d(TAG, "init" + DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
+        Log.d("왜안나와", "init" + DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         listDataHeader.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         List<String> showQuest = new ArrayList<>();
         showQuest.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSumDescription());
