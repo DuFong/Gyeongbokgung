@@ -148,7 +148,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
             DBHandler.currentUserData.setMember_numTutorial(2);
             //DB에도 업데이트
-            
+
        //     SaveSharedPreference2.setNumTutorial(this.context);
       /*      if(DBHandler.numTutorial == 2) {
                 TextView box = MapsActivity.mapView.findViewById(R.id.box2);
