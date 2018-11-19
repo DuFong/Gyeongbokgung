@@ -194,7 +194,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // 튜토리얼 상황
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
         //    DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
-            if(DBHandler.numTutorial == 1) {
+            if(DBHandler.currentUserData.getMember_numTutorial() == 1) {
 
                 box = findViewById(R.id.box1);
                 line1 = findViewById(R.id.line1_1);
