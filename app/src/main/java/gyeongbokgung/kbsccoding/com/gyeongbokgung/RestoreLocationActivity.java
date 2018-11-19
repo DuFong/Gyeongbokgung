@@ -34,7 +34,7 @@ public class RestoreLocationActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "해당 위치까지 잘 오셨습니다.", Toast.LENGTH_LONG).show();
             score = String.valueOf(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getPoint());
             InsertData task=new InsertData();
-            task.execute("http://" + getString(R.string.ip_adrress)+ "/update.php", DBHandler.currentUserData.getMember_id(),score);
+            task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_DD.php", DBHandler.currentUserData.getMember_id(),score);
             DBHandler.currentUserData.setMember_score(DBHandler.currentUserData.getMember_score()+Integer.parseInt(score));
             DBHandler.currentUserData.setMember_currentQuest(DBHandler.currentUserData.getMember_currentQuest()+1);
             end_activity = (MapsActivity)MapsActivity.mapsActivity;
