@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReceiveQuestActivity"
+    android:layout_marginTop="30dp"
+    android:orientation="vertical">>
+
+    <TextView
+        android:id="@+id/chapter_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_weight="3"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/quest_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_weight="8"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/confirm_quest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="60dp"
+        android:layout_weight="1"
+        android:text="확인"
+        android:textSize="20sp" />
+
+</LinearLayout>

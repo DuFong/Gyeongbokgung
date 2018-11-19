@@ -95,8 +95,18 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".CompleteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RestoreLocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VideoChapter1Activity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ReceiveQuestActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".RestoreLocationActivity"/>
+        <activity android:name=".VideoStartChapter1Activity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".QuestDetailActivity"
             android:label="@string/title_activity_quest_detail"

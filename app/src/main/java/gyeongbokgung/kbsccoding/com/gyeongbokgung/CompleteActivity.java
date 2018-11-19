@@ -37,15 +37,30 @@ public class CompleteActivity extends AppCompatActivity {
     void fin() {
         DBHandler.currentUserData.setMember_currentQuest(DBHandler.currentUserData.getMember_currentQuest()+1);
         Log.d(TAG, String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
-        end_activity.finish();
-        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-        startActivity(intent);
-        finish();
+        if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()-1).getTitleID() == DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID())
+        {
+            Intent intent = new Intent(getApplicationContext(), ReceiveQuestActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        // 튜토리얼이 끝나고 1장 오프닝
+        else if (DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID() == 1) {
+            Intent intent = new Intent(getApplicationContext(), VideoStartChapter1Activity.class);
+            startActivity(intent);
+            finish();
+        }
+        // 1장이 끝나고 1장 엔딩
+        else if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID() == 2)    //나머지 챕터 엔딩영상 만들면 주석해제하자;
+        {
+            Intent intent = new Intent(getApplicationContext(), VideoChapter1Activity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(this, "뒤 로갈 수 없습니다. 확인버튼을 누르세요~", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "뒤로 갈 수 없습니다. 확인버튼을 누르세요~", Toast.LENGTH_SHORT).show();
        // super.onBackPressed();  뒤로가기 막기
     }
 }
