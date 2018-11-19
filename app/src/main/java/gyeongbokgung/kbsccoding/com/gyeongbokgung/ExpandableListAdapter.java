@@ -132,6 +132,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 context.startActivity(intent);
             }
         });
+        Log.d("numTorial", Integer.toString(DBHandler.numTutorial));
 
         // 튜토리얼창 안보이게 하기
         if(DBHandler.numTutorial == 1) {
@@ -146,7 +147,19 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             explain.setVisibility(View.GONE);
 
             DBHandler.numTutorial++;
-            SaveSharedPreference2.setNumTutorial(this.context);
+            //DB에도 업데이트
+       //     SaveSharedPreference2.setNumTutorial(this.context);
+      /*      if(DBHandler.numTutorial == 2) {
+                TextView box = MapsActivity.mapView.findViewById(R.id.box2);
+                TextView line1 = MapsActivity.mapView.findViewById(R.id.line2_1);
+                TextView line2 = MapsActivity.mapView.findViewById(R.id.line2_2);
+                TextView explain = MapsActivity.mapView.findViewById(R.id.explain2);
+
+                box.setVisibility(View.GONE);
+                line1.setVisibility(View.GONE);
+                line2.setVisibility(View.GONE);
+                explain.setVisibility(View.GONE);
+            }*/
         }
         return view;
     }

@@ -186,8 +186,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // 튜토리얼 상황
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
-            DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
-
+        //    DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
             if(DBHandler.numTutorial == 1) {
                 box = findViewById(R.id.box1);
                 line1 = findViewById(R.id.line1_1);
@@ -205,10 +204,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
         else {
-            box = findViewById(R.id.box3);
-            line1 = findViewById(R.id.line3_1);
-            line2 = findViewById(R.id.line3_2);
-            explain = findViewById(R.id.explain3);
+            box = findViewById(R.id.box1);
+            line1 = findViewById(R.id.line1_1);
+            line2 = findViewById(R.id.line1_2);
+            explain = findViewById(R.id.explain1);
             box.setVisibility(View.GONE);
             line1.setVisibility(View.GONE);
             line2.setVisibility(View.GONE);
