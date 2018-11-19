@@ -19,6 +19,9 @@ public class Quest implements Serializable {
     private String explanation;
     private int point;
     private int type;
+    private double latitude;
+    private double longitude;
+
 
     // TODO: drawable, color 변경
     static int drawable = R.drawable.image1;
@@ -27,19 +30,26 @@ public class Quest implements Serializable {
     @Override
     public String toString() {
         return "Quest{" +
-                "rowID=" + rowID +
+                "titleID=" + titleID +'\'' +
+                "subID=" + subID +'\'' +
+                "rowID=" + rowID +'\'' +
                 ", title='" + title + '\'' +
                 ", subTitle='" + subTitle + '\'' +
                 ", description='" + description + '\'' +
                 ", sumDescription='" + sumDescription + '\'' +
                 ", goal='" + goal + '\'' +
+                ", goal2='" + goal2 + '\'' +
+                ", goal3='" + goal3 + '\'' +
                 ", hint='" + hint + '\'' +
+                ", explanation='" + explanation + '\'' +
                 ", type='" + type + '\'' +
-                ", point=" + point +
+                ", point=" + point +'\'' +
+                ", latitude=" + latitude +'\'' +
+                ", longitude=" + longitude +
                 '}';
     }
 
-    public Quest(int titleID, int subID, int rowID, String title, String subTitle, String description, String sumDescription, String goal, String hint, String explanation, int point, int type) {
+    public Quest(int titleID, int subID, int rowID, String title, String subTitle, String description, String sumDescription, String goal, String goal2, String goal3, String hint, String explanation, int point, int type,double latitude,double longitude) {
         this.titleID = titleID;
         this.subID = subID;
         this.rowID = rowID;
@@ -48,10 +58,14 @@ public class Quest implements Serializable {
         this.description = description;
         this.sumDescription = sumDescription;
         this.goal = goal;
+        this.goal2 = goal2;
+        this.goal3 = goal3;
         this.hint = hint;
         this.explanation = explanation;
         this.point = point;
         this.type = type;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public int getRowID() {
@@ -158,12 +172,25 @@ public class Quest implements Serializable {
     public void setPoint(int Point) {
         this.point = Point;
     }
+
     public int getType() {
         return type;
     }
 
     public void setType(int Type) {
         this.type = Type;
+    }
+
+    public double getLatitude() { return latitude; }
+
+    public void setLatitude(double Latitude) { this.latitude = Latitude; }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double Longitude) {
+        this.latitude = Longitude;
     }
 
 }

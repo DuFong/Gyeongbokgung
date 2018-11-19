@@ -567,13 +567,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String description = item.getString("description");
                 String sumDescription = item.getString("sumDescription");
                 String goal = item.getString("goal");
+                String goal2 = item.getString("goal2");
+                String goal3 = item.getString("goal3");
                 String hint = item.getString("hint");
                 String explanation = item.getString("explanation");
                 int point = item.getInt("point");
                 int type = item.getInt("type");
+                double latitude = item.getDouble("latitude");
+                double longitude = item.getDouble("longitude");
 
 
-                Quest quest = new Quest(titleID, subID, rowID, title, subTitle, description, sumDescription, goal, hint, explanation, point, type);
+                Quest quest = new Quest(titleID, subID, rowID, title, subTitle, description, sumDescription, goal, goal2, goal3, hint, explanation, point, type,latitude, longitude);
 
 
                 DBHandler.questDataList.add(quest);
@@ -719,6 +723,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         int dbrank=0;
         int dbidx=0;
         int dbcurrent=0;
+        int dbnumTutorial=0;
 
         try {
             Log.d(TAG,"~~~1s");
@@ -751,6 +756,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Log.d(TAG,"userScore 후");
                 dbrank=item.getInt("userRank");
                 dbcurrent=item.getInt("currentQuest");
+                dbnumTutorial=item.getInt("numTutorial");
 
 
                 System.out.println(item.getString("userName"));
@@ -769,6 +775,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             DBHandler.currentUserData.setMember_rank(dbrank);
             DBHandler.currentUserData.setMember_idx(dbidx);
             DBHandler.currentUserData.setMember_currentQuest(dbcurrent);
+            DBHandler.currentUserData.setMember_numTutorial(dbnumTutorial);
             Log.d(TAG,"currentUserData 업데이트됨 !!s");
 
             // SaveSharedPreference.getInstance(LoginActivity.this).saveUserInfo(DBHandler.currentUserData);
