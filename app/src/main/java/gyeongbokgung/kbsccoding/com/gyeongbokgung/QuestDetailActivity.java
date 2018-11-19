@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
@@ -40,6 +41,8 @@ public class QuestDetailActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private ImageButton leftNav;
+    private ImageButton rightNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,20 @@ public class QuestDetailActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+        leftNav = (ImageButton) findViewById(R.id.left_nav);
+        rightNav = (ImageButton) findViewById(R.id.right_nav);
+        leftNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               mViewPager.arrowScroll(ViewPager.FOCUS_LEFT);
+            }
+        });
+        rightNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPager.arrowScroll(ViewPager.FOCUS_RIGHT);
+            }
+        });
         mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
@@ -140,6 +157,7 @@ public class QuestDetailActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+
         public PlaceholderFragment() {
         }
 
@@ -165,6 +183,7 @@ public class QuestDetailActivity extends AppCompatActivity {
             tv_description.setText(subList.get(i).getDescription());
             return rootView;
         }
+
     }
 
     /**
@@ -189,5 +208,8 @@ public class QuestDetailActivity extends AppCompatActivity {
             // Show 3 total pages.
             return subList.size();
         }
+
+
     }
+
 }

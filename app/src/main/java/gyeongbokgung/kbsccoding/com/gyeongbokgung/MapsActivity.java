@@ -27,8 +27,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,8 +103,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     //  public static ArrayList<Quest> questDataList;   //퀘스트 데이터
     private String mJsonString;
     private String mJsonString_quest;
-    private int position =0;
-    private int loginState=0;
+    private int position = 0;
+    private int loginState = 0;
+
     // FloatingActionMenu
     private FloatingActionMenu fab_menu;
     private com.github.clans.fab.FloatingActionButton fab_quest;
@@ -110,6 +113,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private com.github.clans.fab.FloatingActionButton fab_logout;
     private Handler mUiHandler = new Handler();
 
+    // current location btn
+    private ImageButton btn_current_location;
     public static Activity mapsActivity;  // CompleteActivity에서 finsh하기 위함
 
     private TextView box, line1, line2, explain;
@@ -119,8 +124,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);// Retrieve location and camera position from saved instance state.
         Intent intent = getIntent();
-        loginState = intent.getIntExtra("alreadyLogin",0);
-        if(loginState==1){
+        loginState = intent.getIntExtra("alreadyLogin", 0);
+        if (loginState == 1) {
             GetData_set task2 = new GetData_set();
             task2.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/query_DD.php", SaveSharedPreference.getUserName(getApplicationContext()));
             //Log.d(TAG,DBHandler.currentUserData.getMember_id());
@@ -137,7 +142,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapsActivity = MapsActivity.this;
 
         GetData task = new GetData();
-        task.execute( "http://" + "gyeongbokgung.dothome.co.kr" + "/getQuest_DD.php", "");
+        task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/getQuest_DD.php", "");
 
 
         // 화면상단 메인퀘스트 표시
@@ -188,9 +193,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // 튜토리얼 상황
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
-            DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
+        //    DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
+            if(DBHandler.currentUserData.getMember_numTutorial() == 1) {
 
-            if(DBHandler.numTutorial == 1) {
                 box = findViewById(R.id.box1);
                 line1 = findViewById(R.id.line1_1);
                 line2 = findViewById(R.id.line1_2);
@@ -202,7 +207,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 explain.setVisibility(View.VISIBLE);
             }
 
-            else{
+            else {
 
             }
         }
@@ -217,6 +222,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             explain.setVisibility(View.GONE);
         }
 
+        // current location button 세팅
+        btn_current_location = (ImageButton) findViewById(R.id.btn_current_location);
+        btn_current_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG,"내위치내위치ㅡㅡ" );
+                getDeviceLocation();
+            }
+        });
     }
 
     private void createCustomAnimation() {
@@ -238,7 +252,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onAnimationStart(Animator animation) {
                 fab_menu.getMenuIconView().setImageResource(fab_menu.isOpened()
-                        ?  R.drawable.ic_menu:R.drawable.ic_close);
+                        ? R.drawable.ic_menu : R.drawable.ic_close);
                 // 튜토리얼 상황
             }
         });
@@ -262,18 +276,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    /**
-     * Sets up the options menu.
-     *
-     * @param menu The options menu.
-     * @return Boolean.
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.current_place_menu, menu);
-        return true;
-    }
+//    /**
+//     * Sets up the options menu.
+//     *
+//     * @param menu The options menu.
+//     * @return Boolean.
+//     */
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.current_place_menu, menu);
+//        return true;
+//    }
 
     /**
      * Handles a click on the menu option to get a place.
@@ -281,13 +295,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * @param item The menu item to handle.
      * @return Boolean.
      */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.option_get_place) {
-            showCurrentPlace();
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == R.id.option_get_place) {
+//            showCurrentPlace();
+//        }
+//        return true;
+//    }
+
 
     /**
      * Manipulates the map once available.
@@ -354,7 +369,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()&&task.getResult()!=null) {
+                        if (task.isSuccessful() && task.getResult() != null) {
                             // Set the map's camera position to the current location of the device.
                             mLastKnownLocation = task.getResult();
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
@@ -484,13 +499,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             super.onPostExecute(result);
             progressDialog.dismiss();
 //            mTextViewResult.setText(result);
-              Log.d(TAG, "response - " + result);
+            Log.d(TAG, "response - " + result);
 
             if (result == null) {
 
                 //   mTextViewResult.setText(errorString);
             } else {
-                Log.d(TAG,"!!!result Quest"+result);
+                Log.d(TAG, "!!!result Quest" + result);
                 mJsonString_quest = result;
 
                 showResult();
@@ -548,13 +563,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
                 bufferedReader.close();
-                Log.d(TAG,"!!!!!!Quest sb.tostring"+sb.toString().trim());
+                Log.d(TAG, "!!!!!!Quest sb.tostring" + sb.toString().trim());
                 return sb.toString().trim();
 
 
             } catch (Exception e) {
 
-                         Log.d(TAG, "GetData : Error ", e);
+                Log.d(TAG, "GetData : Error ", e);
                 errorString = e.toString();
 
                 return null;
@@ -583,8 +598,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         try {
 
-            Log.d(TAG,"quest try들어옴");
-            Log.d(TAG,"!!!mJsonString"+mJsonString_quest);
+            Log.d(TAG, "quest try들어옴");
+            Log.d(TAG, "!!!mJsonString" + mJsonString_quest);
             JSONObject jsonObject = new JSONObject(mJsonString_quest.substring(mJsonString_quest.indexOf("{"), mJsonString_quest.lastIndexOf("}") + 1));
             //  JSONObject jsonObject = new JSONObject(mJsonString_quest);
             Log.d(TAG, "!!!~~JSONObject: " + jsonObject.toString());
@@ -638,9 +653,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
 
-        Log.d(TAG,"init"+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
+        Log.d(TAG, "init" + DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         listDataHeader.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
-        List<String> showQuest= new ArrayList<>();
+        List<String> showQuest = new ArrayList<>();
         showQuest.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSumDescription());
 
         listHash.put(listDataHeader.get(0), showQuest);
@@ -669,12 +684,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             Log.d(TAG, "response - " + result);
 
-            if (result == null){
+            if (result == null) {
 
                 //mTextViewResult.setText(errorString);
-                Log.d(TAG,"null로 들어옴 :(errorString): "+errorString);
-            }
-            else {
+                Log.d(TAG, "null로 들어옴 :(errorString): " + errorString);
+            } else {
 
                 mJsonString = result;
                 showResult_set();
@@ -688,7 +702,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             String serverURL = params[0];
             String postParameters = "userID=" + params[1];
 /////////////////////////////////////////////////////////////////////////////////////////////
-            Log.d(TAG,"param: "+params[1]);
+            Log.d(TAG, "param: " + params[1]);
             try {
 
                 URL url = new URL(serverURL);
@@ -712,10 +726,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Log.d(TAG, "response code - " + responseStatusCode);
 
                 InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
-                }
-                else{
+                } else {
                     inputStream = httpURLConnection.getErrorStream();
                 }
 
@@ -726,18 +739,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 StringBuilder sb = new StringBuilder();
                 String line;
 
-                while((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     sb.append(line);
                 }
 
                 bufferedReader.close();
-                Log.d(TAG,"~~~결과뚜뚜뚜:"+sb.toString().trim());
+                Log.d(TAG, "~~~결과뚜뚜뚜:" + sb.toString().trim());
                 return sb.toString().trim();
 
 
             } catch (Exception e) {
                 //  Log.d("로그인", "ID없음");
-                Log.d(TAG, "GetData : Error "+e);
+                Log.d(TAG, "GetData : Error " + e);
                 errorString = e.toString();
 
                 return null;
@@ -745,11 +758,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
     }
-    private void showResult_set(){
 
-        String TAG_JSON="gyeongbokgung";
+    private void showResult_set() {
+
+        String TAG_JSON = "gyeongbokgung";
         String TAG_ID = "userID";
         String TAG_NAME = "userName";
+
         String TAG_PASSWORD="userPassword";
         String dbpw="";
         String dbid="";
@@ -761,11 +776,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         int dbnumTutorial=0;
 
         try {
-            Log.d(TAG,"~~~1s");
-            Log.d(TAG,"~~~mJsonStrings"+mJsonString);
+            Log.d(TAG, "~~~1s");
+            Log.d(TAG, "~~~mJsonStrings" + mJsonString);
             // JSONObject jsonObject = new JSONObject(mJsonString);
             JSONObject jsonObject = new JSONObject(mJsonString.substring(mJsonString.indexOf("{"), mJsonString.lastIndexOf("}") + 1));
-            Log.d(TAG,"~~~2s");
+            Log.d(TAG, "~~~2s");
             //  Log.d(TAG,"~~~~~@@@:"+jsonObject.toString());
             // Log.d(TAG,"~~~~!!!!!:"+jsonObject.get("userPassword").toString());
             // Log.d(TAG,"~~~~~@@@:"+jsonObject.toString());
@@ -773,15 +788,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             //JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
             Log.d(TAG, String.valueOf(jsonArray.length()));
-            Log.d(TAG,"~~~3s");
+            Log.d(TAG, "~~~3s");
 
-            for(int i=0;i<jsonArray.length();i++) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 Log.d("로그인s", "for문 들어옴");
 
                 JSONObject item = jsonArray.getJSONObject(i);
                 Log.d("로그인s", "for문 들어옴item");
                 String idx = item.getString("idx");
                 System.out.println(item.getString("userPassword"));
+
                 dbpw=item.getString("userPassword");
                 dbid=item.getString("userID");
                 dbname=item.getString("userName");
@@ -810,6 +826,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             DBHandler.currentUserData.setMember_rank(dbrank);
             DBHandler.currentUserData.setMember_idx(dbidx);
             DBHandler.currentUserData.setMember_currentQuest(dbcurrent);
+
             DBHandler.currentUserData.setMember_numTutorial(dbnumTutorial);
             Log.d(TAG,"currentUserData 업데이트됨 !!s");
 
@@ -817,7 +834,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         } catch (JSONException e) {
 
-            Log.d(TAG, "catch로 들어옴 showResult : s"+e);
+            Log.d(TAG, "catch로 들어옴 showResult : s" + e);
         }
 
     }
@@ -827,14 +844,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         public void onClick(View view) {
             Intent intent;
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.fab_quest:
-                    intent = new Intent(MapsActivity.this,QuestsViewActivity.class);
+                    intent = new Intent(MapsActivity.this, QuestsViewActivity.class);
                     startActivity(intent);
                     // 튜토리얼 상황
                     break;
                 case R.id.fab_ranking:
-                    intent = new Intent(MapsActivity.this,RankingActivity.class);
+                    intent = new Intent(MapsActivity.this, RankingActivity.class);
                     startActivity(intent);
                     // 튜토리얼 상황
                     break;
