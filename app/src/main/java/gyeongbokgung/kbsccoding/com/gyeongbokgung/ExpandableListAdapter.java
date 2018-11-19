@@ -132,6 +132,22 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 context.startActivity(intent);
             }
         });
+
+        // 튜토리얼창 안보이게 하기
+        if(DBHandler.numTutorial == 1) {
+            TextView box = MapsActivity.mapView.findViewById(R.id.box1);
+            TextView line1 = MapsActivity.mapView.findViewById(R.id.line1_1);
+            TextView line2 = MapsActivity.mapView.findViewById(R.id.line1_2);
+            TextView explain = MapsActivity.mapView.findViewById(R.id.explain1);
+
+            box.setVisibility(View.GONE);
+            line1.setVisibility(View.GONE);
+            line2.setVisibility(View.GONE);
+            explain.setVisibility(View.GONE);
+
+            DBHandler.numTutorial++;
+            SaveSharedPreference2.setNumTutorial(this.context);
+        }
         return view;
     }
 
