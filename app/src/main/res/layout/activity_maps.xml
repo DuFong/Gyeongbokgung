@@ -21,7 +21,6 @@
         tools:context="com.kbsccoding.examples.gyeongbokgung.MapsActivity"/>
 
     <include layout="@layout/layout_fab_submenu"/>
-
     <include
         layout="@layout/layout_quest" />
 
@@ -70,5 +69,13 @@
         android:padding="7dp"
         android:textColor="#050253"
         android:text="현재 퀘스트의 내용을 볼 수\n있습니다. 눌러보세요!"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_current_location"
+        android:src="@drawable/ic_my_location"/>
 
 </RelativeLayout>

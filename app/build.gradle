@@ -19,6 +19,7 @@ android {
 }
 
 dependencies {
+    api 'com.android.support:design:27.1.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
@@ -38,6 +39,5 @@ dependencies {
     implementation 'com.google.guava:guava-collections:r03'
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
     implementation 'com.github.clans:fab:1.6.4'
-
 }
 apply plugin: 'com.google.gms.google-services'

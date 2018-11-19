@@ -132,6 +132,7 @@ public class QuestsViewActivity extends AppCompatActivity {
             this.context = context;
             this.title = title;
             this.list = list;
+            expanded = false;
         }
 
 

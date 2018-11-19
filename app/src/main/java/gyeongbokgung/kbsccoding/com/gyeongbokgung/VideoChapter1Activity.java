@@ -34,7 +34,7 @@ public class VideoChapter1Activity extends AppCompatActivity {
         after_timer = new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), ReceiveQuestActivity.class);
+                Intent intent = new Intent(getApplicationContext(), VideoStartChapter2Activity.class);
                 startActivity(intent);
                 finish();
             }

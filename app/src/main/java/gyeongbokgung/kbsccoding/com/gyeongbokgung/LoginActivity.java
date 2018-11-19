@@ -210,6 +210,7 @@ public class LoginActivity extends AppCompatActivity {
         int dbrank=0;
         int dbidx=0;
         int dbcurrent=0;
+        int dbnumTutorial = 0;
 
         try {
             Log.d(TAG,"~~~1");
@@ -242,6 +243,7 @@ public class LoginActivity extends AppCompatActivity {
                 dbscore=item.getInt("userScore");
                 dbrank=item.getInt("userRank");
                 dbcurrent=item.getInt("currentQuest");
+                dbnumTutorial=item.getInt("numTutorial");
 
 
                 System.out.println(item.getString("userName"));
@@ -260,6 +262,7 @@ public class LoginActivity extends AppCompatActivity {
             DBHandler.currentUserData.setMember_rank(dbrank);
             DBHandler.currentUserData.setMember_idx(dbidx);
             DBHandler.currentUserData.setMember_currentQuest(dbcurrent);
+            DBHandler.currentUserData.setMember_numTutorial(dbnumTutorial);
 
 
            // SaveSharedPreference.getInstance(LoginActivity.this).saveUserInfo(DBHandler.currentUserData);

@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
@@ -40,6 +41,8 @@ public class QuestDetailActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private ImageButton leftNav;
+    private ImageButton rightNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,7 @@ public class QuestDetailActivity extends AppCompatActivity {
 
         // 테스트용 데이터 세팅
         ArrayList<Quest> mArrayList = new ArrayList<>();
-        mArrayList.add(new Quest(0, 0, 0, "튜토리얼", "조선총독부 철거!", "일본은 우리나라의 국권을 빼앗고 강제로 통치하기 위해 경복궁 앞에 조선총독부를 세웠습니다. 우선 조선총독부를 철거해야 합니다. 광화문으로 이동하시오.", "광화문으로 이동하시오.", "광화문 근처 이동 시", "", "", 10, 0));
+   /*     mArrayList.add(new Quest(0, 0, 0, "튜토리얼", "조선총독부 철거!", "일본은 우리나라의 국권을 빼앗고 강제로 통치하기 위해 경복궁 앞에 조선총독부를 세웠습니다. 우선 조선총독부를 철거해야 합니다. 광화문으로 이동하시오.", "광화문으로 이동하시오.", "광화문 근처 이동 시", "", "", 10, 0));
         mArrayList.add(new Quest(0, 0, 1, "튜토리얼", "조선총독부 철거!", "광화문에서 경복궁을 바라보시오. 현재 앞에는 OOOOO가 경복궁을 가로막고 있습니다. ", "현재 OOOOO가 경복궁을 가로막고 있습니다.", "조선총독부", "우린 이것을 철거해야 한다.", "일제 강점기에 조선을 지배했던 식민 통치 기구이다. 35년간 사실상 한반도의 정부 노릇을 했으며, 민족정기를 말살하고 조선인을 탄압하는 정치를 폈다.\n" +
                 "조선의 법궁인 경복궁 안에 세웠던 조선 총독부\n" +
                 "조선의 임금들이 나랏일을 보던 근정전을 가로막고 서 있었다. 이 건물은 해방 후 중앙청과 국립중앙박물관으로 사용되다가, 1995년 김영삼 정부 때 완전히 철거되어 지금은 사라지고 없다.\n" +
@@ -62,7 +65,7 @@ public class QuestDetailActivity extends AppCompatActivity {
         mArrayList.add(new Quest(1, 2, 4, "행사의 장", "반반", "지정된 위치로 이동하시오.", "", "", "", "", 1, 0));
         mArrayList.add(new Quest(1, 2, 5, "행사의 장", "반반", "인왕산과 북악산.....", "", "", "", "", 1, 0));
         mArrayList.add(new Quest(1, 2, 6, "행사의 장", "반반", "석견, 새끼석견...", "", "", "", "", 1, 0));
-
+*/
 
         subList = new ArrayList<>();
         for(int i=0;i<mArrayList.size();i++){
@@ -89,6 +92,20 @@ public class QuestDetailActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+        leftNav = (ImageButton) findViewById(R.id.left_nav);
+        rightNav = (ImageButton) findViewById(R.id.right_nav);
+        leftNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               mViewPager.arrowScroll(ViewPager.FOCUS_LEFT);
+            }
+        });
+        rightNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPager.arrowScroll(ViewPager.FOCUS_RIGHT);
+            }
+        });
         mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
@@ -140,6 +157,7 @@ public class QuestDetailActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+
         public PlaceholderFragment() {
         }
 
@@ -165,6 +183,7 @@ public class QuestDetailActivity extends AppCompatActivity {
             tv_description.setText(subList.get(i).getDescription());
             return rootView;
         }
+
     }
 
     /**
@@ -189,5 +208,8 @@ public class QuestDetailActivity extends AppCompatActivity {
             // Show 3 total pages.
             return subList.size();
         }
+
+
     }
+
 }
