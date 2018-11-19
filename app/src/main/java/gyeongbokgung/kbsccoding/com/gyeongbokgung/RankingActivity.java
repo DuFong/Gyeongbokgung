@@ -70,7 +70,7 @@ public class RankingActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
 
         GetData task = new GetData();
-        task.execute( "http://" + getString(R.string.ip_adrress) + "/getjson22.php", "");
+        task.execute( "http://" + "gyeongbokgung.dothome.co.kr" + "/getjson_rank_D.php", "");
         //   }
         // });
 
@@ -181,7 +181,7 @@ public class RankingActivity extends AppCompatActivity {
 
 
         //  String TAG_COUNTRY ="country";
-        String TAG_JSON="proj_manager";
+        String TAG_JSON="gyeongbokgung";
         String TAG_RANK = "userRank";
         String TAG_NAME = "userName";
         String TAG_SCORE="userScore";
