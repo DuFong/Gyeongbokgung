@@ -213,7 +213,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
         else {
-
             box = findViewById(R.id.box1);
             line1 = findViewById(R.id.line1_1);
             line2 = findViewById(R.id.line1_2);
@@ -634,7 +633,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 DBHandler.questDataList.add(quest);
                 Log.d(TAG, "questDataList 추가");
-                Log.d(TAG, "quest:" + quest.toString());
+                Log.d("라라라", "quest:" + quest.toString());
+                Log.d("라라라", String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
                 Log.d(TAG, DBHandler.questDataList.get(0).getTitle());
 
             }
