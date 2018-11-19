@@ -37,11 +37,17 @@ public class RestoreLocationActivity extends AppCompatActivity {
             DBHandler.currentUserData.setMember_score(DBHandler.currentUserData.getMember_score()+Integer.parseInt(score));
             DBHandler.currentUserData.setMember_currentQuest(DBHandler.currentUserData.getMember_currentQuest()+1);
             gps.stopUsingGPS();
-
+            Log.d("CHECK!!", String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
             //TEST용 나중에 밑에 if문 삭제하고 else문 내용만 남기자
             if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID() == 2 && DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()-1).getTitleID() != DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID())
             {
                 Intent intent = new Intent(getApplicationContext(), VideoChapter1Activity.class);
+                startActivity(intent);
+                finish();
+            }
+            else if(DBHandler.currentUserData.getMember_currentQuest()==5){
+                Log.d("CHECK!!","4로 들어왔다!!!!!");
+                Intent intent = new Intent(getApplicationContext(), ExplanationImageActivity.class);
                 startActivity(intent);
                 finish();
             }

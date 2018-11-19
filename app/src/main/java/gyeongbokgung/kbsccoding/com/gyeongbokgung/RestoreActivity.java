@@ -71,6 +71,11 @@ public class RestoreActivity extends AppCompatActivity {
             //점수 올리기
             explanation=DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getExplanation();
             //APP current도 올려줘야함!
+            if(DBHandler.currentUserData.getMember_currentQuest()==4){
+                Intent intent = new Intent(getApplicationContext(),ExplanationImageActivity.class);
+                startActivity(intent);
+                finish();
+            }
             if (explanation.equals("null")){
                 Intent intent = new Intent(getApplicationContext(),CompleteActivity.class);
                 startActivity(intent);

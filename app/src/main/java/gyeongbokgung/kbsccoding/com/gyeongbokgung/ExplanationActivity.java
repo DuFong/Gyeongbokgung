@@ -33,7 +33,7 @@ public class ExplanationActivity extends AppCompatActivity {
     //    TextView mExplain = (TextView) findViewById(R.id.tv_explanation);
      //   Button btnNext = (Button) findViewById(R.id.btn_next);
 
-        mExplain.setText("배경지식 : "+explanation);
+        mExplain.setText(explanation);
 
 
     }
