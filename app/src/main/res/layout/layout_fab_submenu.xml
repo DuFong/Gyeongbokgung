@@ -41,9 +41,8 @@
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_logout"
             style="@style/MenuButtonsStyle"
-            android:src="@drawable/ic_ranking"
+            android:src="@drawable/ic_power_settings"
             fab:fab_label="로그아웃"/>
-
 
     </com.github.clans.fab.FloatingActionMenu>
 
