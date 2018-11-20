@@ -229,7 +229,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-<<<<<<< HEAD
+
 
     class InsertData extends AsyncTask<String, Void,String > {
 
@@ -323,6 +323,4 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     }
 
-=======
->>>>>>> 35a2913da4e86cab83c98e8818002935a0543874
 }

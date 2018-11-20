@@ -193,7 +193,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         // 튜토리얼 상황
-        DBHandler.showTutorial();
+       // DBHandler.showTutorial();
         /*
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
         //    DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
@@ -613,7 +613,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         try {
-
+            DBHandler.showTutorial();
             Log.d(TAG, "quest try들어옴");
             Log.d(TAG, "!!!mJsonString" + mJsonString_quest);
             JSONObject jsonObject = new JSONObject(mJsonString_quest.substring(mJsonString_quest.indexOf("{"), mJsonString_quest.lastIndexOf("}") + 1));
