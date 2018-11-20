@@ -21,6 +21,7 @@ public class HintActivity extends AppCompatActivity {
         if(DBHandler.currentUserData.getMember_numTutorial() == 4) {
             DBHandler.currentUserData.setMember_numTutorial(5);
             DBHandler.isTutorial[4] = true;
+            DBHandler.showTutorial();
         }
     }
 }

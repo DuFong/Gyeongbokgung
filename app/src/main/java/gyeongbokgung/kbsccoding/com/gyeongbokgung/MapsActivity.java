@@ -107,10 +107,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int loginState = 0;
 
     // FloatingActionMenu
-    private FloatingActionMenu fab_menu;
-    private com.github.clans.fab.FloatingActionButton fab_quest;
-    private com.github.clans.fab.FloatingActionButton fab_ranking;
-    private com.github.clans.fab.FloatingActionButton fab_logout;
+    public static FloatingActionMenu fab_menu;
+    public static com.github.clans.fab.FloatingActionButton fab_quest;
+    public static com.github.clans.fab.FloatingActionButton fab_ranking;
+    public static com.github.clans.fab.FloatingActionButton fab_logout;
     private Handler mUiHandler = new Handler();
 
     // current location btn
@@ -191,9 +191,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab_quest.setOnClickListener(clickListener);
         fab_logout.setOnClickListener(clickListener);
 
-
-        // 튜토리얼 상황
-        DBHandler.showTutorial();
         /*
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
         //    DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
@@ -619,6 +616,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             JSONObject jsonObject = new JSONObject(mJsonString_quest.substring(mJsonString_quest.indexOf("{"), mJsonString_quest.lastIndexOf("}") + 1));
             //  JSONObject jsonObject = new JSONObject(mJsonString_quest);
             Log.d(TAG, "!!!~~JSONObject: " + jsonObject.toString());
+
+            // 튜토리얼 상황
+            DBHandler.showTutorial();
 
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
             //         Log.d(TAG,"~~array 성공");

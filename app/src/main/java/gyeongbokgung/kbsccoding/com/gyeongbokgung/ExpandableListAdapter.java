@@ -30,7 +30,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String,List<String>> listHashMap;
     private int nowType=0;
     private String TAG ="ExpandableListAdapter";
-    static boolean isExecuted = false;
+ //   public static View expandableView;
+
+    public static Button buttonHint;
+    public static Button buttonRestore;
  //   static int countExcuted = 0;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listHashMap) {
@@ -96,15 +99,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             view = inflater.inflate(R.layout.list_quest_detail, null);
         }
 
+        //expandableView = view;
+
         TextView txtListChild = view.findViewById(R.id.listItem);
-        Button buttonHint = view.findViewById(R.id.hint_button);
+        buttonHint = view.findViewById(R.id.hint_button);
         if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getHint().equals("null")){
             buttonHint.setVisibility(View.INVISIBLE);
         }
         else{
             buttonHint.setVisibility(View.VISIBLE);
         }
-        Button buttonRestore = view.findViewById(R.id.restore_button);
+        buttonRestore = view.findViewById(R.id.restore_button);
         txtListChild.setText(childText);
         buttonHint.setOnClickListener(new View.OnClickListener() {
 
@@ -153,8 +158,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         DBHandler.explain[2] = view.findViewById(R.id.explain2);
         DBHandler.box[3] = view.findViewById(R.id.box3);
         DBHandler.explain[3] = view.findViewById(R.id.explain2);
- //       DBHandler.box[2].setVisibility(View.GONE);
- //       DBHandler.explain[2].setVisibility(View.GONE);
         // 튜토리얼창 안보이게 하기
         //isExecuted = false;
        // countExcuted++;
@@ -172,7 +175,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             DBHandler.showTutorial();
         }
 
-        if(DBHandler.isTutorial[2] || DBHandler.isTutorial[3] || DBHandler.isTutorial[4])
+        if(DBHandler.isTutorial[2] || DBHandler.isTutorial[3] || DBHandler.isTutorial[4] || DBHandler.isTutorial[5])
             DBHandler.showTutorial();   // 복원하기에 대한 설명을 없애기 위함
       /*  else if(DBHandler.currentUserData.getMember_numTutorial() == 2 && countExcuted == 6) {
             DBHandler.currentUserData.setMember_numTutorial(3);
