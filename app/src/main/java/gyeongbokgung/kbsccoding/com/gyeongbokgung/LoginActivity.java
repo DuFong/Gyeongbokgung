@@ -295,8 +295,6 @@ public class LoginActivity extends AppCompatActivity {
             //mAdapter.notifyDataSetChanged();
             //}
 
-
-
         } catch (JSONException e) {
 
             Log.d(TAG, "catch로 들어옴 showResult : "+e);
@@ -338,6 +336,7 @@ public class LoginActivity extends AppCompatActivity {
         //intent.putExtra("nowPersonID",nid);
      //   intent.putExtra("nowperson",nowPerson);
      //   Log.d(TAG,"넘겨쥼");
+
         startActivity(intent);
         finish();
     }
