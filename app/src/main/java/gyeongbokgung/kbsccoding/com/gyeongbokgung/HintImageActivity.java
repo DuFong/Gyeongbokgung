@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HintImageActivity extends AppCompatActivity {
     @BindView(R.id.iv_hint)
@@ -19,5 +20,9 @@ public class HintImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hint_image);
         ButterKnife.bind(this);
         mHintimage.setImageResource(R.drawable.hintimage);
+    }
+    @OnClick(R.id.btn_OK_hint)
+    void check() {
+        finish();
     }
 }
