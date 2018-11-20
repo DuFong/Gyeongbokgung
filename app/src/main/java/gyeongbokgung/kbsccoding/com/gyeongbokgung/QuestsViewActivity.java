@@ -2,6 +2,8 @@ package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,9 +40,9 @@ public class QuestsViewActivity extends AppCompatActivity {
     private static final String TAGQ = "Quest DB Connect";
     private RecyclerView mRecyclerView;
     private GridLayoutManager mLayoutManager;
-
     public SectionedRecyclerViewAdapter sectionAdapter;
     public ArrayList<Quest> mArrayList;
+    private NestedScrollView nestedScrollView;
     //  private String mJsonString;
 
 
@@ -75,6 +77,8 @@ public class QuestsViewActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_close);
+
+        nestedScrollView = findViewById(R.id.product_grid);
 
 //        Map<String, Quest> ssTitle = new HashMap<>();
 //        for (int i = 0; i < mArrayList.size(); i++) {
@@ -129,6 +133,11 @@ public class QuestsViewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
+                // 튜토리얼
+                if(DBHandler.currentUserData.getMember_numTutorial() == 9) {
+                    DBHandler.currentUserData.setMember_numTutorial(10);
+                    DBHandler.showTutorial();
+                }
                 finish();
                 return true;
             }
@@ -183,6 +192,21 @@ public class QuestsViewActivity extends AppCompatActivity {
             itemHolder.rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // 튜토리얼
+                    if(DBHandler.currentUserData.getMember_numTutorial() == 8){
+                        DBHandler.currentUserData.setMember_numTutorial(9);
+                        Handler delayHandler = new Handler();
+                        delayHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // TODO
+                                DBHandler.showTutorial();
+
+                                //headerHolder.rootView.setBackgroundColor(getResources().getColor(R.color.white)); // 다희야 이부분 원래색으로 돌려줘 ㅎㅎ
+                                nestedScrollView.setBackgroundColor(getResources().getColor(R.color.gridBackgroundColor));
+                            }
+                        }, 1000);
+                    }
                     Intent intent = new Intent(QuestsViewActivity.this, QuestDetailActivity.class);
                     intent.putExtra("title", subTitle); // 데이터 송신
                     startActivity(intent);
@@ -207,6 +231,8 @@ public class QuestsViewActivity extends AppCompatActivity {
         @Override
         public void
         onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
+            DBHandler.explain[8] = findViewById(R.id.explain8);
+            DBHandler.explain[8].setVisibility(View.GONE);
             final QuestSection.HeaderViewHolder headerHolder = (QuestSection.HeaderViewHolder) holder;
             headerHolder.tvTitle.setText(list.get(0).getTitle());
             headerHolder.rootView.setOnClickListener(new View.OnClickListener() {
@@ -220,6 +246,14 @@ public class QuestsViewActivity extends AppCompatActivity {
                     sectionAdapter.notifyDataSetChanged();
                 }
             });
+            // 튜토리얼
+            if(!list.get(0).getTitle().equals("튜토리얼") && DBHandler.currentUserData.getMember_numTutorial() == 8){
+                DBHandler.explain[8].setVisibility(View.VISIBLE);
+                DBHandler.showTutorial();
+                headerHolder.rootView.setBackgroundColor(getResources().getColor(R.color.grey));
+                // 다희야 리스트 회색으로 바꿔줘~
+                nestedScrollView.setBackgroundColor(getResources().getColor(R.color.grey));
+            }
         }
 
         private class HeaderViewHolder extends RecyclerView.ViewHolder {

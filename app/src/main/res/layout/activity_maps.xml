@@ -55,10 +55,41 @@
         android:background="@drawable/tutorial_explain_border"
         android:textSize="15sp"
         android:textColor="#050253"
+        android:padding="7dp"
         android:layout_below="@+id/box1"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="160dp"
         android:text="현재 퀘스트의 내용을 볼 수\n있습니다. 눌러보세요!"/>
+
+    <TextView
+        android:id="@+id/explain6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginRight="100dp"
+        android:background="@drawable/tutorial_explain_border"
+        android:padding="7dp"
+        android:text="첫 장을 열었습니다.\n메뉴를 클릭해보세요!"
+        android:textColor="#050253"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/explain7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/tutorial_explain_border"
+        android:padding="7dp"
+        android:text="퀘스트 목록 버튼을 클릭하여\n현재까지 완료한 퀘스트를 확인하세요!"
+        android:textColor="#050253"
+        android:textSize="15sp" />
+
+
 
     <ImageButton
         android:layout_width="wrap_content"

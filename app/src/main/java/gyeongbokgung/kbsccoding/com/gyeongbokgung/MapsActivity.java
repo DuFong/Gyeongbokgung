@@ -267,6 +267,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 fab_menu.getMenuIconView().setImageResource(fab_menu.isOpened()
                         ? R.drawable.ic_menu : R.drawable.ic_close);
                 // 튜토리얼 상황
+                Log.d("애니메이션함수", "실행!");
+                if(DBHandler.currentUserData.getMember_numTutorial() == 6) {
+                    DBHandler.currentUserData.setMember_numTutorial(7);
+                    DBHandler.isTutorial[6] = true;
+                    DBHandler.showTutorial();
+                }
             }
         });
 
@@ -832,12 +838,42 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Intent intent;
             switch (view.getId()) {
                 case R.id.fab_quest:
+                    // 튜토리얼
+                    if(DBHandler.currentUserData.getMember_numTutorial() == 7) {
+                        DBHandler.currentUserData.setMember_numTutorial(8);
+                        DBHandler.isTutorial[7] = true;
+                    }
+
                     intent = new Intent(MapsActivity.this, QuestsViewActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.fab_ranking:
+                    // 튜토리얼
                     intent = new Intent(MapsActivity.this, RankingActivity.class);
                     startActivity(intent);
+
+                    Handler delayHandler = new Handler();
+                    delayHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(DBHandler.currentUserData.getMember_numTutorial() == 10) {
+                                DBHandler.currentUserData.setMember_numTutorial(11);
+                                DBHandler.isTutorial[10] = true;
+                                DBHandler.showTutorial();
+                                // 팝업창 띄우기
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                                builder.setTitle("튜토리얼 완료");
+                                builder.setMessage("모든 튜토리얼이 완료되었습니다. 이제 여러분의 힘으로 경복궁 복원을 완료해주시길 바랍니다.");
+                                //오른쪽 버튼
+                                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                    }
+                                });
+                                builder.show();
+                            }
+                        }
+                    }, 1000);
                     break;
                 case R.id.fab_logout:
                     SaveSharedPreference.clearUserName(getApplicationContext());

@@ -165,7 +165,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         //isExecuted = false;
        // countExcuted++;
         Log.d("익스펜더블함수", "getChildView호출!");
-        if(DBHandler.currentUserData.getMember_numTutorial() == 1/* && countExcuted == 1*/) {
+
+        if(DBHandler.currentUserData.getMember_numTutorial() > 5) {
+            DBHandler.box[2].setVisibility(View.GONE);
+            DBHandler.box[3].setVisibility(View.GONE);
+            DBHandler.explain[2].setVisibility(View.GONE);
+            DBHandler.explain[3].setVisibility(View.GONE);
+        }
+        else if(DBHandler.currentUserData.getMember_numTutorial() == 1/* && countExcuted == 1*/) {
             Log.d("익스펜더블함수", "케이스2");
             DBHandler.currentUserData.setMember_numTutorial(2);
             //isExecuted = true;
@@ -178,7 +185,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             DBHandler.showTutorial();
         }
 
-        if(DBHandler.isTutorial[2] || DBHandler.isTutorial[3] || DBHandler.isTutorial[4] || DBHandler.isTutorial[5])
+        if(DBHandler.isTutorial[2] || DBHandler.isTutorial[3] || DBHandler.isTutorial[4] || DBHandler.isTutorial[5] || DBHandler.isTutorial[6] || DBHandler.isTutorial[7])
             DBHandler.showTutorial();   // 복원하기에 대한 설명을 없애기 위함
       /*  else if(DBHandler.currentUserData.getMember_numTutorial() == 2 && countExcuted == 6) {
             DBHandler.currentUserData.setMember_numTutorial(3);
