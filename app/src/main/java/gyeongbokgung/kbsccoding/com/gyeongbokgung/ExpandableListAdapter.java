@@ -27,6 +27,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String,List<String>> listHashMap;
     private int nowType=0;
     private String TAG ="ExpandableListAdapter";
+    private String num;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listHashMap) {
         this.context = context;
@@ -157,7 +158,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             DBHandler.currentUserData.setMember_numTutorial(2);
             //DB에도 업데이트
             InsertData task=new InsertData();
-            task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id());
+            task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(),num);
 
             //     SaveSharedPreference2.setNumTutorial(this.context);
 
@@ -210,9 +211,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         protected String doInBackground(String... params) {
 
             String userID = (String)params[1];
+            String numTutorial = (String)params[2];
 
             String serverURL = (String)params[0];
-            String postParameters = "userID=" + userID;
+            String postParameters = "userID=" + userID + "&numTutorial=" + numTutorial;
+
 
             try {
 
