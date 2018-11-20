@@ -56,8 +56,12 @@ public class RestoreActivity extends AppCompatActivity {
         String DBanswer = DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getGoal();
         Log.d(TAG,answer+DBanswer);
         if(answer.equals(DBanswer)){
+            // 튜토리얼
+            if(DBHandler.currentUserData.getMember_numTutorial() == 5) {
+                DBHandler.currentUserData.setMember_numTutorial(6);
+                DBHandler.isTutorial[5] = true;
+            }
             //답이 맞았을 때
-
             Toast.makeText(getBaseContext(), "정답입니다.", Toast.LENGTH_LONG).show();
             Log.d(TAG,"정답if문으로 들어옴");
             score = String.valueOf(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getPoint());

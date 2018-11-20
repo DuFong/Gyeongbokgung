@@ -20,10 +20,17 @@
         android:layout_height="match_parent"
         tools:context="com.kbsccoding.examples.gyeongbokgung.MapsActivity"/>
 
+    <TextView
+        android:id="@+id/dark_background_quest_down"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#B3000000"/>
+
+
     <include layout="@layout/layout_fab_submenu"/>
 
     <TextView
-        android:id="@+id/dark_background_quest"
+        android:id="@+id/dark_background_quest_up"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#B3000000"/>
@@ -45,21 +52,13 @@
         android:id="@+id/explain1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/box1"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="59dp"
-        android:layout_marginRight="10dp"
         android:background="@drawable/tutorial_explain_border"
-        android:padding="7dp"
-        android:text="현재 퀘스트의 내용을 볼 수\n있습니다. 눌러보세요!"
+        android:textSize="15sp"
         android:textColor="#050253"
-        android:textSize="15sp" />
-
-
-
+        android:layout_below="@+id/box1"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="160dp"
+        android:text="현재 퀘스트의 내용을 볼 수\n있습니다. 눌러보세요!"/>
 
     <ImageButton
         android:layout_width="wrap_content"
