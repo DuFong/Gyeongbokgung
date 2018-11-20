@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(this, MapsActivity.class);
             i.putExtra("alreadyLogin",1);
             startActivity(i);
+            //튜토리얼
+      //      DBHandler.showTutorial();
+      //      DBHandler.setIsTutorial();
             finish();
         }
     }

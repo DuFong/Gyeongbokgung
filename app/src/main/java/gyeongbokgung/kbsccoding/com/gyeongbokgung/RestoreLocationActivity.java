@@ -29,6 +29,11 @@ public class RestoreLocationActivity extends AppCompatActivity {
         gps = new GpsInfo(RestoreLocationActivity.this);
         if(compareLocaton())
         {
+            if(DBHandler.currentUserData.getMember_numTutorial() == 2) {
+                DBHandler.currentUserData.setMember_numTutorial(3);
+                DBHandler.isTutorial[2] = true;
+            }
+
             // 도착지에 잘 도착했을때
             Toast.makeText(getBaseContext(), "해당 위치까지 잘 오셨습니다.", Toast.LENGTH_LONG).show();
             score = String.valueOf(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getPoint());
@@ -66,10 +71,10 @@ public class RestoreLocationActivity extends AppCompatActivity {
         // 현재 나의 위도 경도를 변수에 저장.
         mylocation = new LatLng(gps.getLatitude(),gps.getLongitude());
         //******* 일단 야매로 도착지 위도 경도 넣기 ******* 나중에 꼭 수정하기********
-        destination = new LatLng(37.494630, 126.960156);
+        destination = new LatLng(37.497411, 126.958482);
 
         // 거리 차이가 10m 이하 일때는 도착지에 도착했다.
-        if(distance(mylocation.latitude, mylocation.longitude,destination.latitude,destination.longitude) < 10)
+        if(distance(mylocation.latitude, mylocation.longitude,destination.latitude,destination.longitude) < 100000)
             return true;
         else return false;
 
