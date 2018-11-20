@@ -58,6 +58,7 @@ public class QuestDetailActivity extends AppCompatActivity {
         subList = new ArrayList<>();
         for(int i=0;i<DBHandler.questDataList.size();i++){
             if(DBHandler.questDataList.get(i).getSubTitle().equals(title)){
+                Log.d("보노보노", String.valueOf(DBHandler.questDataList.size()));
                 subList.add(DBHandler.questDataList.get(i));
             }
         }
