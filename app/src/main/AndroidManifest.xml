@@ -113,7 +113,8 @@
         <activity
             android:name=".VideoStartChapter2Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".AfterEndingActivity"></activity>
+        <activity android:name=".AfterEndingActivity" />
+        <activity android:name=".ExplanationImageActivity"></activity>
     </application>
 
 </manifest>

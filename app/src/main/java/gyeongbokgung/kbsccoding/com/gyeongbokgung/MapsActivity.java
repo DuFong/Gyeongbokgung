@@ -117,7 +117,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ImageButton btn_current_location;
     public static Activity mapsActivity;  // CompleteActivity에서 finsh하기 위함
 
-    private TextView box, line1, line2, explain;
+    private TextView box, line1, line2, explain, darkBackground;
     public static View mapView;
 
     @Override
@@ -191,33 +191,52 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab_quest.setOnClickListener(clickListener);
         fab_logout.setOnClickListener(clickListener);
 
-        // 튜토리얼 상황
-        if (DBHandler.currentUserData.getMember_currentQuest() == 0) {    // 퀘스트번호 0번
-            DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
 
-            if (DBHandler.numTutorial == 1) {
+        // 튜토리얼 상황
+        DBHandler.showTutorial();
+        /*
+        if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
+        //    DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
+            if(DBHandler.currentUserData.getMember_numTutorial() == 1) {
+               // mapView.setBackgroundColor(getResources().getColor(R.color.darkBackground));
+
                 box = findViewById(R.id.box1);
-                line1 = findViewById(R.id.line1_1);
-                line2 = findViewById(R.id.line1_2);
                 explain = findViewById(R.id.explain1);
+                darkBackground = findViewById(R.id.dark_background_quest);
 
                 box.setVisibility(View.VISIBLE);
-                line1.setVisibility(View.VISIBLE);
-                line2.setVisibility(View.VISIBLE);
                 explain.setVisibility(View.VISIBLE);
-            } else {
+                darkBackground.setVisibility(View.VISIBLE);
 
+                explain = findViewById(R.id.explain2);
+                explain.setVisibility(View.GONE);
             }
-        } else {
-            box = findViewById(R.id.box1);
-            line1 = findViewById(R.id.line1_1);
-            line2 = findViewById(R.id.line1_2);
-            explain = findViewById(R.id.explain1);
-            box.setVisibility(View.GONE);
-            line1.setVisibility(View.GONE);
-            line2.setVisibility(View.GONE);
-            explain.setVisibility(View.GONE);
+
+            else {
+                box = findViewById(R.id.box1);
+                explain = findViewById(R.id.explain1);
+                darkBackground = findViewById(R.id.dark_background_quest);
+
+                box.setVisibility(View.GONE);
+                explain.setVisibility(View.GONE);
+                darkBackground.setVisibility(View.GONE);
+
+                explain = findViewById(R.id.explain2);
+                explain.setVisibility(View.GONE);
+            }
         }
+        else {
+            box = findViewById(R.id.box1);
+            explain = findViewById(R.id.explain1);
+            darkBackground = findViewById(R.id.dark_background_quest);
+
+            box.setVisibility(View.GONE);
+            explain.setVisibility(View.GONE);
+            darkBackground.setVisibility(View.GONE);
+
+            explain = findViewById(R.id.explain2);
+            explain.setVisibility(View.GONE);
+        } */
 
         // current location button 세팅
         btn_current_location = (ImageButton) findViewById(R.id.btn_current_location);
@@ -598,7 +617,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 DBHandler.questDataList.add(quest);
                 Log.d(TAG, "questDataList 추가");
-                Log.d(TAG, "quest:" + quest.toString());
+                Log.d("라라라", "quest:" + quest.toString());
+                Log.d("라라라", String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
                 Log.d(TAG, DBHandler.questDataList.get(0).getTitle());
                 Log.d(TAG, "현재 퀘스트뭐닝? "+DBHandler.currentUserData.getMember_currentQuest());
             }
@@ -608,7 +628,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listHash);
             listView.setAdapter(listAdapter);
         } catch (JSONException e) {
-
+            Log.d("왜안나와", String.valueOf(e));
 
         }
 
@@ -619,7 +639,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
 
-        Log.d(TAG, "init" + DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
+        Log.d("왜안나와", "init" + DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         listDataHeader.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         List<String> showQuest = new ArrayList<>();
         showQuest.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSumDescription());

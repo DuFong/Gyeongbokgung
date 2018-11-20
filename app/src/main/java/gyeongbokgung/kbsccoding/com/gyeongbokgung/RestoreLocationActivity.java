@@ -29,6 +29,11 @@ public class RestoreLocationActivity extends AppCompatActivity {
         gps = new GpsInfo(RestoreLocationActivity.this);
         if(compareLocaton())
         {
+            if(DBHandler.currentUserData.getMember_numTutorial() == 2) {
+                DBHandler.currentUserData.setMember_numTutorial(3);
+                DBHandler.isTutorial[2] = true;
+            }
+
             // 도착지에 잘 도착했을때
             Toast.makeText(getBaseContext(), "해당 위치까지 잘 오셨습니다.", Toast.LENGTH_LONG).show();
             score = String.valueOf(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getPoint());
@@ -37,11 +42,17 @@ public class RestoreLocationActivity extends AppCompatActivity {
             DBHandler.currentUserData.setMember_score(DBHandler.currentUserData.getMember_score()+Integer.parseInt(score));
             DBHandler.currentUserData.setMember_currentQuest(DBHandler.currentUserData.getMember_currentQuest()+1);
             gps.stopUsingGPS();
-
+            Log.d("CHECK!!", String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
             //TEST용 나중에 밑에 if문 삭제하고 else문 내용만 남기자
             if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID() == 2 && DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()-1).getTitleID() != DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID())
             {
                 Intent intent = new Intent(getApplicationContext(), VideoChapter1Activity.class);
+                startActivity(intent);
+                finish();
+            }
+            else if(DBHandler.currentUserData.getMember_currentQuest()==5){
+                Log.d("CHECK!!","4로 들어왔다!!!!!");
+                Intent intent = new Intent(getApplicationContext(), ExplanationImageActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -66,7 +77,8 @@ public class RestoreLocationActivity extends AppCompatActivity {
         // 현재 나의 위도 경도를 변수에 저장.
         mylocation = new LatLng(gps.getLatitude(),gps.getLongitude());
         //******* 일단 야매로 도착지 위도 경도 넣기 ******* 나중에 꼭 수정하기********
-        destination = new LatLng(37.476724,126.869048);
+        destination = new LatLng(37.494630,126.960156);
+
 
         // 거리 차이가 10m 이하 일때는 도착지에 도착했다.
         if(distance(mylocation.latitude, mylocation.longitude,destination.latitude,destination.longitude) < 10)
