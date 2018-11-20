@@ -22,11 +22,6 @@ public class Quest implements Serializable {
     private double latitude;
     private double longitude;
 
-
-    // TODO: drawable, color 변경
-    static int drawable = R.drawable.image1;
-    static String color =  "#4BAA50";
-
     @Override
     public String toString() {
         return "Quest{" +
@@ -66,6 +61,25 @@ public class Quest implements Serializable {
         this.type = type;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public Quest(Quest q) {
+        this.titleID = q.titleID;
+        this.subID = q.subID;
+        this.rowID = q.rowID;
+        this.title = q.title;
+        this.subTitle = q.subTitle;
+        this.description = q.description;
+        this.sumDescription = q.sumDescription;
+        this.goal = q.goal;
+        this.goal2 = q.goal2;
+        this.goal3 = q.goal3;
+        this.hint = q.hint;
+        this.explanation = q.explanation;
+        this.point = q.point;
+        this.type = q.type;
+        this.latitude = q.latitude;
+        this.longitude = q.longitude;
     }
 
     public int getRowID() {

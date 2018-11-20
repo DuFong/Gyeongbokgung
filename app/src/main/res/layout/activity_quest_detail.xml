@@ -28,44 +28,48 @@
             app:title="title text test"/>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scrollView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gridBackgroundColor"
-        android:descendantFocusability="blocksDescendants"
-        android:elevation="8dp"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+        android:layout_marginTop="56dp"
 
-        <FrameLayout
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants"
+            android:elevation="8dp"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-            <ImageButton
-                android:id="@+id/left_nav"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_vertical|left"
-                android:src="@drawable/ic_arrow_left"/>
 
-            <ImageButton
-                android:id="@+id/right_nav"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_vertical|right"
-                android:src="@drawable/ic_arrow_right" />
+        </android.support.v4.widget.NestedScrollView>
 
-        </FrameLayout>
-    </android.support.v4.widget.NestedScrollView>
+        <com.pm10.library.CircleIndicator
+            android:id="@+id/circle_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:p_defaultColor="@color/gray"
+            app:p_gap="4dp"
+            app:p_radius="4dp"
+            app:p_selectedColor="@color/colorPrimaryDark"
+            app:p_strokeColor="@color/colorPrimaryDark"
+            android:layout_marginBottom="16dp"
+            app:p_strokeWidth="1dp"
+            />
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
