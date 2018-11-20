@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:id="@+id/constraintLayout"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             tools:context=".QuestDetailActivity$PlaceholderFragment">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuestDetailActivity$PlaceholderFragment">
 
     <TextView
         android:id="@+id/section_label"
@@ -15,36 +16,85 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:text="test"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="test"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1"/>
 
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="16dp"
         app:cardCornerRadius="4dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="#FFFFFF"
             android:orientation="vertical"
             android:padding="8dp">
 
             <TextView
+                android:id="@+id/label_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:padding="2dp"
+                android:text="문제"
+                android:textAppearance="@style/TextAppearance.Design.Hint"/>
+
+            <TextView
                 android:id="@+id/tv_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Quest"
+                android:layout_below="@+id/label_description"
                 android:padding="2dp"
                 android:text="android description test text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 />
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/label_explanation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_description"
+                android:padding="2dp"
+                android:text="설명"
+                android:textAppearance="@style/TextAppearance.Design.Hint"/>
+
+            <TextView
+                android:id="@+id/tv_explanation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label_explanation"
+                android:padding="2dp"
+                android:text="android description test text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                />
+
+            <!--<TextView
+                android:id="@+id/label_goal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_explanation"
+                android:padding="2dp"
+                android:text="답"
+                android:textAppearance="@style/TextAppearance.Design.Hint"
+                />
+
+            <TextView
+                android:id="@+id/tv_goal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label_goal"
+                android:padding="2dp"
+                android:text="android description test text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                />-->
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

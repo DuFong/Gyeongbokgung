@@ -30,11 +30,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String,List<String>> listHashMap;
     private int nowType=0;
     private String TAG ="ExpandableListAdapter";
+
  //   public static View expandableView;
 
     public static Button buttonHint;
     public static Button buttonRestore;
+
  //   static int countExcuted = 0;
+
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listHashMap) {
         this.context = context;
@@ -117,7 +120,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View view) {
                 // db에서 문제 id로 switch문 작성
                 Intent intent=null;
-                if(DBHandler.currentUserData.getMember_currentQuest()==7){
+                if(DBHandler.currentUserData.getMember_currentQuest()==6){
                     intent = new Intent(context, HintImageActivity.class);
                 }
                 else{
@@ -195,7 +198,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
             //DB에도 업데이트
             InsertData task=new InsertData();
-            task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id());
+            task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(),num);
 
             if(DBHandler.currentUserData.getMember_numTutorial() == 2) {
 
@@ -228,6 +231,99 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return true;
+    }
+
+
+    class InsertData extends AsyncTask<String, Void,String > {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //  progressDialog = ProgressDialog.show(RestoreActivity.this,
+            //         "Please Wait", null, true, true);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            //  progressDialog.dismiss();
+
+            //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+            Log.d(TAG, "POST response  - " + result);
+
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String userID = (String)params[1];
+            String numTutorial = (String)params[2];
+
+            String serverURL = (String)params[0];
+            String postParameters = "userID=" + userID + "&numTutorial=" + numTutorial;
+
+
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(50000);
+                httpURLConnection.setConnectTimeout(50000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(TAG, "POST response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+
+                bufferedReader.close();
+
+
+                return sb.toString();
+
+
+            } catch (Exception e) {
+
+                Log.d(TAG, "InsertData: Error ", e);
+                // onSignupFailed();
+                return new String("Error: " + e.getMessage());
+            }
+
+        }
+
     }
 
 }

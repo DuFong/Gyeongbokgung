@@ -5,17 +5,33 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#00000000"
-    app:cardElevation="0dp"
-    app:cardPreventCornerOverlap="true">
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true">
 
-    <TextView
-        android:id="@+id/tvItem"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="content text test"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:padding="2dp"
-        android:layout_alignParentLeft="true"/>
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tvItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="content text test"
+            android:textAppearance="?attr/textAppearanceListItem"/>
+
+        <ImageView
+            android:id="@+id/ivItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
