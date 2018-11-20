@@ -126,9 +126,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Intent intent = getIntent();
         loginState = intent.getIntExtra("alreadyLogin", 0);
         if (loginState == 1) {
-            GetData_set task2 = new GetData_set();
-            task2.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/query_DD.php", SaveSharedPreference.getUserName(getApplicationContext()));
-            //Log.d(TAG,DBHandler.currentUserData.getMember_id());
+
+                GetData_set task2 = new GetData_set();
+                task2.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/query_DD.php", SaveSharedPreference.getUserName(getApplicationContext()));
+                //Log.d(TAG,DBHandler.currentUserData.getMember_id());
+
         }
         setContentView(R.layout.activity_maps);
         mapView = this.getWindow().getDecorView();
@@ -140,10 +142,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         mapsActivity = MapsActivity.this;
-
-        GetData task = new GetData();
-        task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/getQuest_DD.php", "");
-
+        if(DBHandler.currentUserData.getMember_currentQuest()==0) {
+            GetData task = new GetData();
+            task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/getQuest_DD.php", "");
+        }
+        else{
+            listView = findViewById(R.id.lvExp);
+            initData();
+            listAdapter = new ExpandableListAdapter(this, listDataHeader, listHash);
+            listView.setAdapter(listAdapter);
+        }
 
         // 화면상단 메인퀘스트 표시
       /*  listView = findViewById(R.id.lvExp);
