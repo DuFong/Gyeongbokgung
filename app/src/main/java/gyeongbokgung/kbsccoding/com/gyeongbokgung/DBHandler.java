@@ -215,6 +215,7 @@ public class DBHandler {
                 task = new InsertData();
                 task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
 
+                darkBackgroundDown.setVisibility(View.VISIBLE);
                 explain[7].setText("랭킹버튼을 선택하여 내 랭킹을\n확인할 수 있습니다.");
                 explain[7].setVisibility(View.VISIBLE);
 
