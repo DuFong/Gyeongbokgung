@@ -12,6 +12,7 @@
 
     <EditText
         android:id="@+id/et_score"
+        android:fontFamily="@font/mainfont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -20,6 +21,7 @@
 
     <Button
         android:id="@+id/btn_submit"
+        android:fontFamily="@font/mainfont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="제출" />

@@ -10,6 +10,7 @@
 
     <TextView
         android:id="@+id/chapter_text"
+        android:fontFamily="@font/mainfont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="10sp"
@@ -17,6 +18,7 @@
 
     <TextView
         android:id="@+id/title_text"
+        android:fontFamily="@font/mainfont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
@@ -28,6 +30,7 @@
 
     <TextView
         android:id="@+id/quest_description"
+        android:fontFamily="@font/mainfont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"

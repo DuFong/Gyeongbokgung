@@ -24,6 +24,7 @@
             android:textColor="@color/cardview_dark_background"
             sl:scale_height="130"
             sl:scale_left="0"
+            android:fontFamily="@font/mainfont"
             sl:scale_textsize="7"
             sl:scale_top="20"
             sl:scale_width="100"

@@ -14,6 +14,7 @@
         android:layout_marginTop="72dp"
         android:layout_marginEnd="8dp"
         android:text="HINT"
+        android:fontFamily="@font/mainfont"
         android:textColor="#000000"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,6 +23,7 @@
 
     <TextView
         android:id="@+id/tv_hint"
+        android:fontFamily="@font/mainfont"
         android:layout_width="332dp"
         android:layout_height="286dp"
         android:layout_marginStart="8dp"

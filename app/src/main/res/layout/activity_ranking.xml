@@ -17,6 +17,7 @@
 
         <TextView
             android:id="@+id/textView4"
+            android:fontFamily="@font/mainfont"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -25,6 +26,7 @@
 
         <TextView
             android:id="@+id/textView5"
+            android:fontFamily="@font/mainfont"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -33,6 +35,7 @@
 
         <TextView
             android:id="@+id/textView6"
+            android:fontFamily="@font/mainfont"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -43,6 +46,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
+        android:fontFamily="@font/mainfont"
         android:layout_height="0dp"
         android:layout_weight="6"
         android:layout_margin="5dp"

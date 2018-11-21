@@ -21,32 +21,31 @@ public class RestoreLocationActivity extends AppCompatActivity {
     private LatLng mylocation;
     private LatLng destination;
     private String score;
+    private String explanation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore_location);
         gps = new GpsInfo(RestoreLocationActivity.this);
-        if(compareLocaton())
-        {
+        if(compareLocaton()) {
             // 도착지에 잘 도착했을때
-            Toast.makeText(getBaseContext(), "해당 위치까지 잘 오셨습니다.", Toast.LENGTH_LONG).show();
+            explanation=DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getExplanation();
+            Toast.makeText(getBaseContext(), "해당 위치까지 잘 오셨습니다.", Toast.LENGTH_SHORT).show();
             score = String.valueOf(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getPoint());
-            InsertData task=new InsertData();
-            task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_DD.php", DBHandler.currentUserData.getMember_id(),score);
-            DBHandler.currentUserData.setMember_score(DBHandler.currentUserData.getMember_score()+Integer.parseInt(score));
-            DBHandler.currentUserData.setMember_currentQuest(DBHandler.currentUserData.getMember_currentQuest()+1);
+            InsertData task = new InsertData();
+            task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/update_DD.php", DBHandler.currentUserData.getMember_id(), score);
+            DBHandler.currentUserData.setMember_score(DBHandler.currentUserData.getMember_score() + Integer.parseInt(score));
             gps.stopUsingGPS();
 
-            //TEST용 나중에 밑에 if문 삭제하고 else문 내용만 남기자
-            if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID() == 2 && DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()-1).getTitleID() != DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID())
-            {
-                Intent intent = new Intent(getApplicationContext(), VideoChapter1Activity.class);
+            // 배경지식이 없을 경우
+            if (explanation.equals("null")) {
+                Intent intent = new Intent(getApplicationContext(), CompleteActivity.class);
                 startActivity(intent);
                 finish();
-            }
-            else {
-                Intent intent = new Intent(getApplicationContext(), ReceiveQuestActivity.class);
+                //배경지식이 있을 경우
+            } else {
+                Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -65,11 +64,15 @@ public class RestoreLocationActivity extends AppCompatActivity {
     private boolean compareLocaton(){
         // 현재 나의 위도 경도를 변수에 저장.
         mylocation = new LatLng(gps.getLatitude(),gps.getLongitude());
-        //******* 일단 야매로 도착지 위도 경도 넣기 ******* 나중에 꼭 수정하기********
-        destination = new LatLng(37.494630,126.960156);
 
+        // 해당지점의 좌표 받아오기
+        /*destination = new LatLng(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLatitude(),
+                DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLongitude()); */
+        destination = new LatLng(37.494630,126.960156); //야매로 위치 넣은거 (TEST전용)
+
+        Log.d("뒷자리만",Double.toString(destination.longitude));
         // 거리 차이가 10m 이하 일때는 도착지에 도착했다.
-        if(distance(mylocation.latitude, mylocation.longitude,destination.latitude,destination.longitude) < 10)
+        if(distance(mylocation.latitude, mylocation.longitude,destination.latitude,destination.longitude) < 12)
             return true;
         else return false;
 

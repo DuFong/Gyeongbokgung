@@ -113,7 +113,19 @@
         <activity
             android:name=".VideoStartChapter2Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".AfterEndingActivity"></activity>
+        <activity
+            android:name=".AfterEndingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WebBrowserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VideoChapter2Activity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".VideoStartChapter3Activity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".OpenTheDoorActivity"></activity>
     </application>
 
 </manifest>

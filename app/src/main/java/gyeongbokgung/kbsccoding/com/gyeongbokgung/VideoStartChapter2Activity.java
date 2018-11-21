@@ -15,13 +15,11 @@ public class VideoStartChapter2Activity extends AppCompatActivity {
     private VideoView videoView;
     private Timer timer;
     private TimerTask after_timer;
-    private MapsActivity end_activity; // 나중에 삭제하자
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_start_chapter2);
-        end_activity = (MapsActivity)MapsActivity.mapsActivity; // 변수에 MapsActivity 를 담는다.
         videoView = findViewById(R.id.video_start_chapter2);
         String uriPath = "android.resource://" + getPackageName() + "/" + R.raw.startchapter2;
         uri = Uri.parse(uriPath);
@@ -36,14 +34,12 @@ public class VideoStartChapter2Activity extends AppCompatActivity {
         after_timer = new TimerTask() {
             @Override
             public void run() {
-                end_activity.finish();
-                //Intent intent = new Intent(getApplicationContext(), ReceiveQuestActivity.class);
-                Intent intent = new Intent(getApplicationContext(), AfterEndingActivity.class);
+                Intent intent = new Intent(getApplicationContext(), OpenTheDoorActivity.class);
                 startActivity(intent);
                 finish();
             }
         };
-        timer.schedule(after_timer, 5000);
+        timer.schedule(after_timer, 6000);
 
     }
 

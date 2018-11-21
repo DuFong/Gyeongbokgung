@@ -10,7 +10,7 @@
         <item name="colorControlActivated">@color/colorControlActivated</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
     </style>
-
+    
 
     <style name="Widget.Shrine.Button" parent="Widget.AppCompat.Button">
         <item name="android:textColor">?android:attr/textColorPrimary</item>

@@ -11,12 +11,14 @@
 
     <TextView
         android:id="@+id/textView3"
+        android:fontFamily="@font/mainfont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />
 
     <Button
         android:id="@+id/btn_logout"
+        android:fontFamily="@font/mainfont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Button" />

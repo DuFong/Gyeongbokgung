@@ -39,7 +39,7 @@ public class CompleteActivity extends AppCompatActivity {
         Log.d(TAG, String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
         if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()-1).getTitleID() == DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID())
         {
-            Intent intent = new Intent(getApplicationContext(), ReceiveQuestActivity.class);
+            Intent intent = new Intent(getApplicationContext(), OpenTheDoorActivity.class);
             startActivity(intent);
             finish();
         }
@@ -49,10 +49,17 @@ public class CompleteActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-        // 1장이 끝나고 1장 엔딩
+        // 1장 엔딩
         else if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID() == 2)    //나머지 챕터 엔딩영상 만들면 주석해제하자;
         {
             Intent intent = new Intent(getApplicationContext(), VideoChapter1Activity.class);
+            startActivity(intent);
+            finish();
+        }
+        // 2장 엔딩
+        else if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID() == 3)    //나머지 챕터 엔딩영상 만들면 주석해제하자;
+        {
+            Intent intent = new Intent(getApplicationContext(), VideoChapter2Activity.class);
             startActivity(intent);
             finish();
         }

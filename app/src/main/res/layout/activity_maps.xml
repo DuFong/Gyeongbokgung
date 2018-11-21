@@ -25,6 +25,7 @@
 
     <TextView
         android:id="@+id/box1"
+        android:fontFamily="@font/mainfont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -36,6 +37,7 @@
 
     <TextView
         android:id="@+id/line1_1"
+        android:fontFamily="@font/mainfont"
         android:layout_width="5.3dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/box1"
@@ -45,6 +47,7 @@
         android:textSize="90sp" />
     <TextView
         android:id="@+id/line1_2"
+        android:fontFamily="@font/mainfont"
         android:layout_width="70dp"
         android:layout_height="5.3dp"
         android:layout_below="@+id/line1_1"
@@ -55,6 +58,7 @@
 
     <TextView
         android:id="@+id/explain1"
+        android:fontFamily="@font/mainfont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/line1_2"
