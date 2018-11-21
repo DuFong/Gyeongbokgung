@@ -47,13 +47,14 @@
 
     <TextView
         android:id="@+id/explain8"
+        android:fontFamily="@font/mainfont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginRight="10dp"
         android:background="@drawable/tutorial_explain_border"
         android:padding="7dp"
-        android:text="현재 튜토리얼을 완료했습니다.\n튜토리얼을 눌러 완료한 퀘스트를 확인하세요!"
+        android:text="튜토리얼 항목을 눌러 완료한 퀘스트를 확인하세요!"
         android:textColor="#050253"
         android:textSize="15sp" />
 
