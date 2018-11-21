@@ -15,22 +15,16 @@ import java.util.ArrayList;
 
 public class DBHandler {
     private static final String TAG = "디비핸들러함수";
-    private String num;
 
     public static ArrayList<Quest> questDataList = new ArrayList<>();
     public static PersonalData currentUserData = new PersonalData();
 
     public static boolean[] isTutorial = new boolean[20];
+    public static boolean isGetChildView;
 
     public static TextView[] box = new TextView[20];
     public static TextView[] explain = new TextView[20];
-    public static TextView darkBackground;
-
-    public static void setIsTutorial() {
-        for(int i = 0; i < isTutorial.length; i++) {
-            isTutorial[i] = false;
-        }
-    }
+    public static TextView darkBackgroundUp, darkBackgroundDown;
 
     public static void showTutorial() {
 
@@ -38,78 +32,210 @@ public class DBHandler {
         // for문을 통해 box, explain 객체 찾기, 안보이게 하기
         box[1] = MapsActivity.mapView.findViewById(R.id.box1);
         explain[1] = MapsActivity.mapView.findViewById(R.id.explain1);
-      //  explain[2] = MapsActivity.mapView.findViewById(R.id.explain2);
+        explain[6] = MapsActivity.mapView.findViewById(R.id.explain6);
+        explain[7] = MapsActivity.mapView.findViewById(R.id.explain7);
 
-        darkBackground = MapsActivity.mapView.findViewById(R.id.dark_background_quest);
 
-        darkBackground.setVisibility(View.GONE);
+        darkBackgroundUp = MapsActivity.mapView.findViewById(R.id.dark_background_quest_up);
+        darkBackgroundDown = MapsActivity.mapView.findViewById(R.id.dark_background_quest_down);
+
+        darkBackgroundUp.setVisibility(View.GONE);
+        darkBackgroundDown.setVisibility(View.GONE);
         box[1].setVisibility(View.GONE);
         explain[1].setVisibility(View.GONE);
+        explain[6].setVisibility(View.GONE);
+        explain[7].setVisibility(View.GONE);
 
 
         switch (currentUserData.getMember_numTutorial()) {
             case 1:     // 메인 바 설명
                 Log.d(TAG, "케이스1");
 
-                darkBackground.setVisibility(View.VISIBLE);
+                darkBackgroundUp.setVisibility(View.VISIBLE);
+                darkBackgroundDown.setVisibility(View.GONE);
                 box[1].setVisibility(View.VISIBLE);
                 explain[1].setVisibility(View.VISIBLE);
+
+                MapsActivity.fab_quest.setEnabled(false);
+                MapsActivity.fab_ranking.setEnabled(false);
+                MapsActivity.fab_logout.setEnabled(false);
                 break;
             case 2:     // 복원하기 버튼 설명
-                Log.d(TAG, "케이스2");
+                if(isGetChildView) {
+                    Log.d(TAG, "케이스2");
 
-                task = new InsertData();
-                task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
+                    task = new InsertData();
+                    task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
 
-                darkBackground.setVisibility(View.VISIBLE);
-                box[1].setVisibility(View.GONE);
-                explain[1].setVisibility(View.GONE);
-                box[3].setVisibility(View.GONE);
-                explain[3].setVisibility(View.GONE);
-                box[2].setVisibility(View.VISIBLE);
-                explain[2].setVisibility(View.VISIBLE);
+                    darkBackgroundUp.setVisibility(View.VISIBLE);
+                    darkBackgroundDown.setVisibility(View.GONE);
+                    box[1].setVisibility(View.GONE);
+                    explain[1].setVisibility(View.GONE);
+                    box[3].setVisibility(View.GONE);
+                    explain[3].setVisibility(View.GONE);
+                    box[2].setVisibility(View.VISIBLE);
+                    explain[2].setVisibility(View.VISIBLE);
+
+                    MapsActivity.fab_quest.setEnabled(false);
+                    MapsActivity.fab_ranking.setEnabled(false);
+                    MapsActivity.fab_logout.setEnabled(false);
+
+                    isGetChildView = false;
+                }
                 break;
             case 3:     // 메인 바 설명
-                Log.d(TAG, "케이스3");
+                if(isGetChildView) {
+                    Log.d(TAG, "케이스3");
 
-                task = new InsertData();
-                task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
+                    task = new InsertData();
+                    task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
 
-                darkBackground.setVisibility(View.VISIBLE);
-                box[2].setVisibility(View.GONE);
-                explain[2].setVisibility(View.GONE);
-                explain[1].setText("이번 퀘스트를 수행하기 위하여\n다시 한번 퀘스트 바를 누릅니다.");
-                box[1].setVisibility(View.VISIBLE);
-                explain[1].setVisibility(View.VISIBLE);
+                    darkBackgroundUp.setVisibility(View.VISIBLE);
+                    darkBackgroundDown.setVisibility(View.GONE);
+                    box[2].setVisibility(View.GONE);
+                    explain[2].setVisibility(View.GONE);
+                    explain[1].setText("이번 퀘스트를 수행하기 위하여\n다시 한번 퀘스트 바를 누릅니다.");
+                    box[1].setVisibility(View.VISIBLE);
+                    explain[1].setVisibility(View.VISIBLE);
+
+                    MapsActivity.fab_quest.setEnabled(false);
+                    MapsActivity.fab_ranking.setEnabled(false);
+                    MapsActivity.fab_logout.setEnabled(false);
+
+                    isGetChildView = false;
+                }
                 break;
             case 4:     // 힌트사용 설명
-                Log.d(TAG, "케이스4");
+                if(isGetChildView) {
+                    Log.d(TAG, "케이스4");
 
-                task = new InsertData();
-                task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
+                    task = new InsertData();
+                    task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
 
-                darkBackground.setVisibility(View.VISIBLE);
-                box[1].setVisibility(View.GONE);
-                explain[1].setVisibility(View.GONE);
-                explain[3].setText("문제풀이 형식의 퀘스트에는 힌트가 있습니다. 힌트사용 버튼을 눌러보세요.");
-                box[2].setVisibility(View.GONE);
-                explain[2].setVisibility(View.GONE);
-                box[3].setVisibility(View.VISIBLE);
-                explain[3].setVisibility(View.VISIBLE);
+                    darkBackgroundUp.setVisibility(View.VISIBLE);
+                    darkBackgroundDown.setVisibility(View.GONE);
+                    box[1].setVisibility(View.GONE);
+                    explain[1].setVisibility(View.GONE);
+                    explain[3].setText("문제풀이 형식의 퀘스트에는 힌트가 있습니다. 힌트사용 버튼을 눌러보세요.");
+                    box[2].setVisibility(View.GONE);
+                    explain[2].setVisibility(View.GONE);
+                    box[3].setVisibility(View.VISIBLE);
+                    explain[3].setVisibility(View.VISIBLE);
+
+                    ExpandableListAdapter.buttonRestore.setEnabled(false);
+
+                    MapsActivity.fab_quest.setEnabled(false);
+                    MapsActivity.fab_ranking.setEnabled(false);
+                    MapsActivity.fab_logout.setEnabled(false);
+
+                    isGetChildView = false;
+                }
                 break;
-            case 5:
-                Log.d(TAG, "케이스5");
+            case 5:     // 복원하기 설명
+                if(isGetChildView) {
+                    Log.d(TAG, "케이스5");
+
+                    task = new InsertData();
+                    task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
+
+                    darkBackgroundUp.setVisibility(View.VISIBLE);
+                    darkBackgroundDown.setVisibility(View.GONE);
+                    box[1].setVisibility(View.GONE);
+                    explain[1].setVisibility(View.GONE);
+                    box[3].setVisibility(View.GONE);
+                    explain[3].setVisibility(View.GONE);
+                    explain[2].setText("문제를 풀 때도 복원하기 버튼을 사용합니다. 복원하기 버튼을 누르세요.");
+                    box[2].setVisibility(View.VISIBLE);
+                    explain[2].setVisibility(View.VISIBLE);
+
+                    ExpandableListAdapter.buttonRestore.setEnabled(true);
+
+                    MapsActivity.fab_quest.setEnabled(false);
+                    MapsActivity.fab_ranking.setEnabled(false);
+                    MapsActivity.fab_logout.setEnabled(false);
+
+                    isGetChildView = false;
+                }
+                break;
+            case 6:     //메뉴 설명
+                if(isGetChildView) {
+                    Log.d(TAG, "케이스6");
+
+                    task = new InsertData();
+                    task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
+
+                    darkBackgroundUp.setVisibility(View.GONE);
+                    darkBackgroundDown.setVisibility(View.VISIBLE);
+                    box[1].setVisibility(View.GONE);
+                    explain[1].setVisibility(View.GONE);
+                    box[2].setVisibility(View.GONE);
+                    explain[2].setVisibility(View.GONE);
+                    box[3].setVisibility(View.GONE);
+                    explain[3].setVisibility(View.GONE);
+                    explain[6].setVisibility(View.VISIBLE);
+
+                    MapsActivity.fab_quest.setEnabled(false);
+                    MapsActivity.fab_ranking.setEnabled(false);
+                    MapsActivity.fab_logout.setEnabled(false);
+
+                    isGetChildView = false;
+                }
+                break;
+            case 7:     // 퀘스트 목록 설명
+                Log.d(TAG, "케이스7");
 
                 task = new InsertData();
                 task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
 
-                box[1].setVisibility(View.GONE);
-                explain[1].setVisibility(View.GONE);
-                box[3].setVisibility(View.GONE);
-                explain[3].setVisibility(View.GONE);
-                explain[2].setText("문제를 풀 때도 복원하기 버튼을 사용합니다. 복원하기 버튼을 누르세요.");
-                box[2].setVisibility(View.VISIBLE);
-                explain[2].setVisibility(View.VISIBLE);
+                darkBackgroundDown.setVisibility(View.VISIBLE);
+                explain[7].setVisibility(View.VISIBLE);
+
+                MapsActivity.fab_quest.setEnabled(true);
+                MapsActivity.fab_ranking.setEnabled(false);
+                MapsActivity.fab_logout.setEnabled(false);
+                break;
+            case 8:     // 퀘스트 안에 들어갔을 때, 튜토리얼을 선택하도록 설명
+                Log.d(TAG, "케이스8");
+
+                task = new InsertData();
+                task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
+
+                break;
+            case 9:     // 튜토리얼을 선택하면 튜토리얼 설명을 없앰
+                Log.d(TAG, "케이스8");
+
+                task = new InsertData();
+                task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
+
+                explain[8].setVisibility(View.GONE);
+                break;
+            case 10:    // 랭킹 설명
+                Log.d(TAG, "케이스8");
+
+                task = new InsertData();
+                task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
+
+                darkBackgroundDown.setVisibility(View.VISIBLE);
+                explain[7].setText("랭킹버튼을 선택하여 내 랭킹을\n확인할 수 있습니다.");
+                explain[7].setVisibility(View.VISIBLE);
+
+                MapsActivity.fab_quest.setEnabled(true);
+                MapsActivity.fab_ranking.setEnabled(true);
+                MapsActivity.fab_logout.setEnabled(false);
+                break;
+            case 11:
+                Log.d(TAG, "케이스8");
+
+                task = new InsertData();
+                task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
+
+                darkBackgroundDown.setVisibility(View.GONE);
+                darkBackgroundUp.setVisibility(View.GONE);
+                explain[7].setVisibility(View.GONE);
+
+                MapsActivity.fab_quest.setEnabled(true);
+                MapsActivity.fab_ranking.setEnabled(true);
+                MapsActivity.fab_logout.setEnabled(true);
         }
     }
 

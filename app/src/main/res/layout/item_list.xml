@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/textView_list_rank"
+        android:fontFamily="@font/mainfont"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -16,6 +17,7 @@
 
     <TextView
         android:id="@+id/textView_list_name"
+        android:fontFamily="@font/mainfont"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -24,6 +26,7 @@
 
     <TextView
         android:id="@+id/textView_list_score"
+        android:fontFamily="@font/mainfont"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

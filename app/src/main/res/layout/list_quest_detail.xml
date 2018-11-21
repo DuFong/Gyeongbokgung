@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/durumari_child">
 
 
     <TextView
@@ -12,8 +12,9 @@
         android:layout_height="100dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:fontFamily="@font/mainfont"
         android:textSize="16sp"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|center_vertical"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -24,7 +25,6 @@
         android:layout_alignStart="@+id/listItem"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="2dp"
-
         android:text="복원하기"
         android:textSize="10sp" />
 

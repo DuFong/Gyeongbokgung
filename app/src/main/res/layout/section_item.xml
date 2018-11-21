@@ -11,6 +11,7 @@
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="true">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,7 +24,8 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="content text test"
-            android:textAppearance="?attr/textAppearanceListItem"/>
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:fontFamily="@font/mainfont"/>
 
         <ImageView
             android:id="@+id/ivItem"

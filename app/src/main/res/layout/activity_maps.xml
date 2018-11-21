@@ -20,18 +20,36 @@
         android:layout_height="match_parent"
         tools:context="com.kbsccoding.examples.gyeongbokgung.MapsActivity"/>
 
-    <include layout="@layout/layout_fab_submenu"/>
-
     <TextView
-        android:id="@+id/dark_background_quest"
+        android:id="@+id/dark_background_quest_down"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#B3000000"/>
+
+
+    <include layout="@layout/layout_fab_submenu"/>
+
+    <TextView
+        android:id="@+id/dark_background_quest_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#B3000000"/>
+
+    <TextView
+        android:id="@+id/durumari_down"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@layout/layout_quest"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/durumari_down" />
 
     <include layout="@layout/layout_quest" />
 
     <TextView
         android:id="@+id/box1"
+        android:fontFamily="@font/mainfont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -42,22 +60,48 @@
         android:textSize="43sp" />
 
     <TextView
+        android:fontFamily="@font/mainfont"
         android:id="@+id/explain1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/tutorial_explain_border"
+        android:textSize="15sp"
+        android:textColor="#050253"
+        android:padding="7dp"
         android:layout_below="@+id/box1"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="160dp"
+        android:text="현재 퀘스트의 내용을 볼 수\n있습니다. 눌러보세요!"/>
+
+
+    <TextView
+        android:fontFamily="@font/mainfont"
+        android:id="@+id/explain6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="59dp"
-        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginRight="100dp"
         android:background="@drawable/tutorial_explain_border"
         android:padding="7dp"
-        android:text="현재 퀘스트의 내용을 볼 수\n있습니다. 눌러보세요!"
+        android:text="첫 장을 열었습니다.\n메뉴를 클릭해보세요!"
         android:textColor="#050253"
         android:textSize="15sp" />
 
+    <TextView
+        android:id="@+id/explain7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/tutorial_explain_border"
+        android:padding="7dp"
+        android:text="퀘스트 목록 버튼을 클릭하여\n현재까지 완료한 퀘스트를 확인하세요!"
+        android:textColor="#050253"
+        android:textSize="15sp" />
 
 
 

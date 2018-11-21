@@ -107,10 +107,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int loginState = 0;
 
     // FloatingActionMenu
-    private FloatingActionMenu fab_menu;
-    private com.github.clans.fab.FloatingActionButton fab_quest;
-    private com.github.clans.fab.FloatingActionButton fab_ranking;
-    private com.github.clans.fab.FloatingActionButton fab_logout;
+    public static FloatingActionMenu fab_menu;
+    public static com.github.clans.fab.FloatingActionButton fab_quest;
+    public static com.github.clans.fab.FloatingActionButton fab_ranking;
+    public static com.github.clans.fab.FloatingActionButton fab_logout;
     private Handler mUiHandler = new Handler();
 
     // current location btn
@@ -126,9 +126,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Intent intent = getIntent();
         loginState = intent.getIntExtra("alreadyLogin", 0);
         if (loginState == 1) {
+
             GetData_set task2 = new GetData_set();
             task2.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/query_DD.php", SaveSharedPreference.getUserName(getApplicationContext()));
             //Log.d(TAG,DBHandler.currentUserData.getMember_id());
+
         }
         setContentView(R.layout.activity_maps);
         mapView = this.getWindow().getDecorView();
@@ -140,10 +142,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         mapsActivity = MapsActivity.this;
-
-        GetData task = new GetData();
-        task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/getQuest_DD.php", "");
-
+        if (DBHandler.currentUserData.getMember_currentQuest() == 0) {
+            GetData task = new GetData();
+            task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/getQuest_DD.php", "");
+        } else {
+            listView = findViewById(R.id.lvExp);
+            initData();
+            listAdapter = new ExpandableListAdapter(this, listDataHeader, listHash);
+            listView.setAdapter(listAdapter);
+            DBHandler.showTutorial();
+        }
 
         // 화면상단 메인퀘스트 표시
       /*  listView = findViewById(R.id.lvExp);
@@ -190,6 +198,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab_ranking.setOnClickListener(clickListener);
         fab_quest.setOnClickListener(clickListener);
         fab_logout.setOnClickListener(clickListener);
+
+        // 튜토리얼 상황
+        // DBHandler.showTutorial();
 
         /*
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
@@ -240,7 +251,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         btn_current_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG,"내위치내위치ㅡㅡ" );
+                Log.d(TAG, "내위치내위치ㅡㅡ");
                 getDeviceLocation();
             }
         });
@@ -266,6 +277,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onAnimationStart(Animator animation) {
                 fab_menu.getMenuIconView().setImageResource(fab_menu.isOpened()
                         ? R.drawable.ic_menu : R.drawable.ic_close);
+
+                // 튜토리얼 상황
+                Log.d("애니메이션함수", "실행!");
+                if (DBHandler.currentUserData.getMember_numTutorial() == 6) {
+                    DBHandler.currentUserData.setMember_numTutorial(7);
+                    DBHandler.isTutorial[6] = true;
+                    DBHandler.showTutorial();
+                }
             }
         });
 
@@ -580,16 +599,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String TAG_titleID = "titleID";
 
         try {
-
-
             Log.d(TAG, "quest try들어옴");
             Log.d(TAG, "!!!mJsonString" + mJsonString_quest);
             JSONObject jsonObject = new JSONObject(mJsonString_quest.substring(mJsonString_quest.indexOf("{"), mJsonString_quest.lastIndexOf("}") + 1));
             //  JSONObject jsonObject = new JSONObject(mJsonString_quest);
             Log.d(TAG, "!!!~~JSONObject: " + jsonObject.toString());
 
-            // 튜토리얼 상황 이놈!!!
-//            DBHandler.showTutorial();
+
+            // 튜토리얼 상황
+            DBHandler.showTutorial();
 
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
             //         Log.d(TAG,"~~array 성공");
@@ -613,14 +631,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 double latitude = item.getDouble("latitude");
                 double longitude = item.getDouble("longitude");
 
-                Quest quest = new Quest(titleID, subID, rowID, title, subTitle, description, sumDescription, goal, goal2, goal3, hint, explanation, point, type,latitude, longitude);
+                Quest quest = new Quest(titleID, subID, rowID, title, subTitle, description, sumDescription, goal, goal2, goal3, hint, explanation, point, type, latitude, longitude);
 
                 DBHandler.questDataList.add(quest);
                 Log.d(TAG, "questDataList 추가");
                 Log.d("라라라", "quest:" + quest.toString());
                 Log.d("라라라", String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
                 Log.d(TAG, DBHandler.questDataList.get(0).getTitle());
-                Log.d(TAG, "현재 퀘스트뭐닝? "+DBHandler.currentUserData.getMember_currentQuest());
+                Log.d(TAG, "현재 퀘스트뭐닝? " + DBHandler.currentUserData.getMember_currentQuest());
             }
             Log.d(TAG, "리스트 삽입 끝났니?");
             listView = findViewById(R.id.lvExp);
@@ -751,15 +769,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String TAG_ID = "userID";
         String TAG_NAME = "userName";
 
-        String TAG_PASSWORD="userPassword";
-        String dbpw="";
-        String dbid="";
-        String dbname="";
-        int dbscore=0;
-        int dbrank=0;
-        int dbidx=0;
-        int dbcurrent=0;
-        int dbnumTutorial=0;
+        String TAG_PASSWORD = "userPassword";
+        String dbpw = "";
+        String dbid = "";
+        String dbname = "";
+        int dbscore = 0;
+        int dbrank = 0;
+        int dbidx = 0;
+        int dbcurrent = 0;
+        int dbnumTutorial = 0;
 
         try {
             Log.d(TAG, "~~~1s");
@@ -784,16 +802,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String idx = item.getString("idx");
                 System.out.println(item.getString("userPassword"));
 
-                dbpw=item.getString("userPassword");
-                dbid=item.getString("userID");
-                dbname=item.getString("userName");
-                dbidx=item.getInt("idx");
-                Log.d(TAG,"userScore 전");
-                dbscore=item.getInt("userScore");
-                Log.d(TAG,"userScore 후");
-                dbrank=item.getInt("userRank");
-                dbcurrent=item.getInt("currentQuest");
-                dbnumTutorial=item.getInt("numTutorial");
+                dbpw = item.getString("userPassword");
+                dbid = item.getString("userID");
+                dbname = item.getString("userName");
+                dbidx = item.getInt("idx");
+                Log.d(TAG, "userScore 전");
+                dbscore = item.getInt("userScore");
+                Log.d(TAG, "userScore 후");
+                dbrank = item.getInt("userRank");
+                dbcurrent = item.getInt("currentQuest");
+                dbnumTutorial = item.getInt("numTutorial");
 
 
                 System.out.println(item.getString("userName"));
@@ -832,12 +850,42 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Intent intent;
             switch (view.getId()) {
                 case R.id.fab_quest:
+                    // 튜토리얼
+                    if (DBHandler.currentUserData.getMember_numTutorial() == 7) {
+                        DBHandler.currentUserData.setMember_numTutorial(8);
+                        DBHandler.isTutorial[7] = true;
+                    }
+
                     intent = new Intent(MapsActivity.this, QuestsViewActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.fab_ranking:
+                    // 튜토리얼
                     intent = new Intent(MapsActivity.this, RankingActivity.class);
                     startActivity(intent);
+
+                    Handler delayHandler = new Handler();
+                    delayHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (DBHandler.currentUserData.getMember_numTutorial() == 10) {
+                                DBHandler.currentUserData.setMember_numTutorial(11);
+                                DBHandler.isTutorial[10] = true;
+                                DBHandler.showTutorial();
+                                // 팝업창 띄우기
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                                builder.setTitle("튜토리얼 완료");
+                                builder.setMessage("모든 튜토리얼이 완료되었습니다. 이제 여러분의 힘으로 경복궁 복원을 완료해주시길 바랍니다.");
+                                //오른쪽 버튼
+                                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                    }
+                                });
+                                builder.show();
+                            }
+                        }
+                    }, 1000);
                     break;
                 case R.id.fab_logout:
                     SaveSharedPreference.clearUserName(getApplicationContext());

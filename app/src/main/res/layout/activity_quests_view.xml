@@ -17,6 +17,7 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
+            android:fontFamily="@font/mainfont"
             style="@style/Widget.Shrine.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -25,7 +26,7 @@
             android:paddingEnd="12dp"
             android:paddingRight="12dp"
             app:contentInsetStart="0dp"
-            app:title="퀘스트 목록"/>
+            app:title="퀘스트 목록" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -43,5 +44,17 @@
             android:layout_height="match_parent"/>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/explain8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/tutorial_explain_border"
+        android:padding="7dp"
+        android:text="현재 튜토리얼을 완료했습니다.\n튜토리얼을 눌러 완료한 퀘스트를 확인하세요!"
+        android:textColor="#050253"
+        android:textSize="15sp" />
 
 </FrameLayout>

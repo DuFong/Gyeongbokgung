@@ -34,12 +34,12 @@ public class VideoStartChapter1Activity extends AppCompatActivity {
         after_timer = new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), ReceiveQuestActivity.class);
+                Intent intent = new Intent(getApplicationContext(), OpenTheDoorActivity.class);
                 startActivity(intent);
                 finish();
             }
         };
-        timer.schedule(after_timer, 5000);
+        timer.schedule(after_timer, 6000);
 
     }
 

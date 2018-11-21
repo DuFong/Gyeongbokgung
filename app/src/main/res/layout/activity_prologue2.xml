@@ -9,6 +9,7 @@
 
     <TextView
         android:id="@+id/main_text2"
+        android:fontFamily="@font/mainfont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
