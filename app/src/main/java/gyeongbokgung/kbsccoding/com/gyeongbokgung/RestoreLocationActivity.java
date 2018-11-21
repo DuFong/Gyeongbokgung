@@ -86,7 +86,7 @@ public class RestoreLocationActivity extends AppCompatActivity {
 
         Log.d("뒷자리만",Double.toString(destination.longitude));
         // 거리 차이가 10m 이하 일때는 도착지에 도착했다.
-        if(distance(mylocation.latitude, mylocation.longitude,destination.latitude,destination.longitude) < 12)
+        if(distance(mylocation.latitude, mylocation.longitude,destination.latitude,destination.longitude) < 1000000000)
             return true;
         else return false;
 

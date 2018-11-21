@@ -8,7 +8,8 @@
     android:orientation="vertical"
     tools:context=".RestoreActivity"
     android:layout_margin="15dp"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@drawable/questbackground">
 
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
@@ -27,10 +28,10 @@
             android:gravity="center_horizontal|center_vertical"
             android:textSize="20sp"
             android:textColor="@color/cardview_dark_background"
-            sl:scale_height="40"
+            sl:scale_height="70"
             sl:scale_left="0"
             sl:scale_textsize="7"
-            sl:scale_top="10"
+            sl:scale_top="13"
             sl:scale_width="100"
             tools:ignore="MissingPrefix"/>
 
@@ -48,7 +49,7 @@
             sl:scale_height="15"
             sl:scale_left="0"
             sl:scale_textsize="7"
-            sl:scale_top="50"
+            sl:scale_top="83"
             tools:ignore="MissingPrefix"/>
 
         <EditText
@@ -65,7 +66,7 @@
             sl:scale_height="15"
             sl:scale_left="0"
             sl:scale_textsize="7"
-            sl:scale_top="65"
+            sl:scale_top="98"
             tools:ignore="MissingPrefix"/>
 
         <Button
@@ -82,7 +83,7 @@
             sl:scale_height="18"
             sl:scale_left="0"
             sl:scale_textsize="6"
-            sl:scale_top="80"
+            sl:scale_top="113"
             sl:scale_width="100"
             tools:ignore="MissingPrefix"/>
 

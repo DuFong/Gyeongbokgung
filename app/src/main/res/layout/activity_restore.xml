@@ -28,10 +28,10 @@
         android:gravity="center_horizontal|center_vertical"
         android:textSize="20sp"
         android:textColor="@color/cardview_dark_background"
-        sl:scale_height="60"
+        sl:scale_height="70"
         sl:scale_left="0"
         sl:scale_textsize="7"
-        sl:scale_top="10"
+        sl:scale_top="13"
         sl:scale_width="100"
         tools:ignore="MissingPrefix"/>
 
@@ -46,10 +46,10 @@
         android:hint="정답을 입력하세요"
         android:textSize="20sp"
         sl:scale_width="100"
-        sl:scale_height="15"
+        sl:scale_height="14"
         sl:scale_left="0"
-        sl:scale_textsize="7"
-        sl:scale_top="60"
+        sl:scale_textsize="6"
+        sl:scale_top="83"
         tools:ignore="MissingPrefix"/>
 
     <Button
@@ -63,10 +63,10 @@
         android:layout_weight="0.7"
         android:text="입         력"
         android:textSize="20sp"
-        sl:scale_height="18"
+        sl:scale_height="15"
         sl:scale_left="0"
         sl:scale_textsize="6"
-        sl:scale_top="75"
+        sl:scale_top="97"
         sl:scale_width="100"
         tools:ignore="MissingPrefix"/>
 
