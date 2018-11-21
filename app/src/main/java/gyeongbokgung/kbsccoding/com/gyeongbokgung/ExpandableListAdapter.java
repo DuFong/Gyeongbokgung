@@ -91,12 +91,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView listHeader = view.findViewById(R.id.listHeader);
         listHeader.setTypeface(null, Typeface.BOLD);
         listHeader.setText(headerTitle);
+        Log.d("익스펜더블함수", "부모!!!");
+        DBHandler.durumariDown.setVisibility(View.VISIBLE);
         return view;
     }
 
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
         DBHandler.isGetChildView = true;
+
+        DBHandler.durumariDown.setVisibility(View.GONE);
 
         final String childText = (String)getChild(i,i1);
         if(view == null) {
@@ -160,17 +164,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         Log.d("numTorial", Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
 
         DBHandler.box[2] = view.findViewById(R.id.box2);
-        DBHandler.explain[2] = view.findViewById(R.id.explain2);
         DBHandler.box[3] = view.findViewById(R.id.box3);
-        DBHandler.explain[3] = view.findViewById(R.id.explain2);
 
-     /*   DBHandler.box[2].setVisibility(View.GONE);
-        DBHandler.box[3].setVisibility(View.GONE);
-        DBHandler.explain[2].setVisibility(View.GONE);
-        DBHandler.explain[3].setVisibility(View.GONE);*/
-        // 튜토리얼창 안보이게 하기
-        //isExecuted = false;
-       // countExcuted++;
         Log.d("익스펜더블함수", "getChildView호출!");
 
         if(DBHandler.currentUserData.getMember_numTutorial() > 5) {

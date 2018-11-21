@@ -76,7 +76,7 @@ public class QuestsViewActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_close);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_close_black);
 
 //        Map<String, Quest> ssTitle = new HashMap<>();
 //        for (int i = 0; i < mArrayList.size(); i++) {

@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.common.collect.Maps;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -25,7 +27,7 @@ public class DBHandler {
 
     public static TextView[] box = new TextView[20];
     public static TextView[] explain = new TextView[20];
-    public static TextView darkBackgroundUp, darkBackgroundDown;
+    public static TextView darkBackgroundUp, darkBackgroundDown, durumariDown;
 
     public static void showTutorial() {
 
@@ -33,17 +35,22 @@ public class DBHandler {
         // for문을 통해 box, explain 객체 찾기, 안보이게 하기
         box[1] = MapsActivity.mapView.findViewById(R.id.box1);
         explain[1] = MapsActivity.mapView.findViewById(R.id.explain1);
+        explain[2] = MapsActivity.mapView.findViewById(R.id.explain2);
+        explain[3] = MapsActivity.mapView.findViewById(R.id.explain2);
         explain[6] = MapsActivity.mapView.findViewById(R.id.explain6);
         explain[7] = MapsActivity.mapView.findViewById(R.id.explain7);
 
 
         darkBackgroundUp = MapsActivity.mapView.findViewById(R.id.dark_background_quest_up);
         darkBackgroundDown = MapsActivity.mapView.findViewById(R.id.dark_background_quest_down);
+        durumariDown = MapsActivity.mapView.findViewById(R.id.durumari_down);
 
         darkBackgroundUp.setVisibility(View.GONE);
         darkBackgroundDown.setVisibility(View.GONE);
         box[1].setVisibility(View.GONE);
         explain[1].setVisibility(View.GONE);
+        explain[2].setVisibility(View.GONE);
+        explain[3].setVisibility(View.GONE);
         explain[6].setVisibility(View.GONE);
         explain[7].setVisibility(View.GONE);
 
