@@ -151,6 +151,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             initData();
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listHash);
             listView.setAdapter(listAdapter);
+            DBHandler.showTutorial();
         }
 
         // 화면상단 메인퀘스트 표시
@@ -600,7 +601,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String TAG_titleID = "titleID";
 
         try {
-            DBHandler.showTutorial();
             Log.d(TAG, "quest try들어옴");
             Log.d(TAG, "!!!mJsonString" + mJsonString_quest);
             JSONObject jsonObject = new JSONObject(mJsonString_quest.substring(mJsonString_quest.indexOf("{"), mJsonString_quest.lastIndexOf("}") + 1));
