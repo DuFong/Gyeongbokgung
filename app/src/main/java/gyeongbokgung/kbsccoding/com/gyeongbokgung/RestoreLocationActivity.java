@@ -28,7 +28,14 @@ public class RestoreLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore_location);
         gps = new GpsInfo(RestoreLocationActivity.this);
-        if(compareLocaton()) {
+        if(compareLocaton())
+        {
+            if(DBHandler.currentUserData.getMember_numTutorial() == 2) {
+                DBHandler.currentUserData.setMember_numTutorial(3);
+                DBHandler.isTutorial[2] = true;
+                DBHandler.isGetChildView = true;
+            }
+
             // 도착지에 잘 도착했을때
             explanation=DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getExplanation();
             Toast.makeText(getBaseContext(), "해당 위치까지 잘 오셨습니다.", Toast.LENGTH_SHORT).show();
@@ -38,13 +45,20 @@ public class RestoreLocationActivity extends AppCompatActivity {
             DBHandler.currentUserData.setMember_score(DBHandler.currentUserData.getMember_score() + Integer.parseInt(score));
             gps.stopUsingGPS();
 
-            // 배경지식이 없을 경우
-            if (explanation.equals("null")) {
+            if(DBHandler.currentUserData.getMember_currentQuest()==5){
+                Log.d("CHECK!!","4로 들어왔다!!!!!");
+                Intent intent = new Intent(getApplicationContext(), ExplanationImageActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            // 배경지식이 없는경우
+            else if (explanation.equals("null")) {
                 Intent intent = new Intent(getApplicationContext(), CompleteActivity.class);
                 startActivity(intent);
                 finish();
-                //배경지식이 있을 경우
-            } else {
+            }
+            // 배경지식이 있는 경우
+            else {
                 Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
                 startActivity(intent);
                 finish();

@@ -126,6 +126,7 @@
             android:name=".VideoStartChapter3Activity"
             android:screenOrientation="portrait" />
         <activity android:name=".OpenTheDoorActivity"></activity>
+        <activity android:name=".ExplanationImageActivity"></activity>
     </application>
 
 </manifest>

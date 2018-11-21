@@ -80,7 +80,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     // A default location (경복궁) and default zoom to use when location permission is
     // not granted.
     private final LatLng mDefaultLocation = new LatLng(37.579617, 126.97704099999999);
-    private static final int DEFAULT_ZOOM = 15;
+    private static final int DEFAULT_ZOOM = 17;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean mLocationPermissionGranted; // GPS 이용가능 여부
 
@@ -107,17 +107,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int loginState = 0;
 
     // FloatingActionMenu
-    private FloatingActionMenu fab_menu;
-    private com.github.clans.fab.FloatingActionButton fab_quest;
-    private com.github.clans.fab.FloatingActionButton fab_ranking;
-    private com.github.clans.fab.FloatingActionButton fab_logout;
+    public static FloatingActionMenu fab_menu;
+    public static com.github.clans.fab.FloatingActionButton fab_quest;
+    public static com.github.clans.fab.FloatingActionButton fab_ranking;
+    public static com.github.clans.fab.FloatingActionButton fab_logout;
     private Handler mUiHandler = new Handler();
 
     // current location btn
     private ImageButton btn_current_location;
     public static Activity mapsActivity;  // CompleteActivity에서 finsh하기 위함
 
-    private TextView box, line1, line2, explain;
+    private TextView box, line1, line2, explain, darkBackground;
     public static View mapView;
 
     @Override
@@ -126,9 +126,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Intent intent = getIntent();
         loginState = intent.getIntExtra("alreadyLogin", 0);
         if (loginState == 1) {
-            GetData_set task2 = new GetData_set();
-            task2.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/query_DD.php", SaveSharedPreference.getUserName(getApplicationContext()));
-            //Log.d(TAG,DBHandler.currentUserData.getMember_id());
+
+                GetData_set task2 = new GetData_set();
+                task2.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/query_DD.php", SaveSharedPreference.getUserName(getApplicationContext()));
+                //Log.d(TAG,DBHandler.currentUserData.getMember_id());
+
         }
         setContentView(R.layout.activity_maps);
         mapView = this.getWindow().getDecorView();
@@ -140,10 +142,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         mapsActivity = MapsActivity.this;
-
-        GetData task = new GetData();
-        task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/getQuest_DD.php", "");
-
+        if(DBHandler.currentUserData.getMember_currentQuest()==0) {
+            GetData task = new GetData();
+            task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/getQuest_DD.php", "");
+        }
+        else{
+            listView = findViewById(R.id.lvExp);
+            initData();
+            listAdapter = new ExpandableListAdapter(this, listDataHeader, listHash);
+            listView.setAdapter(listAdapter);
+            DBHandler.showTutorial();
+        }
 
         // 화면상단 메인퀘스트 표시
       /*  listView = findViewById(R.id.lvExp);
@@ -191,37 +200,54 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab_quest.setOnClickListener(clickListener);
         fab_logout.setOnClickListener(clickListener);
 
+
+
         // 튜토리얼 상황
+       // DBHandler.showTutorial();
+
+        /*
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
         //    DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
             if(DBHandler.currentUserData.getMember_numTutorial() == 1) {
                // mapView.setBackgroundColor(getResources().getColor(R.color.darkBackground));
 
                 box = findViewById(R.id.box1);
-                line1 = findViewById(R.id.line1_1);
-                line2 = findViewById(R.id.line1_2);
                 explain = findViewById(R.id.explain1);
+                darkBackground = findViewById(R.id.dark_background_quest);
 
                 box.setVisibility(View.VISIBLE);
-                line1.setVisibility(View.VISIBLE);
-                line2.setVisibility(View.VISIBLE);
                 explain.setVisibility(View.VISIBLE);
+                darkBackground.setVisibility(View.VISIBLE);
+
+                explain = findViewById(R.id.explain2);
+                explain.setVisibility(View.GONE);
             }
 
             else {
+                box = findViewById(R.id.box1);
+                explain = findViewById(R.id.explain1);
+                darkBackground = findViewById(R.id.dark_background_quest);
 
+                box.setVisibility(View.GONE);
+                explain.setVisibility(View.GONE);
+                darkBackground.setVisibility(View.GONE);
+
+                explain = findViewById(R.id.explain2);
+                explain.setVisibility(View.GONE);
             }
         }
         else {
             box = findViewById(R.id.box1);
-            line1 = findViewById(R.id.line1_1);
-            line2 = findViewById(R.id.line1_2);
             explain = findViewById(R.id.explain1);
+            darkBackground = findViewById(R.id.dark_background_quest);
+
             box.setVisibility(View.GONE);
-            line1.setVisibility(View.GONE);
-            line2.setVisibility(View.GONE);
             explain.setVisibility(View.GONE);
-        }
+            darkBackground.setVisibility(View.GONE);
+
+            explain = findViewById(R.id.explain2);
+            explain.setVisibility(View.GONE);
+        } */
 
         // current location button 세팅
         btn_current_location = (ImageButton) findViewById(R.id.btn_current_location);
@@ -255,6 +281,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 fab_menu.getMenuIconView().setImageResource(fab_menu.isOpened()
                         ? R.drawable.ic_menu : R.drawable.ic_close);
                 // 튜토리얼 상황
+                Log.d("애니메이션함수", "실행!");
+                if(DBHandler.currentUserData.getMember_numTutorial() == 6) {
+                    DBHandler.currentUserData.setMember_numTutorial(7);
+                    DBHandler.isTutorial[6] = true;
+                    DBHandler.showTutorial();
+                }
             }
         });
 
@@ -276,33 +308,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             super.onSaveInstanceState(outState);
         }
     }
-
-//    /**
-//     * Sets up the options menu.
-//     *
-//     * @param menu The options menu.
-//     * @return Boolean.
-//     */
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.current_place_menu, menu);
-//        return true;
-//    }
-
-    /**
-     * Handles a click on the menu option to get a place.
-     *
-     * @param item The menu item to handle.
-     * @return Boolean.
-     */
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.option_get_place) {
-//            showCurrentPlace();
-//        }
-//        return true;
-//    }
 
 
     /**
@@ -408,7 +413,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -420,7 +424,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, "permission success", Toast.LENGTH_SHORT).show();
                     mLocationPermissionGranted = true;
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat
+                            .checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
                         //    ActivityCompat#requestPermissions
                         // here to request the missing permissions, and then overriding
@@ -582,7 +587,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void showResult() {
 
-
         //  String TAG_COUNTRY ="country";
         String TAG_JSON = "gyeongbokgung";
         String TAG_IDX = "idx";
@@ -596,14 +600,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String TAG_TYPE = "type";
         String TAG_titleID = "titleID";
 
-
         try {
-
             Log.d(TAG, "quest try들어옴");
             Log.d(TAG, "!!!mJsonString" + mJsonString_quest);
             JSONObject jsonObject = new JSONObject(mJsonString_quest.substring(mJsonString_quest.indexOf("{"), mJsonString_quest.lastIndexOf("}") + 1));
             //  JSONObject jsonObject = new JSONObject(mJsonString_quest);
             Log.d(TAG, "!!!~~JSONObject: " + jsonObject.toString());
+
+            // 튜토리얼 상황
+            DBHandler.showTutorial();
 
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
             //         Log.d(TAG,"~~array 성공");
@@ -626,17 +631,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 int type = item.getInt("type");
                 double latitude = item.getDouble("latitude");
                 double longitude = item.getDouble("longitude");
-                Log.d("왜안나와", rowID +" : " + latitude);
 
                 Quest quest = new Quest(titleID, subID, rowID, title, subTitle, description, sumDescription, goal, goal2, goal3, hint, explanation, point, type,latitude, longitude);
-
 
                 DBHandler.questDataList.add(quest);
                 Log.d(TAG, "questDataList 추가");
                 Log.d("라라라", "quest:" + quest.toString());
                 Log.d("라라라", String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
                 Log.d(TAG, DBHandler.questDataList.get(0).getTitle());
-
+                Log.d(TAG, "현재 퀘스트뭐닝? "+DBHandler.currentUserData.getMember_currentQuest());
             }
             Log.d(TAG, "리스트 삽입 끝났니?");
             listView = findViewById(R.id.lvExp);
@@ -848,20 +851,47 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Intent intent;
             switch (view.getId()) {
                 case R.id.fab_quest:
+                    // 튜토리얼
+                    if(DBHandler.currentUserData.getMember_numTutorial() == 7) {
+                        DBHandler.currentUserData.setMember_numTutorial(8);
+                        DBHandler.isTutorial[7] = true;
+                    }
+
                     intent = new Intent(MapsActivity.this, QuestsViewActivity.class);
                     startActivity(intent);
-                    // 튜토리얼 상황
                     break;
                 case R.id.fab_ranking:
+                    // 튜토리얼
                     intent = new Intent(MapsActivity.this, RankingActivity.class);
                     startActivity(intent);
-                    // 튜토리얼 상황
+
+                    Handler delayHandler = new Handler();
+                    delayHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(DBHandler.currentUserData.getMember_numTutorial() == 10) {
+                                DBHandler.currentUserData.setMember_numTutorial(11);
+                                DBHandler.isTutorial[10] = true;
+                                DBHandler.showTutorial();
+                                // 팝업창 띄우기
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                                builder.setTitle("튜토리얼 완료");
+                                builder.setMessage("모든 튜토리얼이 완료되었습니다. 이제 여러분의 힘으로 경복궁 복원을 완료해주시길 바랍니다.");
+                                //오른쪽 버튼
+                                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                    }
+                                });
+                                builder.show();
+                            }
+                        }
+                    }, 1000);
                     break;
                 case R.id.fab_logout:
                     SaveSharedPreference.clearUserName(getApplicationContext());
                     intent = new Intent(MapsActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    // 튜토리얼 상황
                     break;
             }
         }

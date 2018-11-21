@@ -12,6 +12,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     Context context;
@@ -27,6 +30,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String,List<String>> listHashMap;
     private int nowType=0;
     private String TAG ="ExpandableListAdapter";
+
+ //   public static View expandableView;
+
+    public static Button buttonHint;
+    public static Button buttonRestore;
+
+ //   static int countExcuted = 0;
+
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listHashMap) {
         this.context = context;
@@ -85,20 +96,25 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
+        DBHandler.isGetChildView = true;
+
         final String childText = (String)getChild(i,i1);
         if(view == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_quest_detail, null);
         }
+
+        //expandableView = view;
+
         TextView txtListChild = view.findViewById(R.id.listItem);
-        Button buttonHint = view.findViewById(R.id.hint_button);
+        buttonHint = view.findViewById(R.id.hint_button);
         if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getHint().equals("null")){
             buttonHint.setVisibility(View.INVISIBLE);
         }
         else{
             buttonHint.setVisibility(View.VISIBLE);
         }
-        Button buttonRestore = view.findViewById(R.id.restore_button);
+        buttonRestore = view.findViewById(R.id.restore_button);
         txtListChild.setText(childText);
         buttonHint.setOnClickListener(new View.OnClickListener() {
 
@@ -106,7 +122,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View view) {
                 // db에서 문제 id로 switch문 작성
                 Intent intent=null;
-                if(DBHandler.currentUserData.getMember_currentQuest()==7){
+                if(DBHandler.currentUserData.getMember_currentQuest()==6){
                     intent = new Intent(context, HintImageActivity.class);
                 }
                 else{
@@ -122,6 +138,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View view) {
                 nowType=DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getType();
                 Intent intent = null;
+
                 if(nowType == 0 ){
                     intent = new Intent(context, RestoreLocationActivity.class);
                 }
@@ -142,134 +159,48 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         });
         Log.d("numTorial", Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
 
+        DBHandler.box[2] = view.findViewById(R.id.box2);
+        DBHandler.explain[2] = view.findViewById(R.id.explain2);
+        DBHandler.box[3] = view.findViewById(R.id.box3);
+        DBHandler.explain[3] = view.findViewById(R.id.explain2);
+
+     /*   DBHandler.box[2].setVisibility(View.GONE);
+        DBHandler.box[3].setVisibility(View.GONE);
+        DBHandler.explain[2].setVisibility(View.GONE);
+        DBHandler.explain[3].setVisibility(View.GONE);*/
         // 튜토리얼창 안보이게 하기
-        if(DBHandler.currentUserData.getMember_numTutorial() == 1) {
-            TextView box = MapsActivity.mapView.findViewById(R.id.box1);
-            TextView line1 = MapsActivity.mapView.findViewById(R.id.line1_1);
-            TextView line2 = MapsActivity.mapView.findViewById(R.id.line1_2);
-            TextView explain = MapsActivity.mapView.findViewById(R.id.explain1);
+        //isExecuted = false;
+       // countExcuted++;
+        Log.d("익스펜더블함수", "getChildView호출!");
 
-            box.setVisibility(View.GONE);
-            line1.setVisibility(View.GONE);
-            line2.setVisibility(View.GONE);
-            explain.setVisibility(View.GONE);
-
-            DBHandler.currentUserData.setMember_numTutorial(2);
-            //DB에도 업데이트
-            InsertData task=new InsertData();
-            task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id());
-
-            //     SaveSharedPreference2.setNumTutorial(this.context);
-
-      /*      if(DBHandler.numTutorial == 2) {
-                TextView box = MapsActivity.mapView.findViewById(R.id.box2);
-                TextView line1 = MapsActivity.mapView.findViewById(R.id.line2_1);
-                TextView line2 = MapsActivity.mapView.findViewById(R.id.line2_2);
-                TextView explain = MapsActivity.mapView.findViewById(R.id.explain2);
-
-                box.setVisibility(View.GONE);
-                line1.setVisibility(View.GONE);
-                line2.setVisibility(View.GONE);
-                explain.setVisibility(View.GONE);
-            }*/
+        if(DBHandler.currentUserData.getMember_numTutorial() > 5) {
+            DBHandler.box[2].setVisibility(View.GONE);
+            DBHandler.box[3].setVisibility(View.GONE);
+            DBHandler.explain[2].setVisibility(View.GONE);
+            DBHandler.explain[3].setVisibility(View.GONE);
         }
+        else if(DBHandler.currentUserData.getMember_numTutorial() == 1 || DBHandler.currentUserData.getMember_numTutorial() == 2/* && countExcuted == 1*/) {
+            Log.d("익스펜더블함수", "케이스2");
+            DBHandler.currentUserData.setMember_numTutorial(2);
+            //isExecuted = true;
+            DBHandler.showTutorial();
+        }
+        else if(DBHandler.currentUserData.getMember_numTutorial() == 3) {
+            Log.d("익스펜더블함수", "케이스3");
+            DBHandler.isTutorial[3] = true;
+            DBHandler.currentUserData.setMember_numTutorial(4);
+            DBHandler.showTutorial();
+        }
+
+        if(DBHandler.isTutorial[2] || DBHandler.isTutorial[3] || DBHandler.isTutorial[4] || DBHandler.isTutorial[5] || DBHandler.isTutorial[6] || DBHandler.isTutorial[7])
+            DBHandler.showTutorial();   // 복원하기에 대한 설명을 없애기 위함
+
         return view;
     }
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return true;
-    }
-
-
-    class InsertData extends AsyncTask<String, Void,String > {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            //  progressDialog = ProgressDialog.show(RestoreActivity.this,
-            //         "Please Wait", null, true, true);
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            //  progressDialog.dismiss();
-
-            //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-
-            Log.d(TAG, "POST response  - " + result);
-
-        }
-
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            String userID = (String)params[1];
-
-            String serverURL = (String)params[0];
-            String postParameters = "userID=" + userID;
-
-            try {
-
-                URL url = new URL(serverURL);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
-
-                httpURLConnection.setReadTimeout(50000);
-                httpURLConnection.setConnectTimeout(50000);
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.connect();
-
-
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(postParameters.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
-
-
-                int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d(TAG, "POST response code - " + responseStatusCode);
-
-                InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
-                    inputStream = httpURLConnection.getInputStream();
-                }
-                else{
-                    inputStream = httpURLConnection.getErrorStream();
-                }
-
-
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-
-                while((line = bufferedReader.readLine()) != null){
-                    sb.append(line);
-                }
-
-
-                bufferedReader.close();
-
-
-                return sb.toString();
-
-
-            } catch (Exception e) {
-
-                Log.d(TAG, "InsertData: Error ", e);
-                // onSignupFailed();
-                return new String("Error: " + e.getMessage());
-            }
-
-        }
-
     }
 
 }

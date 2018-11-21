@@ -56,8 +56,13 @@ public class RestoreActivity extends AppCompatActivity {
         String DBanswer = DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getGoal();
         Log.d(TAG,answer+DBanswer);
         if(answer.equals(DBanswer)){
+            // 튜토리얼
+            if(DBHandler.currentUserData.getMember_numTutorial() == 5) {
+                DBHandler.currentUserData.setMember_numTutorial(6);
+                DBHandler.isTutorial[5] = true;
+                DBHandler.isGetChildView = true;
+            }
             //답이 맞았을 때
-
             Toast.makeText(getBaseContext(), "정답입니다.", Toast.LENGTH_LONG).show();
             Log.d(TAG,"정답if문으로 들어옴");
             score = String.valueOf(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getPoint());
@@ -71,6 +76,11 @@ public class RestoreActivity extends AppCompatActivity {
             //점수 올리기
             explanation=DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getExplanation();
             //APP current도 올려줘야함!
+            if(DBHandler.currentUserData.getMember_currentQuest()==4){
+                Intent intent = new Intent(getApplicationContext(),ExplanationImageActivity.class);
+                startActivity(intent);
+                finish();
+            }
             if (explanation.equals("null")){
                 Intent intent = new Intent(getApplicationContext(),CompleteActivity.class);
                 startActivity(intent);

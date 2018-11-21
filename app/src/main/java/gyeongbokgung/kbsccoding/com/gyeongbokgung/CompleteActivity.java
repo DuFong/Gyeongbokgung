@@ -20,7 +20,6 @@ public class CompleteActivity extends AppCompatActivity {
     @BindView(R.id.tv_desc_com)
     TextView mDesc;
     private String TAG = "CompleteActivity";
-
     private MapsActivity end_activity; //MapsActivity스텍을 담을 변수
 
 
@@ -32,6 +31,30 @@ public class CompleteActivity extends AppCompatActivity {
         mSubtitle.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         mDesc.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getDescription());
         end_activity = (MapsActivity)MapsActivity.mapsActivity; // 변수에 MapsActivity 를 담는다.
+   /*     viewKonfetti2 = (KonfettiView)findViewById(R.id.viewKonfetti);
+        viewKonfetti2.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(2000L)
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                .addSizes(new Size(10, 5))
+                .setPosition(-50f, viewKonfetti2.getWidth() + 50f, -50f, -50f)
+                .streamFor(300, 5000L);
+
+
+        viewKonfetti.build()
+                .addColors(Color.parseColor("#12fce6"), Color.parseColor("#ff0dc6c9"), Color.parseColor("#009688"))
+                .setDirection(90.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(5000L)
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                .addSizes(new Size(14, 6f))
+                .setPosition(-50f, viewKonfetti.getWidth() + 50f, -50f, -50f)
+                .stream(300, 5000L);
+*/
     }
     @OnClick(R.id.btn_finish)
     void fin() {

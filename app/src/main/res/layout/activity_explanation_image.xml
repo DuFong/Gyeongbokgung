@@ -5,33 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HintImageActivity"
     android:orientation="vertical"
+    tools:context=".ExplanationImageActivity"
     android:layout_margin="15dp"
     android:padding="10dp">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:fontFamily="@font/mainfont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="8dp"
-        android:text="HINT"
-        android:textColor="#000000"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
-        tools:context=".HintImageActivity"
-        android:layout_margin="15dp"
-        android:padding="10dp"/>
-
     <ImageView
-        android:id="@+id/iv_hint"
+        android:id="@+id/iv_explanation"
         android:layout_width="match_parent"
         android:layout_height="370dp"
         android:layout_marginStart="8dp"
@@ -42,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btn_OK_hint"
+        android:id="@+id/btn_OK_EI"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="확인" />

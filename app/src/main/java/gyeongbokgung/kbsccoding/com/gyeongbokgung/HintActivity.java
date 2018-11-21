@@ -1,5 +1,6 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,5 +18,19 @@ public class HintActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hint);
         ButterKnife.bind(this);
         mHint.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getHint());
+
+        if(DBHandler.currentUserData.getMember_numTutorial() == 4) {
+            DBHandler.currentUserData.setMember_numTutorial(5);
+            DBHandler.isTutorial[4] = true;
+            Handler delayHandler = new Handler();
+            delayHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // TODO
+                    DBHandler.showTutorial();
+                }
+            }, 1000);
+            DBHandler.isGetChildView = true;
+        }
     }
 }
