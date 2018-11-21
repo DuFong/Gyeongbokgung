@@ -32,8 +32,18 @@
     <TextView
         android:id="@+id/dark_background_quest_up"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#B3000000"/>
+
+    <TextView
+        android:id="@+id/durumari_down"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@layout/layout_quest"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/durumari_down" />
 
     <include layout="@layout/layout_quest" />
 

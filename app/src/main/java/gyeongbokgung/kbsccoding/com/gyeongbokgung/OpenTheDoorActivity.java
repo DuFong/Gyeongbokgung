@@ -39,7 +39,7 @@ public class OpenTheDoorActivity extends AppCompatActivity {
                 finish();
             }
         };
-        timer.schedule(after_timer, 1400);
+        timer.schedule(after_timer, 2000);
 
     }
 
