@@ -2,6 +2,7 @@ package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
@@ -36,13 +37,12 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
 public class QuestsViewActivity extends AppCompatActivity {
 
-    private static final String TAG = MapsActivity.class.getSimpleName();
+    private static final String TAG = QuestsViewActivity.class.getSimpleName();
     private static final String TAGQ = "Quest DB Connect";
     private RecyclerView mRecyclerView;
     private GridLayoutManager mLayoutManager;
     public SectionedRecyclerViewAdapter sectionAdapter;
     public ArrayList<Quest> mArrayList;
-    private NestedScrollView nestedScrollView;
     //  private String mJsonString;
 
 
@@ -77,8 +77,6 @@ public class QuestsViewActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_close);
-
-        nestedScrollView = findViewById(R.id.product_grid);
 
 //        Map<String, Quest> ssTitle = new HashMap<>();
 //        for (int i = 0; i < mArrayList.size(); i++) {
@@ -120,6 +118,9 @@ public class QuestsViewActivity extends AppCompatActivity {
                     }
                 }
             });
+            for(int i=0;i<quests.size();i++){
+                Log.d(TAG,"rowId=" +quests.get(i).getRowID());
+            }
             QuestSection section = new QuestSection(getApplicationContext(), titleId, quests);
             sectionAdapter.addSection(section);
         }
@@ -201,9 +202,9 @@ public class QuestsViewActivity extends AppCompatActivity {
                             public void run() {
                                 // TODO
                                 DBHandler.showTutorial();
-
-                                //headerHolder.rootView.setBackgroundColor(getResources().getColor(R.color.white)); // 다희야 이부분 원래색으로 돌려줘 ㅎㅎ
-                                nestedScrollView.setBackgroundColor(getResources().getColor(R.color.gridBackgroundColor));
+//                                headerHolder.rootView.setBackgroundColor(getResources().getColor(R.color.white)); // 다희야 이부분 원래색으로 돌려줘 ㅎㅎ
+//                                nestedScrollView.setBackgroundColor(getResources().getColor(R.color.gridBackgroundColor));
+                                sectionAdapter.notifyDataSetChanged();
                             }
                         }, 1000);
                     }
@@ -243,17 +244,20 @@ public class QuestsViewActivity extends AppCompatActivity {
                     headerHolder.ivArrow.setImageResource(
                             expanded ? R.drawable.ic_arrow_up : R.drawable.ic_arrow_down
                     );
+
                     sectionAdapter.notifyDataSetChanged();
                 }
             });
+
             // 튜토리얼
             if(!list.get(0).getTitle().equals("튜토리얼") && DBHandler.currentUserData.getMember_numTutorial() == 8){
                 DBHandler.explain[8].setVisibility(View.VISIBLE);
                 DBHandler.showTutorial();
+                // 다희야 리스트 회색으로 바꿔줘 ->ㅇㅋ
                 headerHolder.rootView.setBackgroundColor(getResources().getColor(R.color.grey));
-                // 다희야 리스트 회색으로 바꿔줘~
-                nestedScrollView.setBackgroundColor(getResources().getColor(R.color.grey));
-            }
+            } else
+                headerHolder.rootView.setBackgroundColor(getResources().getColor(R.color.white));
+
         }
 
         private class HeaderViewHolder extends RecyclerView.ViewHolder {
