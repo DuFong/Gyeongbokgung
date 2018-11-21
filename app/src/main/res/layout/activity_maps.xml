@@ -25,6 +25,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#B3000000"/>
+    
+    <TextView
+        android:id="@+id/durumari_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="55dp"
+        android:background="@drawable/durumari_line"/>
 
 
     <include layout="@layout/layout_fab_submenu"/>
@@ -32,7 +40,7 @@
     <TextView
         android:id="@+id/dark_background_quest_up"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#B3000000"/>
 
     <TextView
@@ -54,10 +62,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         android:background="@drawable/tutorial_border"
-        android:textSize="43sp" />
+        android:textSize="80sp" />
 
     <TextView
         android:fontFamily="@font/mainfont"
@@ -72,6 +80,20 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="160dp"
         android:text="현재 퀘스트의 내용을 볼 수\n있습니다. 눌러보세요!"/>
+
+    <TextView
+        android:id="@+id/explain2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/durumari_down"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="166dp"
+        android:background="@drawable/tutorial_explain_border"
+        android:padding="7dp"
+        android:text="퀘스트를 완료하기 위해 복원하기버튼을 사용합니다.\n광화문 근처로 이동 후 복원하기 버튼을 눌러보세요."
+        android:textColor="#050253"
+        android:textSize="15sp" />
 
 
     <TextView
