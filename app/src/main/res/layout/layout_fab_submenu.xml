@@ -10,42 +10,38 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        fab:menu_colorNormal="#DA4336"
-        fab:menu_colorPressed="#E75043"
-        fab:menu_colorRipple="#99FFFFFF"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
         fab:menu_fab_size="normal"
         fab:menu_icon="@drawable/ic_menu"
-        fab:menu_labels_paddingRight="32dp"
-        fab:menu_labels_showShadow="false"
-        fab:menu_labels_style="@style/MenuLabelsStyle"
-        fab:menu_showShadow="false"
-        >
+        fab:menu_labels_singleLine="true"
+        fab:menu_labels_style="@style/MenuLabelsStyle">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_quest"
-            android:fontFamily="@font/mainfont"
             style="@style/MenuButtonsStyle"
+            android:fontFamily="@font/mainfont"
             android:src="@drawable/ic_quest"
             fab:fab_label="퀘스트 목록"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_ranking"
-            android:fontFamily="@font/mainfont"
             style="@style/MenuButtonsStyle"
+            android:fontFamily="@font/mainfont"
             android:src="@drawable/ic_ranking"
             fab:fab_label="랭킹"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_logout"
-            android:fontFamily="@font/mainfont"
             style="@style/MenuButtonsStyle"
+            android:fontFamily="@font/mainfont"
             android:src="@drawable/ic_power_settings"
             fab:fab_label="로그아웃"/>
 
