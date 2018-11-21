@@ -65,6 +65,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static gyeongbokgung.kbsccoding.com.gyeongbokgung.DBHandler.isLogin;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
@@ -125,6 +127,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);// Retrieve location and camera position from saved instance state.
         Intent intent = getIntent();
         loginState = intent.getIntExtra("alreadyLogin", 0);
+
         if (loginState == 1) {
 
             GetData_set task2 = new GetData_set();
@@ -152,7 +155,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             listView.setAdapter(listAdapter);
             DBHandler.showTutorial();
         }
+        if(DBHandler.currentUserData.getMember_numTutorial()==0 || isLogin){
 
+            Log.d("연재확인", String.valueOf(DBHandler.currentUserData.getMember_numTutorial())+isLogin);
+        Intent i = new Intent(this, ReceiveQuestActivity.class);
+        startActivity(i);
+        isLogin=false;
+        }
         // 화면상단 메인퀘스트 표시
       /*  listView = findViewById(R.id.lvExp);
         initData();

@@ -21,7 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_vertical|center_horizontal"
         android:textSize="20sp"
         sl:scale_height="20"
         sl:scale_left="0"
@@ -43,7 +42,7 @@
         android:textSize="30sp"
         sl:scale_height="20"
         sl:scale_left="0"
-        sl:scale_textsize="10"
+        sl:scale_textsize="20"
         sl:scale_top="20"
         sl:scale_width="125"
         tools:ignore="MissingPrefix"/>

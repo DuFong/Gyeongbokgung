@@ -5,11 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Prologue1Activity"
-    android:background="@drawable/fire">
+    android:background="@drawable/fire2">
 
     <TextView
         android:id="@+id/main_text"
-        android:fontFamily="@font/mainfont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -17,9 +16,13 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/mainfont"
         android:gravity="center_horizontal"
         android:text="1592년 임진년 부산으로 침략한 일본은 \n빠르게 한양까지 북상하여 선조는 적군을 피해 피난을 간다. \n이에 경복궁을 비롯한 궁들은 버려지고 불타게 된다. \n이후 경복궁은 약 270여년간 폐허로 남게 된다...."
+        android:textAlignment="center"
+        android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

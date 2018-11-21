@@ -30,6 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static gyeongbokgung.kbsccoding.com.gyeongbokgung.DBHandler.isLogin;
+
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -327,8 +329,17 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         Log.d("로그인","로그인성공!");
         mLogin.setEnabled(true);
-        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-
+        isLogin=true;
+        if(DBHandler.currentUserData.getMember_numTutorial()==0) {
+            Intent intent = new Intent(getApplicationContext(), Prologue1Activity.class);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+            startActivity(intent);
+            finish();
+        }
        // Log.d(TAG,"~~~nowID"+nowPerson.getMember_id());
       //  String nid= nowPerson.getMember_id();
      //   Log.d(TAG,"~~~~nid:"+nid);
@@ -337,8 +348,6 @@ public class LoginActivity extends AppCompatActivity {
      //   intent.putExtra("nowperson",nowPerson);
      //   Log.d(TAG,"넘겨쥼");
 
-        startActivity(intent);
-        finish();
     }
 
     public void onLoginFailed() {
