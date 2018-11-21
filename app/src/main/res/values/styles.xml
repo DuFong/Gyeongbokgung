@@ -53,7 +53,7 @@
         <item name="fab_size">mini</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
         <item name="fab_showAnimation">@anim/jump_from_down</item>
         <item name="fab_hideAnimation">@anim/jump_to_down</item>
         <item name="fab_showShadow">false</item>

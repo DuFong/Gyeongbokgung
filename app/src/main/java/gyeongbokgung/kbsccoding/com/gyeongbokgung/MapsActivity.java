@@ -191,9 +191,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab_quest.setOnClickListener(clickListener);
         fab_logout.setOnClickListener(clickListener);
 
-
-        // 튜토리얼 상황
-        DBHandler.showTutorial();
         /*
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
         //    DBHandler.numTutorial = SaveSharedPreference2.getNumTutorial(this);
@@ -269,7 +266,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onAnimationStart(Animator animation) {
                 fab_menu.getMenuIconView().setImageResource(fab_menu.isOpened()
                         ? R.drawable.ic_menu : R.drawable.ic_close);
-                // 튜토리얼 상황
             }
         });
 
@@ -585,11 +581,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         try {
 
+
             Log.d(TAG, "quest try들어옴");
             Log.d(TAG, "!!!mJsonString" + mJsonString_quest);
             JSONObject jsonObject = new JSONObject(mJsonString_quest.substring(mJsonString_quest.indexOf("{"), mJsonString_quest.lastIndexOf("}") + 1));
             //  JSONObject jsonObject = new JSONObject(mJsonString_quest);
             Log.d(TAG, "!!!~~JSONObject: " + jsonObject.toString());
+
+            // 튜토리얼 상황 이놈!!!
+//            DBHandler.showTutorial();
 
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
             //         Log.d(TAG,"~~array 성공");
@@ -814,7 +814,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             DBHandler.currentUserData.setMember_currentQuest(dbcurrent);
 
             DBHandler.currentUserData.setMember_numTutorial(dbnumTutorial);
-            Log.d(TAG,"currentUserData 업데이트됨 !!s");
+            Log.d(TAG, "currentUserData 업데이트됨 !!s");
 
             // SaveSharedPreference.getInstance(LoginActivity.this).saveUserInfo(DBHandler.currentUserData);
 

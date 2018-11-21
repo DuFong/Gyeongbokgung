@@ -30,6 +30,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class QuestDetailActivity extends AppCompatActivity {
+    private static final String TAG = QuestDetailActivity.class.getSimpleName();
     public static ArrayList<Quest> subList;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -56,7 +57,7 @@ public class QuestDetailActivity extends AppCompatActivity {
         String title = intent.getExtras().getString("title");
 
         subList = new ArrayList<>();
-        for(int i=0;i<DBHandler.questDataList.size();i++){
+        for(int i=0;i<25;i++){
             if(DBHandler.questDataList.get(i).getSubTitle().equals(title)){
                 subList.add(DBHandler.questDataList.get(i));
             }
@@ -136,6 +137,7 @@ public class QuestDetailActivity extends AppCompatActivity {
             //            TextView tv_goal = (TextView) rootView.findViewById(R.id.tv_goal);
 
             int i = getArguments().getInt(ARG_SECTION_NUMBER)-1;
+            Log.d(TAG,"개수는? "+i );
             tv_description.setText(subList.get(i).getDescription());
             if(subList.get(i).getExplanation().equals("null")){
                tv_explanation.setVisibility(View.GONE);

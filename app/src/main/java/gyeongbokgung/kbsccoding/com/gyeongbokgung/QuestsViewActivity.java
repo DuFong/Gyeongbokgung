@@ -2,6 +2,7 @@ package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
 public class QuestsViewActivity extends AppCompatActivity {
 
-    private static final String TAG = MapsActivity.class.getSimpleName();
+    private static final String TAG = QuestsViewActivity.class.getSimpleName();
     private static final String TAGQ = "Quest DB Connect";
     private RecyclerView mRecyclerView;
     private GridLayoutManager mLayoutManager;
@@ -76,6 +77,7 @@ public class QuestsViewActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_close);
 
+
 //        Map<String, Quest> ssTitle = new HashMap<>();
 //        for (int i = 0; i < mArrayList.size(); i++) {
 //            ssTitle.put(mArrayList.get(i).getSubTitle(), mArrayList.get(i));
@@ -116,6 +118,9 @@ public class QuestsViewActivity extends AppCompatActivity {
                     }
                 }
             });
+            for(int i=0;i<quests.size();i++){
+                Log.d(TAG,"rowId=" +quests.get(i).getRowID());
+            }
             QuestSection section = new QuestSection(getApplicationContext(), titleId, quests);
             sectionAdapter.addSection(section);
         }
@@ -217,10 +222,11 @@ public class QuestsViewActivity extends AppCompatActivity {
                     headerHolder.ivArrow.setImageResource(
                             expanded ? R.drawable.ic_arrow_up : R.drawable.ic_arrow_down
                     );
+
                     sectionAdapter.notifyDataSetChanged();
                 }
             });
-        }
+            }
 
         private class HeaderViewHolder extends RecyclerView.ViewHolder {
             private final View rootView;
