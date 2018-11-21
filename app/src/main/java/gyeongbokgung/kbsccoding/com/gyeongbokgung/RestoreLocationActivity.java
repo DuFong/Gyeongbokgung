@@ -32,6 +32,7 @@ public class RestoreLocationActivity extends AppCompatActivity {
             if(DBHandler.currentUserData.getMember_numTutorial() == 2) {
                 DBHandler.currentUserData.setMember_numTutorial(3);
                 DBHandler.isTutorial[2] = true;
+                DBHandler.isGetChildView = true;
             }
 
             // 도착지에 잘 도착했을때

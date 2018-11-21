@@ -60,6 +60,7 @@ public class RestoreActivity extends AppCompatActivity {
             if(DBHandler.currentUserData.getMember_numTutorial() == 5) {
                 DBHandler.currentUserData.setMember_numTutorial(6);
                 DBHandler.isTutorial[5] = true;
+                DBHandler.isGetChildView = true;
             }
             //답이 맞았을 때
             Toast.makeText(getBaseContext(), "정답입니다.", Toast.LENGTH_LONG).show();

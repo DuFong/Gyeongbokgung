@@ -30,7 +30,7 @@ public class HintActivity extends AppCompatActivity {
                     DBHandler.showTutorial();
                 }
             }, 1000);
-
+            DBHandler.isGetChildView = true;
         }
     }
 }
