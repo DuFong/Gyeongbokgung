@@ -135,7 +135,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             GetData_set task2 = new GetData_set();
             task2.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/query_DD.php", SaveSharedPreference.getUserName(getApplicationContext()));
-            //Log.d(TAG,DBHandler.currentUserData.getMember_id());
+            Log.d("연재짱","111111");
+            isLogin=true;
 
         }
         setContentView(R.layout.activity_maps);
@@ -161,9 +162,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(DBHandler.currentUserData.getMember_numTutorial()==0 || isLogin){
 
             Log.d("연재확인", String.valueOf(DBHandler.currentUserData.getMember_numTutorial())+isLogin);
-        Intent i = new Intent(this, ReceiveQuestActivity.class);
-        startActivity(i);
-        isLogin=false;
+            Intent i = new Intent(this, ReceiveQuestActivity.class);
+            startActivity(i);
+            isLogin=false;
         }
         // 화면상단 메인퀘스트 표시
       /*  listView = findViewById(R.id.lvExp);

@@ -329,7 +329,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         Log.d("로그인","로그인성공!");
         mLogin.setEnabled(true);
-        isLogin=true;
         if(DBHandler.currentUserData.getMember_numTutorial()==0) {
             Intent intent = new Intent(getApplicationContext(), Prologue1Activity.class);
             startActivity(intent);
