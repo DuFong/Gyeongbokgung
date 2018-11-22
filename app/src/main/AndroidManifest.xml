@@ -131,9 +131,6 @@
         <activity
             android:name=".ExplanationImageActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".VideoEndingActivity"
-            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

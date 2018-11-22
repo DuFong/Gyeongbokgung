@@ -13,7 +13,7 @@
     <ImageView
         android:id="@+id/iv_explanation"
         android:layout_width="match_parent"
-        android:layout_height="370dp"
+        android:layout_height="350dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="48dp"
@@ -28,7 +28,7 @@
         android:gravity="center"
         android:fontFamily="@font/mainfont"
         android:textSize="16sp"
-        android:text="경복궁 포토스팟 입니다. 기념사진 촬영하세요." />
+        android:text="경복궁 포토스팟 입니다. 기념사진 촬영하세요.\n" />
 
     <Button
         android:id="@+id/btn_OK_EI"
