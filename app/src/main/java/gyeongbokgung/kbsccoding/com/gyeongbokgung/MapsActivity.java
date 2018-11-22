@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,7 +47,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.collect.Maps;
@@ -65,6 +68,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static gyeongbokgung.kbsccoding.com.gyeongbokgung.DBHandler.isLogin;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
@@ -80,7 +85,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     // A default location (경복궁) and default zoom to use when location permission is
     // not granted.
     private final LatLng mDefaultLocation = new LatLng(37.579617, 126.97704099999999);
-    private static final int DEFAULT_ZOOM = 17;
+    private static final int DEFAULT_ZOOM = 18;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean mLocationPermissionGranted; // GPS 이용가능 여부
 
@@ -125,11 +130,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);// Retrieve location and camera position from saved instance state.
         Intent intent = getIntent();
         loginState = intent.getIntExtra("alreadyLogin", 0);
+
         if (loginState == 1) {
 
-                GetData_set task2 = new GetData_set();
-                task2.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/query_DD.php", SaveSharedPreference.getUserName(getApplicationContext()));
-                //Log.d(TAG,DBHandler.currentUserData.getMember_id());
+            GetData_set task2 = new GetData_set();
+            task2.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/query_DD.php", SaveSharedPreference.getUserName(getApplicationContext()));
+            Log.d("연재짱","111111");
+            isLogin=true;
 
         }
         setContentView(R.layout.activity_maps);
@@ -142,18 +149,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         mapsActivity = MapsActivity.this;
-        if(DBHandler.currentUserData.getMember_currentQuest()==0) {
+        if (DBHandler.currentUserData.getMember_currentQuest() == 0) {
             GetData task = new GetData();
             task.execute("http://" + "gyeongbokgung.dothome.co.kr" + "/getQuest_DD.php", "");
-        }
-        else{
+        } else {
             listView = findViewById(R.id.lvExp);
             initData();
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listHash);
             listView.setAdapter(listAdapter);
             DBHandler.showTutorial();
         }
+        if(DBHandler.currentUserData.getMember_numTutorial()==0 || isLogin){
 
+            Log.d("연재확인", String.valueOf(DBHandler.currentUserData.getMember_numTutorial())+isLogin);
+            Intent i = new Intent(this, ReceiveQuestActivity.class);
+            startActivity(i);
+            isLogin=false;
+        }
         // 화면상단 메인퀘스트 표시
       /*  listView = findViewById(R.id.lvExp);
         initData();
@@ -200,10 +212,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab_quest.setOnClickListener(clickListener);
         fab_logout.setOnClickListener(clickListener);
 
-
-
         // 튜토리얼 상황
-       // DBHandler.showTutorial();
+        // DBHandler.showTutorial();
 
         /*
         if(DBHandler.currentUserData.getMember_currentQuest() == 0){    // 퀘스트번호 0번
@@ -254,7 +264,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         btn_current_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG,"내위치내위치ㅡㅡ" );
+                Log.d(TAG, "내위치내위치ㅡㅡ");
                 getDeviceLocation();
             }
         });
@@ -280,9 +290,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onAnimationStart(Animator animation) {
                 fab_menu.getMenuIconView().setImageResource(fab_menu.isOpened()
                         ? R.drawable.ic_menu : R.drawable.ic_close);
+
                 // 튜토리얼 상황
                 Log.d("애니메이션함수", "실행!");
-                if(DBHandler.currentUserData.getMember_numTutorial() == 6) {
+                if (DBHandler.currentUserData.getMember_numTutorial() == 6) {
                     DBHandler.currentUserData.setMember_numTutorial(7);
                     DBHandler.isTutorial[6] = true;
                     DBHandler.showTutorial();
@@ -309,7 +320,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -323,31 +333,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Use a custom info window adapter to handle multiple lines of text in the
-        // info window contents.
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+        try {
+            boolean success = mMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.style_json));
+            if (!success)
+                Log.e(TAG, "Style parsing failed.");
 
-            @Override
-            // Return null here, so that getInfoContents() is called next.
-            public View getInfoWindow(Marker arg0) {
-                return null;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
-                // Inflate the layouts for the info window, title and snippet.
-                View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents,
-                        (FrameLayout) findViewById(R.id.map), false);
-
-                TextView title = ((TextView) infoWindow.findViewById(R.id.title));
-                title.setText(marker.getTitle());
-
-                TextView snippet = ((TextView) infoWindow.findViewById(R.id.snippet));
-                snippet.setText(marker.getSnippet());
-
-                return infoWindow;
-            }
-        });
+        } catch (Resources.NotFoundException e) {
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
 
         // Prompt the user for permission.
         getLocationPermission();
@@ -376,19 +371,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful() && task.getResult() != null) {
-                            // Set the map's camera position to the current location of the device.
                             mLastKnownLocation = task.getResult();
+                            // Set the map's camera position to the current location of the device.
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(mLastKnownLocation.getLatitude(),
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+                            // Construct a CameraPosition focusing on current location
+                            // and animate the camera to that position.
+                            CameraPosition cameraPosition = new CameraPosition.Builder()
+                                    .target(new LatLng(mLastKnownLocation.getLatitude(),
+                                            mLastKnownLocation.getLongitude()))
+                                    .zoom(DEFAULT_ZOOM)
+                                    .tilt(50)
+                                    .build();
+                            mMap.animateCamera(CameraUpdateFactory.newCameraPosition((cameraPosition)));
+//                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
                             Log.d(TAG, "Current location Lat:" + mLastKnownLocation.getLatitude() + ", Lng:" + mLastKnownLocation.getLongitude());
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
                             Log.e(TAG, "Exception: %s", task.getException());
                             mMap.moveCamera(CameraUpdateFactory
                                     .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
-                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+//                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
+
                     }
                 });
             }
@@ -397,11 +404,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private void getLocationPermission() {/*
-     * Request location permission, so that we can get the location of the
-     * device. The result of the permission request is handled by a callback,
-     * onRequestPermissionsResult.
+    /**
+     * 런타임에 기기 위치 권한 요청
      */
+    private void getLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -413,6 +419,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    /**
+     * 콜백 메서드
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -426,19 +439,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     mLocationPermissionGranted = true;
                     if (ActivityCompat
                             .checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
                         return;
                     }
-                    mMap.setMyLocationEnabled(true);
+//                    mMap.setMyLocationEnabled(true);
                 } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    // permission denied
                     Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -462,11 +467,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    /*
-     * If the user has granted location permission,
-     * enable the My Location layer and the related control on the map,
-     * otherwise disable the layer and the control, and set the current location to null
-     */
     private void updateLocationUI() {
         if (mMap == null) {
             return;
@@ -474,10 +474,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         try {
             if (mLocationPermissionGranted) {
                 mMap.setMyLocationEnabled(true);
-                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+//                mMap.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
                 mMap.setMyLocationEnabled(false);
-                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+//                mMap.getUiSettings().setMyLocationButtonEnabled(false);
                 mLastKnownLocation = null;
                 getLocationPermission();
             }
@@ -485,6 +485,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.e("Exception: %s", e.getMessage());
         }
     }
+
 
     private class GetData extends AsyncTask<String, Void, String> {
 
@@ -607,6 +608,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             //  JSONObject jsonObject = new JSONObject(mJsonString_quest);
             Log.d(TAG, "!!!~~JSONObject: " + jsonObject.toString());
 
+
             // 튜토리얼 상황
             DBHandler.showTutorial();
 
@@ -632,14 +634,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 double latitude = item.getDouble("latitude");
                 double longitude = item.getDouble("longitude");
 
-                Quest quest = new Quest(titleID, subID, rowID, title, subTitle, description, sumDescription, goal, goal2, goal3, hint, explanation, point, type,latitude, longitude);
+                Quest quest = new Quest(titleID, subID, rowID, title, subTitle, description, sumDescription, goal, goal2, goal3, hint, explanation, point, type, latitude, longitude);
 
                 DBHandler.questDataList.add(quest);
                 Log.d(TAG, "questDataList 추가");
                 Log.d("라라라", "quest:" + quest.toString());
                 Log.d("라라라", String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
                 Log.d(TAG, DBHandler.questDataList.get(0).getTitle());
-                Log.d(TAG, "현재 퀘스트뭐닝? "+DBHandler.currentUserData.getMember_currentQuest());
+                Log.d(TAG, "현재 퀘스트뭐닝? " + DBHandler.currentUserData.getMember_currentQuest());
             }
             Log.d(TAG, "리스트 삽입 끝났니?");
             listView = findViewById(R.id.lvExp);
@@ -762,6 +764,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
         }
+
     }
 
     private void showResult_set() {
@@ -770,15 +773,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String TAG_ID = "userID";
         String TAG_NAME = "userName";
 
-        String TAG_PASSWORD="userPassword";
-        String dbpw="";
-        String dbid="";
-        String dbname="";
-        int dbscore=0;
-        int dbrank=0;
-        int dbidx=0;
-        int dbcurrent=0;
-        int dbnumTutorial=0;
+        String TAG_PASSWORD = "userPassword";
+        String dbpw = "";
+        String dbid = "";
+        String dbname = "";
+        int dbscore = 0;
+        int dbrank = 0;
+        int dbidx = 0;
+        int dbcurrent = 0;
+        int dbnumTutorial = 0;
 
         try {
             Log.d(TAG, "~~~1s");
@@ -803,16 +806,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String idx = item.getString("idx");
                 System.out.println(item.getString("userPassword"));
 
-                dbpw=item.getString("userPassword");
-                dbid=item.getString("userID");
-                dbname=item.getString("userName");
-                dbidx=item.getInt("idx");
-                Log.d(TAG,"userScore 전");
-                dbscore=item.getInt("userScore");
-                Log.d(TAG,"userScore 후");
-                dbrank=item.getInt("userRank");
-                dbcurrent=item.getInt("currentQuest");
-                dbnumTutorial=item.getInt("numTutorial");
+                dbpw = item.getString("userPassword");
+                dbid = item.getString("userID");
+                dbname = item.getString("userName");
+                dbidx = item.getInt("idx");
+                Log.d(TAG, "userScore 전");
+                dbscore = item.getInt("userScore");
+                Log.d(TAG, "userScore 후");
+                dbrank = item.getInt("userRank");
+                dbcurrent = item.getInt("currentQuest");
+                dbnumTutorial = item.getInt("numTutorial");
 
 
                 System.out.println(item.getString("userName"));
@@ -833,7 +836,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             DBHandler.currentUserData.setMember_currentQuest(dbcurrent);
 
             DBHandler.currentUserData.setMember_numTutorial(dbnumTutorial);
-            Log.d(TAG,"currentUserData 업데이트됨 !!s");
+            Log.d(TAG, "currentUserData 업데이트됨 !!s");
 
             // SaveSharedPreference.getInstance(LoginActivity.this).saveUserInfo(DBHandler.currentUserData);
 
@@ -852,7 +855,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             switch (view.getId()) {
                 case R.id.fab_quest:
                     // 튜토리얼
-                    if(DBHandler.currentUserData.getMember_numTutorial() == 7) {
+                    if (DBHandler.currentUserData.getMember_numTutorial() == 7) {
                         DBHandler.currentUserData.setMember_numTutorial(8);
                         DBHandler.isTutorial[7] = true;
                     }
@@ -869,7 +872,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     delayHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if(DBHandler.currentUserData.getMember_numTutorial() == 10) {
+                            if (DBHandler.currentUserData.getMember_numTutorial() == 10) {
                                 DBHandler.currentUserData.setMember_numTutorial(11);
                                 DBHandler.isTutorial[10] = true;
                                 DBHandler.showTutorial();

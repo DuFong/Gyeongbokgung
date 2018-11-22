@@ -7,6 +7,5 @@
         android:interpolator="@android:anim/linear_interpolator"
         android:fromYDelta = "130%"
         android:toYDelta="-30%"
-        android:duration="7000"/>
-
+        android:duration="10000"/>
 </set>

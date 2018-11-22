@@ -8,14 +8,15 @@
 
     <TextView
         android:id="@+id/listHeader"
-        android:background="@drawable/durumari_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="35dp"
-        android:fontFamily="@font/mainfont"
+        android:background="@drawable/durumari_up"
+        android:fontFamily="@font/yuryeob"
         android:gravity="center_horizontal"
-        android:textSize="23sp"
+        android:paddingTop="35dp"
+        android:textAlignment="center"
+        android:textAllCaps="false"
         android:textColor="@color/black"
-        app:layout_constraintVertical_bias="0.0" />
+        android:textSize="30sp" />
 
 </android.support.constraint.ConstraintLayout>

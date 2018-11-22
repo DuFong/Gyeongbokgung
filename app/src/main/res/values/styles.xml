@@ -53,16 +53,15 @@
         <item name="fab_size">mini</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
         <item name="fab_showAnimation">@anim/jump_from_down</item>
         <item name="fab_hideAnimation">@anim/jump_to_down</item>
-        <item name="fab_showShadow">false</item>
-        <item name="fab_colorNormal">@color/colorAccent</item>
+=        <item name="fab_colorNormal">@color/colorAccent</item>
         <item name="fab_colorPressed">@color/colorPrimaryDark</item>
         <item name="fab_colorRipple">@color/colorPrimary</item>
     </style>
 
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-    
+
 </resources>

@@ -2,11 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:sl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ReceiveQuestActivity"
-    android:layout_marginTop="30dp"
+    android:layout_marginTop="15dp"
     android:orientation="vertical">>
+
+    <com.ssomai.android.scalablelayout.ScalableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        sl:scale_base_height="180"
+        sl:scale_base_width="125">
 
     <TextView
         android:id="@+id/chapter_text"
@@ -14,8 +21,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_vertical|center_horizontal"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        sl:scale_height="20"
+        sl:scale_left="0"
+        sl:scale_textsize="10"
+        sl:scale_top="0"
+        sl:scale_width="125"
+        tools:ignore="MissingPrefix"/>
 
     <TextView
         android:id="@+id/title_text"
@@ -27,7 +39,13 @@
         android:layout_marginRight="30dp"
         android:layout_weight="3"
         android:gravity="center_vertical|center_horizontal"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        sl:scale_height="20"
+        sl:scale_left="0"
+        sl:scale_textsize="20"
+        sl:scale_top="20"
+        sl:scale_width="125"
+        tools:ignore="MissingPrefix"/>
 
     <TextView
         android:id="@+id/quest_description"
@@ -38,7 +56,13 @@
         android:layout_marginRight="30dp"
         android:layout_weight="8"
         android:gravity="center_vertical|center_horizontal"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        sl:scale_height="110"
+        sl:scale_left="0"
+        sl:scale_textsize="8"
+        sl:scale_top="40"
+        sl:scale_width="125"
+        tools:ignore="MissingPrefix"/>
 
     <Button
         android:id="@+id/confirm_quest"
@@ -52,6 +76,13 @@
         android:layout_marginBottom="60dp"
         android:layout_weight="1"
         android:text="확인"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        sl:scale_height="20"
+        sl:scale_left="0"
+        sl:scale_textsize="5"
+        sl:scale_top="160"
+        sl:scale_width="125"
+        tools:ignore="MissingPrefix"/>
+    </com.ssomai.android.scalablelayout.ScalableLayout>
 
 </LinearLayout>

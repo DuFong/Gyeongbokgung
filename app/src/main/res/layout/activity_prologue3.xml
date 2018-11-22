@@ -16,7 +16,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="1592년 임진왜란 때 불탄 경복궁이 아직까지 폐허로 남아있다. 태조가 창건했던 경복궁을 다시 중건함으로서 법궁이라는 상징성과 국초의 전통성을 계승하라는 의미를 강조한 신정왕후의 뜻을 받들어 경복궁을 복원하라!"
         android:layout_weight="6" />

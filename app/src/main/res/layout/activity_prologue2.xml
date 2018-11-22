@@ -9,20 +9,24 @@
 
     <TextView
         android:id="@+id/main_text2"
-        android:fontFamily="@font/mainfont"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_height="2500dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/mainfont"
         android:gravity="center_horizontal"
-        android:text="대왕대비(大王大妃)가 전교하기를, “경복궁(景福宮)은 우리 왕조에서 수도를 세울 때 맨처음으로 지은 정궁(正宮)이다. 규모가 바르고 크며 위치가 정제하고 엄숙한 것을 통하여 성인(聖人)의 심법(心法)을 우러러 볼 수 있거니와 정령(政令)과 시책이 다 바른 것에서 나와 팔도의 백성들이 하나같이 복을 받은 것도 이 궁전으로부터 시작되었다. 그러나 불행하게도 전란에 의하여 불타버리고 난 다음에 미처 다시 짓지 못한 관계로 오랫동안 뜻있는 선비들의 개탄을 자아내었다. .....
-돌이켜보면, 익종(翼宗)께서 정사를 대리하면서도 여러 번 옛 대궐에 행차하여 옛터를 두루 돌아보면서 개연히 다시 지으려는 듯을 두었으나 미처 착수하지 못하였고, 헌종(憲宗)께서도 그 뜻을 이어 여러 번 공사를 하려다가 역시 시작하지 못하고 말았다. 아! 마치 오늘을 기다리느라고 그랬던 것 같다. ......
-이것은 비단 조상의 사업을 계승한다는 성의(聖意)일 뿐만 아니라 넓고도 큰 도량까지 엿볼 수 있는 것이니, 이것은 백성들의 복이며 국운의 무궁한 터전도 실로 여기에 기초할 것이다. ....“ 하였다.>
-- 고종실록:고종 2년 4월 2일 기사"
+        android:text="경복궁은 수도를 세울 때 맨처음으로 지은 정궁이다.
+ 규모가 바르고 크며 위치가 정제하고 엄숙한 것을 통하여 성인의 심법을 우러러 볼 수 있거니와 정령과 시책이 다 바른 것에서 나와 팔도의 백성들이 하나같이 복을 받은 것도 이 궁전으로부터 시작되었다.
+ 그러나 불행하게도 전란에 의하여 불타버렸다.
+익종께서 다시 지으려는 뜻을 두었으나 미처 착수하지 못하였고, 헌종께서도 그 뜻을 이어 여러 번 공사를 하려다가 역시 시작하지 못하고 말았다.
+아! 마치 오늘을 기다리느라고 그랬던 것 같다. 경복궁 재건은 비단 조상의 사업을 계승한다는 성의일 뿐만 아니라 넓고도 큰 도량까지 엿볼 수 있는 것이니, 이것은 백성들의 복이며 국운의 무궁할 터전도 실로 여기에 기초할 것이다.
+이 궁전을 다시 지어 중흥의 큰 업적을 이루자."
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
