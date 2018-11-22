@@ -37,6 +37,5 @@ public class Prologue2Activity extends AppCompatActivity {
             }
         };
         timer.schedule(after_timer, 20000);
-
     }
 }

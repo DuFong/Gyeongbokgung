@@ -41,6 +41,7 @@ public class ReceiveQuestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_receive_quest);
         ButterKnife.bind(this);
         end_activity = (MapsActivity)MapsActivity.mapsActivity; // 변수에 MapsActivity 를 담는다.
+        Log.d(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()),"알로하");
         setElement();
     }
 
