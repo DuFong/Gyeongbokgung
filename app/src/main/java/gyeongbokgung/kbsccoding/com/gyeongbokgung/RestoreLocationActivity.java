@@ -45,23 +45,27 @@ public class RestoreLocationActivity extends AppCompatActivity {
             DBHandler.currentUserData.setMember_score(DBHandler.currentUserData.getMember_score() + Integer.parseInt(score));
             gps.stopUsingGPS();
 
-            if(DBHandler.currentUserData.getMember_currentQuest()==5){
-                Log.d("CHECK!!","4로 들어왔다!!!!!");
-                Intent intent = new Intent(getApplicationContext(), ExplanationImageActivity.class);
-                startActivity(intent);
-                finish();
-            }
+
             // 배경지식이 없는경우
-            else if (explanation.equals("null")) {
+            if (explanation.equals("null")) {
                 Intent intent = new Intent(getApplicationContext(), CompleteActivity.class);
                 startActivity(intent);
                 finish();
             }
             // 배경지식이 있는 경우
             else {
+                Log.d("연재연재연재", String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
+            if(DBHandler.currentUserData.getMember_currentQuest()==4){
+                Log.d("CHECK!!","4로 들어왔다!!!!!");
+                Intent intent = new Intent(getApplicationContext(), ExplanationImageActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else{
                 Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
                 startActivity(intent);
                 finish();
+            }
             }
         }
         else

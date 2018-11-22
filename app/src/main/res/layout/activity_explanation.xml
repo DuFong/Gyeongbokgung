@@ -51,6 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="확인"
+            android:background="@drawable/big_button"
+            android:fontFamily="@font/mainfont"
             sl:scale_height="18"
             sl:scale_left="0"
             sl:scale_textsize="6"

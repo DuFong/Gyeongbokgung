@@ -57,7 +57,7 @@ public class ReceiveQuestActivity extends AppCompatActivity {
         }
         chapter.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitle());
         title.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
-        description.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getDescription());
+        description.setText("("+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getPoint()+"점)\n"+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getDescription());
     }
 
     @OnClick(R.id.confirm_quest)

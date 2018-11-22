@@ -8,5 +8,4 @@
         android:fromYDelta = "130%"
         android:toYDelta="-30%"
         android:duration="10000"/>
-
 </set>

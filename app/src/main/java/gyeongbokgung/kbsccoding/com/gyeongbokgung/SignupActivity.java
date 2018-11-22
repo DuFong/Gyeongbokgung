@@ -95,8 +95,8 @@ public class SignupActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            progressDialog = ProgressDialog.show(SignupActivity.this,
-                    "Please Wait", null, true, true);
+           // progressDialog = ProgressDialog.show(SignupActivity.this,
+            //        "Please Wait", null, true, true);
         }
 
 
@@ -104,9 +104,9 @@ public class SignupActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            progressDialog.dismiss();
+        //    progressDialog.dismiss();
 
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
             Log.d(TAG, "POST response  - " + result);
 
