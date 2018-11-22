@@ -23,6 +23,7 @@ public class DBHandler {
 
     public static boolean[] isTutorial = new boolean[20];
     public static boolean isGetChildView;
+    public static boolean isLogin;
 
     public static TextView[] box = new TextView[20];
     public static TextView[] explain = new TextView[20];
