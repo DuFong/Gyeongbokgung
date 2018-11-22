@@ -353,6 +353,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
 
+        if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getType() == 0){
+            Log.d("마커나오나","알로하");
+            LatLng destination = new LatLng(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLatitude(),
+                    DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLongitude());
+
+            onAddMarker(destination);
+            }
+
     }
 
 
@@ -398,7 +406,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     }
                 });
+                // 위치기반문제일 경우 카메라를 현재 내위치 말고 가야하는 위치로 표시
+                if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getType() == 0){
+                    LatLng destination = new LatLng(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLatitude(),
+                            DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, DEFAULT_ZOOM));
+                }
             }
+
         } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
@@ -899,6 +914,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     };
+
+    private void onAddMarker(LatLng location) {
+        MarkerOptions makerOptions = new MarkerOptions();
+        makerOptions
+                .position(location);
+
+        this.mMap.addMarker(makerOptions).showInfoWindow();
+    }
 
     @Override
     public void onBackPressed() {
