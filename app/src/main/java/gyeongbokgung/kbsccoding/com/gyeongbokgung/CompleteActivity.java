@@ -86,6 +86,13 @@ public class CompleteActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+        else if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID() == 4)    //나머지 챕터 엔딩영상 만들면 주석해제하자;
+        {
+            end_activity.finish();
+            Intent intent = new Intent(getApplicationContext(), VideoEndingActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override

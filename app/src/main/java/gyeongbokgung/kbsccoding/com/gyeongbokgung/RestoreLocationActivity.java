@@ -80,13 +80,13 @@ public class RestoreLocationActivity extends AppCompatActivity {
         mylocation = new LatLng(gps.getLatitude(),gps.getLongitude());
 
         // 해당지점의 좌표 받아오기
-        /*destination = new LatLng(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLatitude(),
-                DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLongitude()); */
-        destination = new LatLng(37.494630,126.960156); //야매로 위치 넣은거 (TEST전용)
+        destination = new LatLng(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLatitude(),
+                DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLongitude());
+       // destination = new LatLng(37.494630,126.960156); //야매로 위치 넣은거 (TEST전용)
 
         Log.d("뒷자리만",Double.toString(destination.longitude));
-        // 거리 차이가 10m 이하 일때는 도착지에 도착했다.
-        if(distance(mylocation.latitude, mylocation.longitude,destination.latitude,destination.longitude) < 1000000000)
+        // 거리 차이가 12m 이하 일때는 도착지에 도착했다.
+        if(distance(mylocation.latitude, mylocation.longitude,destination.latitude,destination.longitude) < 12)
             return true;
         else return false;
 

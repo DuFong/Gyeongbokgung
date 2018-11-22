@@ -133,7 +133,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".VideoEndingActivity"
-            android:screenOrientation="portrait" ></activity>
+            android:screenOrientation="landscape" ></activity>
     </application>
 
 </manifest>
