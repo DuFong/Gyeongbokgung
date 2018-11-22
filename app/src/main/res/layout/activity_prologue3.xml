@@ -23,6 +23,8 @@
 
     <Button
         android:id="@+id/tutorial_start"
+        android:background="@drawable/big_button"
+        android:fontFamily="@font/mainfont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

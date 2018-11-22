@@ -3,6 +3,7 @@ package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class ReceiveQuestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_receive_quest);
         ButterKnife.bind(this);
         end_activity = (MapsActivity)MapsActivity.mapsActivity; // 변수에 MapsActivity 를 담는다.
+        Log.d(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()),"알로하");
         setElement();
     }
 

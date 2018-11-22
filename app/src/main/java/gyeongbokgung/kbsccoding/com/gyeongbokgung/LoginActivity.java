@@ -327,18 +327,25 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         Log.d("로그인","로그인성공!");
         mLogin.setEnabled(true);
-        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+        if(DBHandler.currentUserData.getMember_numTutorial() < 2) {
+            Intent intent = new Intent(getApplicationContext(), Prologue1Activity.class);
 
-       // Log.d(TAG,"~~~nowID"+nowPerson.getMember_id());
-      //  String nid= nowPerson.getMember_id();
-     //   Log.d(TAG,"~~~~nid:"+nid);
-        //  intent.putExtra("nowPersonID",nid);
-        //intent.putExtra("nowPersonID",nid);
-     //   intent.putExtra("nowperson",nowPerson);
-     //   Log.d(TAG,"넘겨쥼");
+            // Log.d(TAG,"~~~nowID"+nowPerson.getMember_id());
+            //  String nid= nowPerson.getMember_id();
+            //   Log.d(TAG,"~~~~nid:"+nid);
+            //  intent.putExtra("nowPersonID",nid);
+            //intent.putExtra("nowPersonID",nid);
+            //   intent.putExtra("nowperson",nowPerson);
+            //   Log.d(TAG,"넘겨쥼");
 
-        startActivity(intent);
-        finish();
+            startActivity(intent);
+            finish();
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), ReceiveQuestActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void onLoginFailed() {

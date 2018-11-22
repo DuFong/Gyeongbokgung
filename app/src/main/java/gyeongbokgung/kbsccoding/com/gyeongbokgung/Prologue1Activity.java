@@ -36,7 +36,7 @@ public class Prologue1Activity extends AppCompatActivity {
                 finish();
             }
         };
-        timer.schedule(after_timer, 4000);
+        timer.schedule(after_timer, 7000);
 
     }
 }
