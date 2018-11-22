@@ -159,12 +159,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             listView.setAdapter(listAdapter);
             DBHandler.showTutorial();
         }
+
         if(DBHandler.currentUserData.getMember_numTutorial()==0 || isLogin){
 
             Log.d("연재확인", String.valueOf(DBHandler.currentUserData.getMember_numTutorial())+isLogin);
-            Intent i = new Intent(this, ReceiveQuestActivity.class);
-            startActivity(i);
-            isLogin=false;
+            Handler delayHandler = new Handler();
+            delayHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent i = new Intent(getApplicationContext(), ReceiveQuestActivity.class);
+                    startActivity(i);
+                    isLogin=false;
+                }
+            }, 4000);
         }
         // 화면상단 메인퀘스트 표시
       /*  listView = findViewById(R.id.lvExp);

@@ -1,6 +1,7 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +46,15 @@ public class ReceiveQuestActivity extends AppCompatActivity {
     }
 
     private void setElement(){
+        Typeface regular;
+        if(DBHandler.currentUserData.getMember_currentQuest() == 9 || DBHandler.currentUserData.getMember_currentQuest() == 11) {
+            regular = Typeface.createFromAsset(this.getAssets(), "font/chinese2.ttf");
+            title.setTypeface(regular, Typeface.NORMAL);
+        }
+        else {
+            regular = Typeface.createFromAsset(this.getAssets(), "font/hanna.ttf");
+            title.setTypeface(regular, Typeface.NORMAL);
+        }
         chapter.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitle());
         title.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         description.setText("("+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getPoint()+"점)\n"+DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getDescription());
@@ -59,6 +69,8 @@ public class ReceiveQuestActivity extends AppCompatActivity {
         }
         end_activity.finish();
         Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+        if(DBHandler.currentUserData.getMember_numTutorial() < 11)
+            DBHandler.showTutorial();
         startActivity(intent);
         finish();
     }
