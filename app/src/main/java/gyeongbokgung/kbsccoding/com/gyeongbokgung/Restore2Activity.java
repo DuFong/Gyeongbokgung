@@ -98,8 +98,8 @@ public class Restore2Activity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            progressDialog = ProgressDialog.show(Restore2Activity.this,
-                    "Please Wait", null, true, true);
+      //      progressDialog = ProgressDialog.show(Restore2Activity.this,
+      //              "Please Wait", null, true, true);
         }
 
 
@@ -107,7 +107,7 @@ public class Restore2Activity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            progressDialog.dismiss();
+          //  progressDialog.dismiss();
 
            // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 

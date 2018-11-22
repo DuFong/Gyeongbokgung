@@ -33,6 +33,10 @@ public class DBHandler {
 
         InsertData task;
         // for문을 통해 box, explain 객체 찾기, 안보이게 하기
+
+        TextView darkBackground = MapsActivity.mapView.findViewById(R.id.dark_background_base);
+        darkBackground.setVisibility(View.GONE);
+
         box[1] = MapsActivity.mapView.findViewById(R.id.box1);
         explain[1] = MapsActivity.mapView.findViewById(R.id.explain1);
         explain[2] = MapsActivity.mapView.findViewById(R.id.explain2);

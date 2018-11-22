@@ -1,6 +1,7 @@
 package gyeongbokgung.kbsccoding.com.gyeongbokgung;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,17 @@ public class CompleteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete);
         ButterKnife.bind(this);
+
+        Typeface regular;
+        if(DBHandler.currentUserData.getMember_currentQuest() == 9 || DBHandler.currentUserData.getMember_currentQuest() == 11) {
+            regular = Typeface.createFromAsset(this.getAssets(), "font/chinese2.ttf");
+            mSubtitle.setTypeface(regular, Typeface.NORMAL);
+        }
+        else {
+            regular = Typeface.createFromAsset(this.getAssets(), "font/hanna.ttf");
+            mSubtitle.setTypeface(regular, Typeface.NORMAL);
+        }
+
         mSubtitle.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         mDesc.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getDescription());
         end_activity = (MapsActivity)MapsActivity.mapsActivity; // 변수에 MapsActivity 를 담는다.
