@@ -26,7 +26,7 @@ public class ExplanationImageActivity extends AppCompatActivity {
     }
     @OnClick(R.id.btn_OK_EI)
     void check() {
-        Intent intent = new Intent(getApplicationContext(),ReceiveQuestActivity.class);
+        Intent intent = new Intent(getApplicationContext(),CompleteActivity.class);
         startActivity(intent);
         finish();
     }

@@ -106,6 +106,7 @@ public class DBHandler {
                     darkBackgroundDown.setVisibility(View.GONE);
                     box[2].setVisibility(View.GONE);
                     explain[2].setVisibility(View.GONE);
+                    Log.d(TAG,"3번 로그");
                     explain[1].setText("이번 퀘스트를 수행하기 위하여\n다시 한번 퀘스트 바를 누릅니다.");
                     box[1].setVisibility(View.VISIBLE);
                     explain[1].setVisibility(View.VISIBLE);
@@ -214,7 +215,7 @@ public class DBHandler {
 
                 break;
             case 9:     // 튜토리얼을 선택하면 튜토리얼 설명을 없앰
-                Log.d(TAG, "케이스8");
+                Log.d(TAG, "케이스9");
 
                 task = new InsertData();
                 task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
@@ -222,7 +223,7 @@ public class DBHandler {
                 explain[8].setVisibility(View.GONE);
                 break;
             case 10:    // 랭킹 설명
-                Log.d(TAG, "케이스8");
+                Log.d(TAG, "케이스10");
 
                 task = new InsertData();
                 task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
@@ -236,7 +237,7 @@ public class DBHandler {
                 MapsActivity.fab_logout.setEnabled(false);
                 break;
             case 11:
-                Log.d(TAG, "케이스8");
+                Log.d(TAG, "케이스11");
 
                 task = new InsertData();
                 task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
@@ -248,6 +249,7 @@ public class DBHandler {
                 MapsActivity.fab_quest.setEnabled(true);
                 MapsActivity.fab_ranking.setEnabled(true);
                 MapsActivity.fab_logout.setEnabled(true);
+                break;
         }
     }
 

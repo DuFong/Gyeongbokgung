@@ -329,13 +329,13 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         Log.d("로그인","로그인성공!");
         mLogin.setEnabled(true);
-        if(DBHandler.currentUserData.getMember_numTutorial()==0) {
+        if(DBHandler.currentUserData.getMember_numTutorial()==1) {
             Intent intent = new Intent(getApplicationContext(), Prologue1Activity.class);
             startActivity(intent);
             finish();
         }
         else{
-            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ReceiveQuestActivity.class);
             startActivity(intent);
             finish();
         }

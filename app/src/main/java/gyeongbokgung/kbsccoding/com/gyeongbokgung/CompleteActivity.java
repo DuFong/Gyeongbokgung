@@ -70,8 +70,10 @@ public class CompleteActivity extends AppCompatActivity {
     }
     @OnClick(R.id.btn_finish)
     void fin() {
+
         DBHandler.currentUserData.setMember_currentQuest(DBHandler.currentUserData.getMember_currentQuest()+1);
         Log.d(TAG, String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
+        end_activity.finish();
         if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()-1).getTitleID() == DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitleID())
         {
             Intent intent = new Intent(getApplicationContext(), OpenTheDoorActivity.class);
