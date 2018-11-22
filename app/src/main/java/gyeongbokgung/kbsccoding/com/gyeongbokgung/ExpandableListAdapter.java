@@ -93,6 +93,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         listHeader.setText(headerTitle);
         Log.d("익스펜더블함수", "부모!!!");
         DBHandler.durumariDown.setVisibility(View.VISIBLE);
+
+        Typeface regular = Typeface.createFromAsset(this.context.getAssets(), "font/yuryeob.ttf");
+        listHeader.setTypeface(regular, Typeface.NORMAL);
         return view;
     }
 
