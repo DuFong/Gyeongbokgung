@@ -21,6 +21,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:fontFamily="@font/mainfont"
+        android:textSize="16sp"
+        android:text="경복궁 포토스팟 입니다. 기념사진 촬영하세요." />
+
     <Button
         android:id="@+id/btn_OK_EI"
         android:background="@drawable/big_button"
