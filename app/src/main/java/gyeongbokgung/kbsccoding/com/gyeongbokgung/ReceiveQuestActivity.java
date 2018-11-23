@@ -49,14 +49,14 @@ public class ReceiveQuestActivity extends AppCompatActivity {
 
     private void setElement(){
         Typeface regular;
-        if(DBHandler.currentUserData.getMember_currentQuest() == 9 || DBHandler.currentUserData.getMember_currentQuest() == 11) {
+       /* if(DBHandler.currentUserData.getMember_currentQuest() == 9 || DBHandler.currentUserData.getMember_currentQuest() == 11) {
             regular = Typeface.createFromAsset(this.getAssets(), "font/chinese2.ttf");
             title.setTypeface(regular, Typeface.NORMAL);
         }
         else {
             regular = Typeface.createFromAsset(this.getAssets(), "font/hanna.ttf");
             title.setTypeface(regular, Typeface.NORMAL);
-        }
+        }*/
         try {
             Log.d("김현귮", String.valueOf(DBHandler.currentUserData.getMember_currentQuest()));
             chapter.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getTitle());

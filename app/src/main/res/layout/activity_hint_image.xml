@@ -45,6 +45,9 @@
         android:id="@+id/btn_OK_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/big_button"
+        android:textSize="20sp"
+        android:fontFamily="@font/mainfont"
         android:text="확인" />
 
 </LinearLayout>

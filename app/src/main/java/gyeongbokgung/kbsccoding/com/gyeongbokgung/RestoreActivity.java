@@ -76,7 +76,7 @@ public class RestoreActivity extends AppCompatActivity {
             //점수 올리기
             explanation=DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getExplanation();
             //APP current도 올려줘야함!
-            if(DBHandler.currentUserData.getMember_currentQuest()==4){
+            if(DBHandler.currentUserData.getMember_currentQuest() == 10){
                 Intent intent = new Intent(getApplicationContext(),ExplanationImageActivity.class);
                 startActivity(intent);
                 finish();
@@ -87,9 +87,16 @@ public class RestoreActivity extends AppCompatActivity {
                 finish();
             }
             else{
-                Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
-                startActivity(intent);
-                finish();
+                if(DBHandler.currentUserData.getMember_currentQuest() == 10){
+                    Intent intent = new Intent(getApplicationContext(),ExplanationImageActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(getApplicationContext(), ExplanationActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }
         //답이 맞으면 배경지식 띄어주는 화면, 그 다음에 확인버튼 누르면 complete됐다고 띄어야됨

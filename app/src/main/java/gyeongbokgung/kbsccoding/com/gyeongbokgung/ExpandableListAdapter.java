@@ -98,7 +98,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         listHeader.setTypeface(regular, Typeface.NORMAL);
         if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getRowID()==9||DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getRowID()==11)
         {
-            regular = Typeface.createFromAsset(this.context.getAssets(), "font/chinese.ttf");
+            regular = Typeface.createFromAsset(this.context.getAssets(), "font/chinese.TTF");
             listHeader.setTypeface(regular, Typeface.NORMAL);
         }return view;
     }

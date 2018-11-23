@@ -129,7 +129,7 @@ public class DBHandler {
                     darkBackgroundDown.setVisibility(View.GONE);
                     box[1].setVisibility(View.GONE);
                     explain[1].setVisibility(View.GONE);
-                    explain[3].setText("문제풀이 형식의 퀘스트에는 힌트가 있습니다. 힌트사용 버튼을 눌러보세요.");
+                    explain[3].setText("문제풀이 형식의 퀘스트에는 힌트가 있습니다. 힌트사용 버튼을 눌러보세요.\n단, 힌트를 사용하면 얻을 수 있는 점수가 반이 됩니다.");
                     box[2].setVisibility(View.GONE);
                     explain[2].setVisibility(View.GONE);
                     box[3].setVisibility(View.VISIBLE);
@@ -229,7 +229,7 @@ public class DBHandler {
                 task.execute("http://" + "gyeongbokgung.dothome.co.kr"+ "/update_tutorial.php", DBHandler.currentUserData.getMember_id(), Integer.toString(DBHandler.currentUserData.getMember_numTutorial()));
 
                 darkBackgroundDown.setVisibility(View.VISIBLE);
-                explain[7].setText("랭킹버튼을 선택하여 내 랭킹을\n확인할 수 있습니다.");
+                explain[7].setText("랭킹버튼을 선택하여 내 랭킹을\n확인할 수 있습니다.\n퀘스트를 수행하며 얻은 점수를\n확인해보세요!");
                 explain[7].setVisibility(View.VISIBLE);
 
                 MapsActivity.fab_quest.setEnabled(true);

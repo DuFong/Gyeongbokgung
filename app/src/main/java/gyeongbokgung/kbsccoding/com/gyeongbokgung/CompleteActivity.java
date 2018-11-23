@@ -30,7 +30,7 @@ public class CompleteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_complete);
         ButterKnife.bind(this);
 
-        Typeface regular;
+  /*      Typeface regular;
         if(DBHandler.currentUserData.getMember_currentQuest() == 9 || DBHandler.currentUserData.getMember_currentQuest() == 11) {
             regular = Typeface.createFromAsset(this.getAssets(), "font/chinese2.ttf");
             mSubtitle.setTypeface(regular, Typeface.NORMAL);
@@ -38,7 +38,7 @@ public class CompleteActivity extends AppCompatActivity {
         else {
             regular = Typeface.createFromAsset(this.getAssets(), "font/hanna.ttf");
             mSubtitle.setTypeface(regular, Typeface.NORMAL);
-        }
+        }*/
 
         mSubtitle.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         mDesc.setText(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getDescription());

@@ -515,7 +515,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         listHash = new HashMap<>();
 
         Log.d("왜안나와", "init" + DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
-        listDataHeader.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
+
+        if(DBHandler.currentUserData.getMember_currentQuest() < 16 && DBHandler.currentUserData.getMember_currentQuest() > 12)
+            listDataHeader.add("강녕전과 교태전의 특별함");
+        else
+            listDataHeader.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSubTitle());
         List<String> showQuest = new ArrayList<>();
         showQuest.add(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getSumDescription());
 

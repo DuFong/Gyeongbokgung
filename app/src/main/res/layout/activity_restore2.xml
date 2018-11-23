@@ -1,94 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sl="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".RestoreActivity"
-    android:layout_margin="15dp"
-    android:padding="10dp"
-    android:background="@drawable/questbackground">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
 
-    <com.ssomai.android.scalablelayout.ScalableLayout
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:sl="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        sl:scale_base_height="160"
-        sl:scale_base_width="100">
+        android:orientation="vertical"
+        tools:context=".RestoreActivity"
+        android:layout_margin="15dp"
+        android:padding="10dp"
+        android:background="@drawable/questbackground">
 
-        <TextView
-            android:id="@+id/view_input_reply2"
-            android:fontFamily="@font/mainfont"
+        <com.ssomai.android.scalablelayout.ScalableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_weight="7"
-            android:gravity="center_horizontal|center_vertical"
-            android:textSize="20sp"
-            android:textColor="@color/cardview_dark_background"
-            sl:scale_height="70"
-            sl:scale_left="0"
-            sl:scale_textsize="7"
-            sl:scale_top="13"
-            sl:scale_width="100"
-            tools:ignore="MissingPrefix"/>
+            android:layout_height="match_parent"
+            sl:scale_base_height="160"
+            sl:scale_base_width="100">
 
-        <EditText
-            android:id="@+id/input_reply2_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal|center_vertical"
-            android:hint="첫 번째 정답을 입력하세요"
-            android:textSize="20sp"
-            sl:scale_width="100"
-            sl:scale_height="15"
-            sl:scale_left="0"
-            sl:scale_textsize="7"
-            sl:scale_top="83"
-            tools:ignore="MissingPrefix"/>
+            <TextView
+                android:id="@+id/view_input_reply2"
+                android:fontFamily="@font/malgunbd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="7"
+                android:gravity="center_horizontal|center_vertical"
+                android:textSize="20sp"
+                android:textColor="@color/cardview_dark_background"
+                sl:scale_height="70"
+                sl:scale_left="0"
+                sl:scale_textsize="7"
+                sl:scale_top="20"
+                sl:scale_width="100"
+                tools:ignore="MissingPrefix"/>
 
-        <EditText
-            android:id="@+id/input_reply2_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal|center_vertical"
-            android:hint="두 번째 정답을 입력하세요"
-            android:textSize="20sp"
-            sl:scale_width="100"
-            sl:scale_height="15"
-            sl:scale_left="0"
-            sl:scale_textsize="7"
-            sl:scale_top="98"
-            tools:ignore="MissingPrefix"/>
+            <EditText
+                android:id="@+id/input_reply2_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:hint="첫 번째 정답을 입력하세요"
+                android:textSize="20sp"
+                sl:scale_width="100"
+                sl:scale_height="15"
+                sl:scale_left="0"
+                sl:scale_textsize="7"
+                sl:scale_top="90"
+                tools:ignore="MissingPrefix"/>
 
-        <Button
-            android:id="@+id/input_button2"
-            android:background="@drawable/big_button"
-            android:fontFamily="@font/mainfont"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="0.7"
-            android:text="입         력"
-            android:textSize="20sp"
-            sl:scale_height="18"
-            sl:scale_left="0"
-            sl:scale_textsize="6"
-            sl:scale_top="113"
-            sl:scale_width="100"
-            tools:ignore="MissingPrefix"/>
+            <EditText
+                android:id="@+id/input_reply2_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:hint="두 번째 정답을 입력하세요"
+                android:textSize="20sp"
+                sl:scale_width="100"
+                sl:scale_height="15"
+                sl:scale_left="0"
+                sl:scale_textsize="7"
+                sl:scale_top="105"
+                tools:ignore="MissingPrefix"/>
 
-    </com.ssomai.android.scalablelayout.ScalableLayout>
+            <Button
+                android:id="@+id/input_button2"
+                android:background="@drawable/big_button"
+                android:fontFamily="@font/mainfont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="0.7"
+                android:text="입         력"
+                android:textSize="20sp"
+                sl:scale_height="18"
+                sl:scale_left="0"
+                sl:scale_textsize="6"
+                sl:scale_top="120"
+                sl:scale_width="100"
+                tools:ignore="MissingPrefix"/>
 
-</LinearLayout>
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+    </LinearLayout>
+</ScrollView>

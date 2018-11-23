@@ -57,14 +57,13 @@
 
             <TextView
                 android:id="@+id/tv_subtitle_com"
-                android:fontFamily="@font/hanna"
+                android:fontFamily="@font/tmonmonsori"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:gravity="center_horizontal"
                 android:text="TextView"
                 android:textColor="@color/cardview_dark_background"
-                android:textStyle="bold"
-                sl:scale_height="25"
+                sl:scale_height="40"
                 sl:scale_left="0"
                 sl:scale_textsize="13"
                 sl:scale_top="5"
@@ -73,7 +72,7 @@
 
             <TextView
                 android:id="@+id/tv_desc_com"
-                android:fontFamily="@font/mainfont"
+                android:fontFamily="@font/malgunbd"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:gravity="left"
@@ -91,12 +90,12 @@
                 android:fontFamily="@font/mainfont"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="확인"
+                android:text="확    인"
                 android:background="@drawable/big_button"
                 sl:scale_height="18"
                 sl:scale_left="0"
                 sl:scale_textsize="6"
-                sl:scale_top="130"
+                sl:scale_top="135"
                 sl:scale_width="100"
                 tools:ignore="MissingPrefix" />
         </com.ssomai.android.scalablelayout.ScalableLayout>
