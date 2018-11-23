@@ -359,8 +359,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
 
-      if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getType() == 0){
+      if(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getType() == 0 && DBHandler.currentUserData.getMember_currentQuest() != 14 && DBHandler.currentUserData.getMember_currentQuest() != 18){
             Log.d("마커나오나","알로하");
+
             LatLng destination = new LatLng(DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLatitude(),
                     DBHandler.questDataList.get(DBHandler.currentUserData.getMember_currentQuest()).getLongitude());
 
